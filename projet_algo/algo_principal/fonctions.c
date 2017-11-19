@@ -7,7 +7,6 @@
 
 //------------------------------------------------------------------------------------------------------------
 // lecture du fichier contenant les variables souhaitées, stockage de ces variables pour utilisation
-
 void importer_parametres(int* l, int* d, int* k, int* nb_masques)
 {
 	FILE* ptr_fichier;
@@ -26,9 +25,8 @@ void importer_parametres(int* l, int* d, int* k, int* nb_masques)
 
   fclose(ptr_fichier);
 }
-
 //---------------------------------------------------------------------------------------------------------
-
+// Récupère les séquences et les stocke dans une liste chainée
 void importer_sequences_fasta( TInfo_ensemble_sequences* ptr_info, TEnsemble_Sequences* ptr_ensemble )
 {
   FILE* ptr_fichier_fasta;
@@ -47,17 +45,15 @@ void importer_sequences_fasta( TInfo_ensemble_sequences* ptr_info, TEnsemble_Seq
   ptr_fichier_fasta = fopen(nom_fichier_fasta, "r");
   if( ptr_fichier_fasta == NULL) { free(ptr_fichier_fasta); return; }// si le fichier est vide on sort
 
-	do //cette boucle permet de compter les séquences 
+	do //cette boucle permet de compter les séquences
 	{
 		c = fgetc (ptr_fichier_fasta); //lecture du fichier caractère par caractère
 		if (c == '>') cptr++;  //incrémentation pour chaque nom de séquences
 	} while (c != EOF);
-	// printf("nb_seq: %d \n", cptr);
-  //
+
 	ptr_fichier_fasta = fopen(nom_fichier_fasta, "r");
-	while (!feof(ptr_fichier_fasta))
+	do
 	{
-		// printf("dans la boucle!!\n");
 		fscanf(ptr_fichier_fasta,"%s\n", contenu_ligne);
 	  if ( contenu_ligne[0] == '>')
 	  {
@@ -68,36 +64,75 @@ void importer_sequences_fasta( TInfo_ensemble_sequences* ptr_info, TEnsemble_Seq
 				p = p_new;
 				if ( ptr_info->nb_seq  == cptr) { p->suiv_seq = NULL;}
 			}
-			// printf("dans le if !!\n");
 			ptr_info->nb_seq += 1;
-			// printf("%d \n", ptr_info->nb_seq);
 			strcpy(p->nom_seq, contenu_ligne);
+			// printf(" DOOM %s\n", p->nom_seq);
 		}else{
-			// printf("dans le else !!\n");
 			if ( p->seq == NULL){
 				strcpy(p->seq, contenu_ligne);
 	    }else{
 	      strcat(p->seq, contenu_ligne);
 	    }
 	  }
-	}
-
-
+	}	while(!feof(ptr_fichier_fasta));
   fclose(ptr_fichier_fasta);
 }
 //--------------------------------------------------------------------------------------------------
 
 void afficher_sequences(TInfo_ensemble_sequences* ptr_info, TEnsemble_Sequences* ptr_ensemble )
 {
+	FILE * ptr_fichier;
   TPtr_ensemble_sequences p = ptr_ensemble;
 	TPtr_ensemble_sequences p_prec = NULL;
+	int cptr = 0;
 	printf("fonction afficher_sequences\n");
 	printf("%d \n", ptr_info->nb_seq);
 
-	while ( p->suiv_seq != NULL){
+	ptr_fichier = fopen ( "verif_dico_fasta.txt" ,"w");
+	while ( cptr < (ptr_info->nb_seq))
+	{
+		fputs( p->nom_seq, ptr_fichier);
+		fputs( "\n" ,ptr_fichier);
+		fputs( p->seq,ptr_fichier);
+		fputs( "\n" ,ptr_fichier);
 		printf("nom_seq: %s\n", p->nom_seq );
-		printf(" %s\n", p->seq);
+		printf("%s\n", p->seq);
 		p_prec = p;
 		p = p->suiv_seq;
+		cptr ++;
 	}
 }
+//------------------------------------------------------------------------------------------------
+//genere un chiffre random
+// int random_number(int max_number, int zero_excluded)
+// {
+// 	int randomNumber;
+//
+// 	if(zero_excluded==0) //on peut tomber sur 0 aléatoirement
+// 	{
+// 		randomNumber= rand() % max_number;
+// 	}else{
+//     randomNumber= rand() % max_number +1;
+// 	}
+// 	return(randomNumber);
+// }
+// //-------------------------------------------------------------------------------------------------
+// //genere un masque avec un nombre de fenetre ouverte en paramètre:
+// void generation_masque(int longueur_masque, int* adr_masque[longueur_masque], int nb_fenetre)
+// {
+//   int i;
+//   int nb_fenetre_ouverte=1;
+//
+//   while (nb_fenetre_ouverte < nb_fenetre)
+// 	{
+//     for (i=0; i<= (longueur_masque -1); i++)
+// 		{
+//       adr_masque[i]= random_number(2,0);
+//       if (adr_masque[i]==1)
+// 			{
+//       	nb_fenetre_ouverte++;
+//       }
+//     }
+//   }
+//   return;
+// }

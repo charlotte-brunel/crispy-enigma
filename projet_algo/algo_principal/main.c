@@ -9,13 +9,14 @@ bool convergence;
 //definition des variables principales
 int l; //longueur motif
 int d; // nombre maximal de substitutions autorisées
-int k; //taille masque
+int k; //nombre de fenêtres dans le masque
 int nb_masques;
 
 int main()
 {
 	//définition des variables utilitaires
 	int i = 0;
+	int masque[l];
 
 	TInfo_ensemble_sequences info_seq; //instanciation de la structure contenants les informations des sequences
 	TInfo_ensemble_sequences* ptr_info;
@@ -33,26 +34,26 @@ int main()
 	importer_sequences_fasta(&ptr_info, &ptr_ensemble );
 	afficher_sequences(&ptr_info, &ptr_ensemble );
 
-	for ( i, i <= nb_masques, i++)
-	{
-		generation_masque(l,k);
-		creation_dictionnaire();
-
-		for () //pour chaque k-mere suffisemment représenté
-		{
-			convergence = FALSE;
-			calculer_PSSM_ref();
-			do
-			{
-				ameliorer_PSSM();
-			}
-			while( convergence = FALSE )
-
-			raffiner_PSSM();
-		}
-	}
+	// for ( i; i <= nb_masques; i++)
+	// {
+	// 	generation_masque(l, &masque[l], k);
+		// creation_dictionnaire();
+		//
+		// for () //pour chaque k-mere suffisemment représenté
+		// {
+		// 	convergence = FALSE;
+		// 	calculer_PSSM_ref();
+		// 	do
+		// 	{
+		// 		ameliorer_PSSM();
+		// 	}
+		// 	while( convergence = FALSE )
+		//
+		// 	raffiner_PSSM();
+		// }
+	// }
 	//desallocation mémoire
-	free(ptr_info); free(ptr_ensemble);
+	// free(ptr_info); free(ptr_ensemble);
 
 	return(0);
 }
