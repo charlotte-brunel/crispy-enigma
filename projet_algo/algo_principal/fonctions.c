@@ -1,0 +1,103 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+#include <stdbool.h>
+#include "fonctions.h"
+
+//------------------------------------------------------------------------------------------------------------
+// lecture du fichier contenant les variables souhaitées, stockage de ces variables pour utilisation
+
+void importer_parametres(int* l, int* d, int* k, int* nb_masques)
+{
+	FILE* ptr_fichier;
+  char nom_fichier[30];
+
+	printf("Quel est le nom du fichier que vous voulez utiliser pour importer les paramètres du programme ?\n");
+	scanf("%s", nom_fichier);
+  ptr_fichier = fopen(nom_fichier, "r");
+
+	if( ptr_fichier == NULL) { free(ptr_fichier); return; }// si le fichier est vide on sort
+
+  fscanf(ptr_fichier, "#longueur du motif à identifier (IE. taille du masque): %d\n", l);
+  fscanf(ptr_fichier, "#nombre maximal de substitutions autorisées: %d\n", d);
+  fscanf(ptr_fichier, "#nombre de fenêtres dans les masques utilisés: %d\n", k);
+  fscanf(ptr_fichier, "#nombre de masques à générer: %d\n", nb_masques);
+
+  fclose(ptr_fichier);
+}
+
+//---------------------------------------------------------------------------------------------------------
+
+void importer_sequences_fasta( TInfo_ensemble_sequences* ptr_info, TEnsemble_Sequences* ptr_ensemble )
+{
+  FILE* ptr_fichier_fasta;
+  char nom_fichier_fasta[30];
+  char contenu_ligne[128];
+  char c;
+  int cptr = 0;
+
+  TPtr_ensemble_sequences p_new;
+  TPtr_ensemble_sequences p = ptr_ensemble;
+  ptr_info->nb_seq = 0;
+
+	printf("Quel est le nom du fichier que vous voulez utiliser pour importer les séquences ?\n");
+  scanf("%s", nom_fichier_fasta);
+
+  ptr_fichier_fasta = fopen(nom_fichier_fasta, "r");
+  if( ptr_fichier_fasta == NULL) { free(ptr_fichier_fasta); return; }// si le fichier est vide on sort
+
+	do //cette boucle permet de compter les séquences 
+	{
+		c = fgetc (ptr_fichier_fasta); //lecture du fichier caractère par caractère
+		if (c == '>') cptr++;  //incrémentation pour chaque nom de séquences
+	} while (c != EOF);
+	// printf("nb_seq: %d \n", cptr);
+  //
+	ptr_fichier_fasta = fopen(nom_fichier_fasta, "r");
+	while (!feof(ptr_fichier_fasta))
+	{
+		// printf("dans la boucle!!\n");
+		fscanf(ptr_fichier_fasta,"%s\n", contenu_ligne);
+	  if ( contenu_ligne[0] == '>')
+	  {
+			if ((ptr_info->nb_seq) > 0)
+			{
+				p_new = malloc ( sizeof(TEnsemble_Sequences));
+				p->suiv_seq = p_new;
+				p = p_new;
+				if ( ptr_info->nb_seq  == cptr) { p->suiv_seq = NULL;}
+			}
+			// printf("dans le if !!\n");
+			ptr_info->nb_seq += 1;
+			// printf("%d \n", ptr_info->nb_seq);
+			strcpy(p->nom_seq, contenu_ligne);
+		}else{
+			// printf("dans le else !!\n");
+			if ( p->seq == NULL){
+				strcpy(p->seq, contenu_ligne);
+	    }else{
+	      strcat(p->seq, contenu_ligne);
+	    }
+	  }
+	}
+
+
+  fclose(ptr_fichier_fasta);
+}
+//--------------------------------------------------------------------------------------------------
+
+void afficher_sequences(TInfo_ensemble_sequences* ptr_info, TEnsemble_Sequences* ptr_ensemble )
+{
+  TPtr_ensemble_sequences p = ptr_ensemble;
+	TPtr_ensemble_sequences p_prec = NULL;
+	printf("fonction afficher_sequences\n");
+	printf("%d \n", ptr_info->nb_seq);
+
+	while ( p->suiv_seq != NULL){
+		printf("nom_seq: %s\n", p->nom_seq );
+		printf(" %s\n", p->seq);
+		p_prec = p;
+		p = p->suiv_seq;
+	}
+}
