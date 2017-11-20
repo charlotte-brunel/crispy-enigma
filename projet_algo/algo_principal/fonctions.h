@@ -27,7 +27,7 @@ void importer_parametres(int* l, int* d, int* k, int* nb_masques);
 void importer_sequences_fasta(TInfo_ensemble_sequences* ptr_info, TEnsemble_Sequences* ptr_ensemble );
 void afficher_sequences(TInfo_ensemble_sequences* ptr_info, TEnsemble_Sequences* ptr_ensemble  );
 int random_number(int max_number, int zero_excluded);
-void generation_masque(int l, int* masque[l], int k);
+void generation_masque(int l, int* masque, int k);
 
 
 //---VARIABLES GLOBALES---------------------------------

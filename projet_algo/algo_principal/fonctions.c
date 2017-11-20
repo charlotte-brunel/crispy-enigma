@@ -119,24 +119,24 @@ int random_number(int max_number, int zero_excluded)
 }
 //-------------------------------------------------------------------------------------------------
 //genere un masque avec un nombre de fenetre ouverte en paramètre:
-void generation_masque(int l, int* masque[l], int k)
+void generation_masque(int l, int* masque, int k)
 {
-  int i,j;
+  int j;
   int nb_fenetre_ouverte = 1;
-  // while (nb_fenetre_ouverte < k)
-	// {
+  while (nb_fenetre_ouverte < k)
+	{
     for (j=0; j<= (l -1); j++)
 		{
-			// printf("x -");
       masque[j] = random_number(2,0);
-      // if (masque[j] == 1)
-			// {
-      // 	nb_fenetre_ouverte ++;
-      // }
+      if (masque[j] == 1)
+			{
+    		nb_fenetre_ouverte ++;
+			}
     }
-		// for(i=0; i< l; i++)
-		// {
-		// 	printf("%d", masque[i]);
-		// }
-  // }
+  }
+	//test du masque 
+	for(j=0; j< l; j++)
+	{
+		printf("%d", masque[i]);
+	}
 }
