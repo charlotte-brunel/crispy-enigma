@@ -33,13 +33,15 @@ int main()
 	printf("l= %d,",l);printf("d= %d,",d);
 	printf("k= %d,",k);printf("nb_masques= %d\n ",nb_masques);
 	int masque[l];
+	int *ptr_masque;
+	ptr_masque = masque;
+
 	// importer_sequences_fasta(&ptr_info, &ptr_ensemble );
 	// afficher_sequences(&ptr_info, &ptr_ensemble );
 
-	for ( i=0; i<=10; i++ )
+	for ( i=0; i<= nb_masques ; i++ )
 	{
-		a ++;
-		printf("%d",a);
+		printf("essais n°:%d\n", i);
 		generation_masque(l, &masque, k);
 		// creation_dictionnaire();
 		//
@@ -55,11 +57,12 @@ int main()
 		//
 		// 	raffiner_PSSM();
 		// }
+		for(j=0; j< l; j++)
+		{
+			printf("please\n %d", masque[i]);
+		}
 	}
 
-	for(j=0; j< l; j++)
-	{
-		printf("%d", masque[i]);
-	}
+
 	return(0);
 }

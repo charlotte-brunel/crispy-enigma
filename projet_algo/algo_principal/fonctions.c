@@ -121,7 +121,7 @@ int random_number(int max_number, int zero_excluded)
 //genere un masque avec un nombre de fenetre ouverte en paramètre:
 void generation_masque(int l, int* masque, int k)
 {
-  int j;
+  int i,j;
   int nb_fenetre_ouverte = 1;
   while (nb_fenetre_ouverte < k)
 	{
@@ -134,9 +134,160 @@ void generation_masque(int l, int* masque, int k)
 			}
     }
   }
-	//test du masque 
-	for(j=0; j< l; j++)
+	//test du masque
+	for(i=0; i< l; i++)
 	{
-		printf("%d", masque[i]);
+		printf("%d\n", masque[i]);
+	}
+}
+
+//---------------------------------------------------------------------------------------------------------------------
+void parcours_masque(int longueur_masque, int* adr_masque[longueur_masque], int nb_fenetre, int nb_sequence,
+										ptr_struct_seq* adr_tete_struct_sequence, TPtr_Cellkmer* adr_tete_liste_kmer,
+										TPtr_CellSequence* adr_tete_liste_sequence, TPtr_CellPos* adr_tete_liste_pos)
+{
+  ptr_struct_seq p_generation_seq = *adr_tete_struct_sequence;
+  TPtr_Cellkmer p_kmer = *adr_tete_liste_kmer;
+  TPtr_CellSequence p_sequence = *adr_tete_liste_sequence;
+  TPtr_CellPos p_pos = *adr_tete_liste_pos;
+	
+  int position = 0;
+  int cpt_pos_masque, position_kmer;
+  int pos_kmer = 0;
+  char k_mer[nb_fenetre + 1]; // le k_mer mesure la taille du nombre de fenêtre ouverte dans le masque
+
+  while (p_generation_seq != NULL)
+	{
+    while (position < 30)
+		{
+      for(cpt_pos_masque = 0; cpt_pos_masque< longueur_masque; cpt_pos_masque++)  // on parcourt les nucleotides sous le masque
+			{
+        if (adr_masque[cpt_pos_masque] == 1) //si la fenêtre du masque est ouverte
+				{
+          k_mer[pos_kmer] = p_generation_seq->sequence[position];
+
+          if (pos_kme == 0)
+					{
+            position_kmer = position;
+          }
+          pos_kmer ++;
+          if (pos_kmer == nb_fenetre)
+					{
+            k_mer[pos_kmer] = '\0' ;
+            pos_kmer = 0;
+          }
+
+        }
+        position = position +1;
+      }
+    	generation_kmer(position_kmer, k_mer, &p_kmer, &p_sequence, &p_generation_seq, &p_pos);
+    }
+    position = 0;
+    p_generation_seq = p_generation_seq->next_sequence;
+  }
+  return;
+
+}
+
+
+//----------------------------------------------------------------------------------------------------------------
+void generation_kmer(int position_kmer, char* k_mer, TPtr_Cellkmer* adr_liste_kmer,
+						TPtr_CellSequence* adr_liste_sequence, ptr_struct_seq* adr_liste_generation_sequence,
+						TPtr_CellPos* adr_liste_pos)
+{
+	TPtr_Cellkmer temp_p_kmer = *adr_liste_kmer; //on créé des pointeurs temporaire pour parcourir les listes
+	ptr_struct_seq p_generation_seq = *adr_liste_generation_sequence;
+
+	if (temp_p_kmer->suiv_kmer == NULL) //cas du premier element de la liste
+	{
+	  TPtr_Cellkmer nouveau_kmer = (TCellkmer*) malloc(sizeof(TCellkmer));
+	  strcpy(temp_p_kmer->kmer, k_mer);
+	  nouveau_kmer->suiv_kmer = NULL;
+
+	  TPtr_CellSequence nouvelle_sequence = (TCellSequence*) malloc(sizeof(TCellSequence));
+	  temp_p_kmer->suiv_kmer = nouveau_kmer;
+	  temp_p_kmer->tete_sequence = nouvelle_sequence;
+	  nouvelle_sequence->sequence = p_generation_seq->numero_sequence;
+	  nouvelle_sequence->suiv_sequence = NULL;
+
+	  TPtr_CellPos nouvelle_position = (TCellPos*) malloc(sizeof(TCellPos));
+	  nouvelle_sequence->tete_pos = nouvelle_position;
+	  nouvelle_position->position = position_kmer;
+	  nouvelle_position->suiv_pos = NULL;
+	  return;
+
+	}else{
+
+	  while (temp_p_kmer->suiv_kmer != NULL)
+		{
+      if (strcmp(temp_p_kmer->kmer, k_mer) == 0)  //si le kmer a déjà été trouvé
+			{
+        TPtr_CellSequence p_liste_sequence = temp_p_kmer->tete_sequence;
+
+        //premier element de la liste chainee de sequence:
+        while (p_liste_sequence->suiv_sequence != NULL)
+				{
+            if (p_generation_seq->numero_sequence == p_liste_sequence->sequence) //Si le kmer a déjà été trouvé dans cette séquence
+						{
+              TPtr_CellPos p_liste_pos = p_liste_sequence->tete_pos;
+              while (p_liste_pos->suiv_pos != NULL)
+							{
+              	p_liste_pos = p_liste_pos->suiv_pos;
+              }
+              TPtr_CellPos nouvelle_position = (TCellPos*) malloc(sizeof(TCellPos)); // On créé une nouvelle brique de pôsition
+              nouvelle_position->position = position_kmer;
+              nouvelle_position->suiv_pos = NULL;
+              p_liste_pos->suiv_pos = nouvelle_position;
+              return;
+
+            }
+            p_liste_sequence = p_liste_sequence->suiv_sequence;
+        }
+        if (p_generation_seq->numero_sequence == p_liste_sequence->sequence) //Si le kmer a déjà été trouvé dans cette séquence
+				{
+          TPtr_CellPos p_liste_pos = p_liste_sequence->tete_pos;
+          while (p_liste_pos->suiv_pos != NULL)
+					{
+            p_liste_pos=p_liste_pos->suiv_pos;
+          }
+          TPtr_CellPos nouvelle_position = (TCellPos*) malloc(sizeof(TCellPos)); // On créé une nouvelle brique de pôsition
+          nouvelle_position->position = position_kmer;
+          nouvelle_position->suiv_pos = NULL;
+          p_liste_pos->suiv_pos = nouvelle_position;
+          return;
+
+        }
+        TPtr_CellSequence nouvelle_sequence = (TCellSequence*) malloc(sizeof(TCellSequence));
+        nouvelle_sequence->sequence = p_generation_seq->numero_sequence;
+        nouvelle_sequence->suiv_sequence = NULL;
+        p_liste_sequence->suiv_sequence = nouvelle_sequence;
+
+        TPtr_CellPos nouvelle_tete_pos = (TCellPos*) malloc(sizeof(TCellPos)); // on créé une nouvelle tete de liste de position
+        nouvelle_sequence->tete_pos = nouvelle_tete_pos;
+        nouvelle_tete_pos->position = position_kmer;
+        nouvelle_tete_pos->suiv_pos = NULL;
+        return;
+
+      }
+      temp_p_kmer=temp_p_kmer->suiv_kmer;
+	  }
+
+	 // Si ce kmer n'a pas encore été trouvé: ajout en fin de boucle
+	  TPtr_Cellkmer nouveau_kmer = (TCellkmer*) malloc(sizeof(TCellkmer));
+	  strcpy(temp_p_kmer->kmer, k_mer);
+	  nouveau_kmer->suiv_kmer = NULL;
+
+	  TPtr_CellSequence nouvelle_sequence =(TCellSequence*) malloc(sizeof(TCellSequence));
+	  temp_p_kmer->suiv_kmer = nouveau_kmer;
+	  temp_p_kmer->tete_sequence = nouvelle_sequence;
+	  nouvelle_sequence->sequence = p_generation_seq->numero_sequence;
+	  nouvelle_sequence->suiv_sequence = NULL;
+
+	  TPtr_CellPos nouvelle_position = (TCellPos*) malloc(sizeof(TCellPos));
+	  nouvelle_sequence->tete_pos = nouvelle_position;
+	  nouvelle_position->position = position_kmer;
+	  nouvelle_position->suiv_pos = NULL;
+	  return;
+
 	}
 }
