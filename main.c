@@ -24,6 +24,7 @@ TPtr_Cellkmer element_kmer=malloc(sizeof(TCellkmer));
 TPtr_Cellkmer tete_liste_kmer= element_kmer;
 TPtr_Cellkmer tete_liste_kmer2= element_kmer;
 TPtr_Cellkmer tete_liste_kmer3= element_kmer;
+TPtr_Cellkmer tete_liste_kmer4= element_kmer;
 element_kmer->suiv_kmer=NULL;
 TPtr_CellSequence element_sequence= malloc(sizeof(TCellSequence));
 TPtr_CellSequence tete_liste_sequence= element_sequence;
@@ -55,7 +56,7 @@ double **ptr_matrice_PSSM;
 srand(time(0));
 
 int nb_sequence= 10; // nombre de s�quence � g�n�rer
-int i,j,k; //it�rateur de boucle
+int i,j; //it�rateur de boucle
 char nucleo= ' ';
 
 ptr_struct_seq element_generation_sequence=malloc(sizeof(structure_sequence)); // On cr�� le premier �l�ment de la structure
@@ -94,20 +95,23 @@ for(i=1; i<=nb_sequence; i++){ //Boucle qui permet de cr�� les 10 s�quence
 insert_motif(&tete_liste_pour_insertion_motif, nb_sequence, &tete_liste_motif);
 
 generation_masque(longueur_masque, &masque, nb_fenetre);
-for (k=0; k<longueur_masque; k++)
-{
-	printf("%d", masque[k]);
-}
-/*
-parcours_masque(longueur_masque, &p_masque, nb_fenetre, nb_sequence, &tete_liste_pour_parcours_masque, &tete_liste_kmer, &tete_liste_sequence, &tete_liste_pos);
+parcours_masque(longueur_masque, &masque, nb_fenetre, nb_sequence, &tete_liste_pour_parcours_masque, &tete_liste_kmer, &tete_liste_sequence, &tete_liste_pos);
 kmer_present_dans_chaque_sequence(nb_sequence, &tete_liste_kmer2, &tete_liste_sequence2, &tete_liste_pos2, &tete_liste_pour_recup_motif, &tete_liste_kmer_selectionne, &tete_liste_motif_PSSM);
 affichage_dictionnaire_kmer(&tete_liste_kmer3, &tete_liste_sequence3, &tete_liste_pos3);
 affichage_motif_selectionne(&tete_liste_kmer_selectionne2, &tete_liste_motif_PSSM2);
-calcul_PSSM(&tete_liste_kmer_selectionne_pour_calcul, &tete_liste_motif_PSSM_pour_calcul, &file_info, &ptr_matrice_PSSM);
+// On calculera la PSSM seulement pour les kmers qui sont présent dans plus de 7 sequences:
+while (tete_liste_kmer4 != NULL)
+{
+	if (tete_liste_kmer4->nb_sequence>=7)
+	{
+		calcul_PSSM(&tete_liste_kmer_selectionne_pour_calcul, &tete_liste_motif_PSSM_pour_calcul, &file_info, &ptr_matrice_PSSM);
+	}
+	tete_liste_kmer4= tete_liste_kmer4->suiv_kmer;
+}
 //printf("\npleaase: %s", p_motif_consensus->motif_consensus);
 //calcul_ST1()
 
-*/
+
 
 return 0;
 }

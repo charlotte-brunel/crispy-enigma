@@ -82,11 +82,9 @@ void generation_masque(int longueur_masque, void* adr_masque, int nb_fenetre)
     while (nb_fenetre_ouverte != nb_fenetre)
     {
     	nb_fenetre_ouverte=0;
-    	printf("nb_fenetre_ouverte: %d \n", nb_fenetre_ouverte);
         for (i=0; i<= (longueur_masque -1); i++)
         {
             p_masque[i]= random_number(2,0);
-            printf("masque : %d, posiion: %d \n", p_masque[i], i);
             if (p_masque[i]==1)
             {
                 nb_fenetre_ouverte++;
@@ -181,19 +179,23 @@ if (temp_p_kmer->suiv_kmer==NULL){ //cas du premier element de la liste
 
 
 
-void parcours_masque(int longueur_masque, int* adr_masque[longueur_masque], int nb_fenetre, int nb_sequence, ptr_struct_seq* adr_tete_struct_sequence, TPtr_Cellkmer* adr_tete_liste_kmer, TPtr_CellSequence* adr_tete_liste_sequence, TPtr_CellPos* adr_tete_liste_pos){
+void parcours_masque(int longueur_masque, void* adr_masque, int nb_fenetre, int nb_sequence, ptr_struct_seq* adr_tete_struct_sequence, TPtr_Cellkmer* adr_tete_liste_kmer, TPtr_CellSequence* adr_tete_liste_sequence, TPtr_CellPos* adr_tete_liste_pos)
+{
     ptr_struct_seq p_generation_seq = *adr_tete_struct_sequence;
     TPtr_Cellkmer p_kmer= *adr_tete_liste_kmer;
     TPtr_CellSequence p_sequence= *adr_tete_liste_sequence;
     TPtr_CellPos p_pos= *adr_tete_liste_pos;
+    int *p_masque= adr_masque;
     int position=0;
     int cpt_pos_masque, position_kmer;
     int pos_kmer =0;
     char k_mer[nb_fenetre+1]; // le k_mer mesure la taille du nombre de fen�tre ouverte dans le masque
-    while (p_generation_seq != NULL){
-        while (position<30){
+    while (p_generation_seq != NULL)
+    {
+        while (position<30)
+        {
                 for(cpt_pos_masque=0; cpt_pos_masque< longueur_masque; cpt_pos_masque++){ // on parcourt les nucleotides sous le masque
-                    if (*adr_masque[cpt_pos_masque]==1){ //si la fen�tre du masque est ouverte
+                    if (p_masque[cpt_pos_masque]==1){ //si la fen�tre du masque est ouverte
                         k_mer[pos_kmer]= p_generation_seq->sequence[position];
 
                         if (pos_kmer==0){
@@ -321,7 +323,8 @@ void kmer_present_dans_chaque_sequence(int nb_sequence, TPtr_Cellkmer* adr_cell_
         }
 
         printf("nb_sequence_par_kmer: %d \n", nb_sequence_par_kmer);
-        if (nb_sequence_par_kmer+1 >= 8){ //Pour l"instant pour pouvoir continuer
+        p_parcours_kmer->nb_sequence=nb_sequence_par_kmer;
+        if (nb_sequence_par_kmer >= 7){ //Pour l"instant pour pouvoir continuer
             recuperer_motif_kmer(&p_parcours_kmer, &p_kmer_selectionne, &p_motif_PSSM, &tete_sequence, &tete_pos, &tete_generation_sequence, nb_sequence_par_kmer);
             p_kmer_selectionne= tete_kmer_selectionne;
         }
