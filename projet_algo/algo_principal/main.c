@@ -6,6 +6,8 @@
 #include <time.h>
 #include "fonctions.h"
 
+
+
 bool convergence;
 //definition des variables principales
 int l; //longueur motif/masque
