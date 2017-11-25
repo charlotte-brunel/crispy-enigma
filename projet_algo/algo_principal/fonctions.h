@@ -1,6 +1,17 @@
 #define TAILLE_MAX_SEQ 800
-//---STRUCTURES------------------------------------------------
+/*******************************************************************************
+ * * *                   VARIABLES GLOBALES                                * * *
+ *******************************************************************************/
 
+extern bool convergence;
+extern int l;
+extern int d;
+extern int k;
+extern int nb_masques;
+
+/*******************************************************************************
+ * * *                      STRUCTURES                                     * * *
+ *******************************************************************************/
 typedef struct TInfo_ensemble_sequences TInfo_ensemble_sequences;
 struct TInfo_ensemble_sequences
 {
@@ -19,17 +30,55 @@ struct TEnsemble_Sequences
 };
 typedef TEnsemble_Sequences* TPtr_ensemble_sequences;
 
+/*
+ *******************************
+ * STRUCTURE DICTIONNAIRE KMER *
+ *******************************
+1er élément: liste chainée des kmers
+*/
+typedef struct TCellkmer TCellkmer;
+struct TCellkmer{
+    struct TCellkmer* suiv_kmer; //Pointer sur le kmer suivant
+    struct TCellSequence* tete_sequence; //Pointer qui pointe sur une liste chainée de séquence où le kmer est retrouvé
+    char kmer[]; //"TCC" par exemple
 
-//---FONCTIONS--------------------------
+};
+typedef TCellkmer* TPtr_Cellkmer; //Pointeur sur Tcellkmer
+
+//deuxième élément du dictionnaire kmer: liste chainée de sequence possédant le kmer:
+
+typedef struct TCellSequence TCellSequence;
+struct TCellSequence{
+    int sequence; //sequence 1 --> 1; sequence 2 --> 2
+    struct TCellSequence* suiv_sequence; // Pointeur qui pointe l'élément suivant de la liste chainée de séquence
+    struct TCellPos* tete_pos; // Pointeur qui pointe sur le premier élément de la structure position qui répertorie toutes les positions où le kmer a été trouvé dans une séquence
+};
+typedef TCellSequence* TPtr_CellSequence; // Pointeur sur TCellSéquence
+
+// troisième élément du dictionnaire de kmer: liste chainée de position où le kmer a été trouvé dans une séquence.
+
+typedef struct TCellPos TCellPos;
+struct TCellPos{
+    int position; // position du kmer dans la séquence
+    struct TCellPos* suiv_pos; //pointe sur la position suivante
+};
+typedef TCellPos* TPtr_CellPos;
+
+/*******************************************************************************
+ * * *                      FONCTIONS                                      * * *
+ *******************************************************************************/
 
 void importer_parametres(int* l, int* d, int* k, int* nb_masques);
 void importer_sequences_fasta(TInfo_ensemble_sequences* ptr_info, TEnsemble_Sequences* ptr_ensemble );
 void afficher_sequences(TInfo_ensemble_sequences* ptr_info, TEnsemble_Sequences* ptr_ensemble  );
 
-//---VARIABLES GLOBALES---------------------------------
+int random_number(int max_number, int zero_excluded);
+void generation_masque(int l, int* masque, int k);
 
-extern bool convergence;
-extern int l;
-extern int d;
-extern int k;
-extern int nb_masques;
+// void parcours_masque(int longueur_masque, int* adr_masque[longueur_masque], int nb_fenetre, int nb_sequence,
+// ptr_struct_seq* adr_tete_struct_sequence, TPtr_Cellkmer* adr_tete_liste_kmer,
+// TPtr_CellSequence* adr_tete_liste_sequence, TPtr_CellPos* adr_tete_liste_pos);
+
+// void generation_kmer(int position_kmer, char* k_mer, TPtr_Cellkmer* adr_liste_kmer,
+// TPtr_CellSequence* adr_liste_sequence, ptr_struct_seq* adr_liste_generation_sequence,
+// TPtr_CellPos* adr_liste_pos);

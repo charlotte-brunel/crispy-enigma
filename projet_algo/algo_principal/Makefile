@@ -6,7 +6,7 @@ main.out: main.o fonctions.o
 main.o: main.c fonctions.h
 	gcc -Wall -c -o main.o main.c
 
-fonctions.o: fonctions.c fonctions.h 
+fonctions.o: fonctions.c fonctions.h
 	gcc -Wall -c -o fonctions.o fonctions.c
 
 clean:
