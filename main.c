@@ -11,11 +11,21 @@
 #include "function.h"
 
 
+
+
+
 int main()
 {
 
 FILE *file_info=NULL; //fichier contenant les infos sur les s�quences
 int longueur_masque = 5;
+//int pos_max;
+int position= 0;
+//int score_max;
+int cpt_mot;
+int n_sequence;
+//float score;
+char mot[longueur_masque+1];
 int masque[longueur_masque];
 memset(masque, 0, sizeof masque);
 //int* p_masque= masque;
@@ -46,9 +56,14 @@ TPtr_Cell_Motif_PSSM tete_liste_motif_PSSM2= element_liste_motif_PSSM;
 TPtr_Cell_Motif_PSSM tete_liste_motif_PSSM_pour_calcul= element_liste_motif_PSSM;
 element_liste_motif_PSSM->suiv_motif=NULL;
 
-//MATRICE PSSM ET MOTIF CONSENSUS:
+TPtr_Mot_Ameliorer_PSSM element_mot= (TMot_Ameliorer_PSSM*)malloc(sizeof(TMot_Ameliorer_PSSM));
+TPtr_Mot_Ameliorer_PSSM p_mot= element_mot;
 
-double **ptr_matrice_PSSM;
+//MATRICE PSSM ET MOTIF CONSENSUS:
+double** matrice_PSSM[4][6]; 
+
+
+
 
 
 /* GENERATION ALEATOIRE DE DIX SEQUENCES POUR TEST */
@@ -61,6 +76,7 @@ char nucleo= ' ';
 
 ptr_struct_seq element_generation_sequence=malloc(sizeof(structure_sequence)); // On cr�� le premier �l�ment de la structure
 ptr_struct_seq tete_liste_pour_parcours_masque= element_generation_sequence;
+ptr_struct_seq p_generation_seq= element_generation_sequence;
 ptr_struct_seq tete_liste_pour_recup_motif= element_generation_sequence;
 ptr_struct_seq tete_liste_pour_insertion_motif= element_generation_sequence;
 ptr_struct_seq element_generation_sequence_next= NULL;
@@ -71,7 +87,6 @@ ptr_liste_motif tete_liste_motif= element_motif;
 
 /* GENERATION ALEATOIRE DE DIX SEQUENCES POUR TEST */
 // D�but du code:
-printf("aaaaaaargh");
 for(i=1; i<=nb_sequence; i++){ //Boucle qui permet de cr�� les 10 s�quences du fichier fasta
 	element_generation_sequence->numero_sequence= i;
 	for (j=0; j<30; j++){ //boucle qui permet de cr�er les s�quences de 30 nucl�otides de long
@@ -103,11 +118,52 @@ affichage_motif_selectionne(&tete_liste_kmer_selectionne2, &tete_liste_motif_PSS
 while (tete_liste_kmer4 != NULL)
 {
 	if (tete_liste_kmer4->nb_sequence>=7)
-	{
-		calcul_PSSM(&tete_liste_kmer_selectionne_pour_calcul, &tete_liste_motif_PSSM_pour_calcul, &file_info, &ptr_matrice_PSSM);
+	{	
+		calcul_PSSM(&tete_liste_kmer_selectionne_pour_calcul, &tete_liste_motif_PSSM_pour_calcul, &file_info, &matrice_PSSM);
+		while (p_generation_seq != NULL) //pour chaque sequence
+		{
+			//pos_max= -1;
+			//score_max= -100;
+			//pour chaque mot:
+			while (position<30)
+			{
+				n_sequence= p_generation_seq->numero_sequence;
+				printf("numero seq: %d \n", n_sequence);
+				for (cpt_mot=0; cpt_mot<=longueur_masque; cpt_mot++)
+				{
+					mot[cpt_mot]=p_generation_seq-> sequence[position];
+					p_mot->mot[cpt_mot]= p_generation_seq-> sequence[position];
+					position++; 
+					if (cpt_mot==longueur_masque)
+					{
+						mot[longueur_masque]= '\0';
+						p_mot->mot[longueur_masque]= '\0';
+						printf("%s \n", mot);
+						printf("%s \n", p_mot->mot);
+						printf("PSSM: %f \n", matrice_PSSM[0][0]);
+						printf("longueur masque: %d \n", longueur_masque);
+						calcul_score(&p_mot, &matrice_PSSM, n_sequence, &p_generation_seq, longueur_masque);
+					} 
+					printf("%d \n", position);
+					printf("cpt mot: %d \n", cpt_mot);
+					printf("longueur_masque: %d \n", longueur_masque);
+					
+				}
+				printf("fonction ???");
+				printf("FONCTION !!!");
+				TPtr_Mot_Ameliorer_PSSM p_nouv_mot= malloc(sizeof(TMot_Ameliorer_PSSM));
+				p_mot->next_mot= p_nouv_mot;
+				p_mot=p_nouv_mot;
+			}
+			p_generation_seq= p_generation_seq-> next_sequence;
+		}
 	}
 	tete_liste_kmer4= tete_liste_kmer4->suiv_kmer;
 }
+
+
+
+
 //printf("\npleaase: %s", p_motif_consensus->motif_consensus);
 //calcul_ST1()
 
