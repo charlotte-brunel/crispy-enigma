@@ -6,13 +6,11 @@
 #include <time.h>
 #include "fonctions.h"
 
-
-
 bool convergence;
 //definition des variables principales
-int l; //longueur motif/masque
+int longueur_masque; //longueur motif/masque IE. l
 int d; // nombre maximal de substitutions autorisées
-int k; //nombre de fenêtres dans le masque
+int nb_fenetre; //nombre de fenêtres dans le masque IE. k
 int nb_masques;
 // ------------------------------------------------------------------------------------------------
 int main()
@@ -31,20 +29,22 @@ int main()
 
 	//début de l'algorithme
 
-	importer_parametres(&l,&d,&k,&nb_masques);
-	printf("l= %d,",l);printf("d= %d,",d);
-	printf("k= %d,",k);printf("nb_masques= %d\n ",nb_masques);
-	int masque[l];
-	int *ptr_masque;
-	ptr_masque = masque;
+	importer_parametres(&longueur_masque, &d, &nb_fenetre, &nb_masques);
+	printf("longueur_masque= %d, ",longueur_masque);printf("d= %d, ",d);
+	printf("nb_fenetre= %d, ",nb_fenetre);printf("nb_masques= %d\n",nb_masques);
+	int masque[longueur_masque];
+	memset(masque, 0, sizeof masque);
 
-	// importer_sequences_fasta(&ptr_info, &ptr_ensemble );
+	importer_sequences_fasta(&ptr_info, &ptr_ensemble );
 	// afficher_sequences(&ptr_info, &ptr_ensemble );
 
 	for ( i=0; i<= nb_masques ; i++ )
 	{
-		printf("essais n°:%d\n", i);
-		generation_masque(l, &masque, k);
+		generation_masque(longueur_masque, &masque, nb_fenetre);
+		// affiche masques
+		// printf("essais n°:%d\n", i);
+		// for(j=0; j<longueur_masque; j++){printf("%d\n", masque[j]);}
+
 		// creation_dictionnaire();
 		//
 		// for () //pour chaque k-mere suffisemment représenté
@@ -59,12 +59,7 @@ int main()
 		//
 		// 	raffiner_PSSM();
 		// }
-		for(j=0; j< l; j++)
-		{
-			printf("please\n %d", masque[i]);
-		}
+
 	}
-
-
 	return(0);
 }

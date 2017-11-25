@@ -2,7 +2,6 @@
 #define WRITE_HELLO_H
 #include <stdio.h>
 
-
 //STRUCTURES:
 
 /****
@@ -10,20 +9,16 @@
  ****/
 
 //1er element: liste chainee des kmers
-
-
 typedef struct TCellkmer TCellkmer;
 struct TCellkmer{
     struct TCellkmer* suiv_kmer; //Pointer sur le kmer suivant
     struct TCellSequence* tete_sequence; //Pointer qui pointe sur une liste chain�e de s�quence o� le kmer est retrouv�
     int nb_sequence; // nombre de séquence dans lesquelles le kmer est présent
     char kmer[]; //"TCC" par exemple
-
 };
 typedef TCellkmer* TPtr_Cellkmer; //Pointeur sur Tcellkmer
 
 //deuxieme element du dictionnaire kmer: liste chainee de sequence possedant le kmer:
-
 typedef struct TCellSequence TCellSequence;
 struct TCellSequence{
     int sequence; //sequence 1 --> 1; sequence 2 --> 2
@@ -33,7 +28,6 @@ struct TCellSequence{
 typedef TCellSequence* TPtr_CellSequence; // Pointeur sur TCellSequence
 
 // troisieme element du dictionnaire de kmer: liste chainee de position ou le kmer a ete trouve dans une sequence.
-
 typedef struct TCellPos TCellPos;
 struct TCellPos{
     int position; // position du kmer dans la s�quence
@@ -46,9 +40,6 @@ typedef TCellPos* TPtr_CellPos;
  ****/
 
 //1er element: liste chainee des kmers
-
-
-
 typedef struct TCellkmer_selectionne TCellkmer_selectionne;
 struct TCellkmer_selectionne{
     struct TCellkmer_selectionne* suiv_kmer_selectionne;
@@ -59,7 +50,6 @@ struct TCellkmer_selectionne{
 typedef TCellkmer_selectionne* TPtr_Cellkmer_selectionne;
 
 //2eme element: liste chainee de motif pour lequels on va calculer la PSSM:
-
 typedef struct TCell_Motif_PSSM TCell_Motif_PSSM;
 struct TCell_Motif_PSSM{
     struct TCell_Motif_PSSM* suiv_motif;
@@ -73,16 +63,13 @@ typedef TCell_Motif_PSSM* TPtr_Cell_Motif_PSSM;
  * STRUCTURE CHAINEE DES SEQUENCES
  ****/
 
-
 typedef struct structure_sequence structure_sequence;
 struct structure_sequence{
 	int numero_sequence; // 1 (indication de la s�quence)
 	char sequence[31]; // 'ATCGGACG...' s�quencede nucl�otide
 	struct structure_sequence *next_sequence; //pointeur sur le prochain num�ro de s�quence (ex: '>Seq2:')
-	};
-
+};
 typedef structure_sequence* ptr_struct_seq; // on cr�� le type ptr_struct_seq qui est un pointeur sur la structure de s�quence.
-
 
 
 /****
@@ -93,10 +80,8 @@ typedef struct liste_chaine_motif liste_chaine_motif; //chaque motif sera stock�
 struct liste_chaine_motif{
     char motif_substitue[6];
     struct liste_chaine_motif *next_motif; //pointeur sur le prochain num�ro de s�quence (ex: '>Seq2:')
-	};
-
+};
 typedef liste_chaine_motif* ptr_liste_motif;
-
 
 
 /****
@@ -110,8 +95,6 @@ struct TMot_Ameliorer_PSSM
   char mot[]; //Mot de longueur motif
 };
 typedef TMot_Ameliorer_PSSM* TPtr_Mot_Ameliorer_PSSM;
-
-
 
 
 

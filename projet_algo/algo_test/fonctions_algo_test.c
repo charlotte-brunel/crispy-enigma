@@ -57,8 +57,8 @@ void insert_motif(ptr_struct_seq* adr_tete_structure, int nb_sequence, ptr_liste
 }
 
 
- int random_number(int max_number, int zero_excluded)
- {
+int random_number(int max_number, int zero_excluded)
+{
 	int randomNumber;
 	if(zero_excluded==0) //on peut tomber sur 0 al�atoirement
   {

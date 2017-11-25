@@ -8,7 +8,7 @@
 
 //------------------------------------------------------------------------------------------------------------
 // lecture du fichier contenant les variables souhaitées, stockage de ces variables pour utilisation
-void importer_parametres(int* l, int* d, int* k, int* nb_masques)
+void importer_parametres(int* longueur_masque, int* d, int* nb_fenetre, int* nb_masques)
 {
 	FILE* ptr_fichier;
   char nom_fichier[30];
@@ -19,14 +19,14 @@ void importer_parametres(int* l, int* d, int* k, int* nb_masques)
 
 	if( ptr_fichier == NULL) { free(ptr_fichier); return; }// si le fichier est vide on sort
 
-  fscanf(ptr_fichier, "#longueur du motif à identifier (IE. taille du masque): %d\n", l);
+  fscanf(ptr_fichier, "#longueur du motif à identifier (IE. taille du masque): %d\n", longueur_masque);
   fscanf(ptr_fichier, "#nombre maximal de substitutions autorisées: %d\n", d);
-  fscanf(ptr_fichier, "#nombre de fenêtres dans les masques utilisés: %d\n", k);
+  fscanf(ptr_fichier, "#nombre de fenêtres dans les masques utilisés: %d\n", nb_fenetre);
   fscanf(ptr_fichier, "#nombre de masques à générer: %d\n", nb_masques);
 
   fclose(ptr_fichier);
 }
-//---------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 // Récupère les séquences et les stocke dans une liste chainée
 void importer_sequences_fasta( TInfo_ensemble_sequences* ptr_info, TEnsemble_Sequences* ptr_ensemble )
 {
@@ -78,8 +78,7 @@ void importer_sequences_fasta( TInfo_ensemble_sequences* ptr_info, TEnsemble_Seq
 	}	while(!feof(ptr_fichier_fasta));
   fclose(ptr_fichier_fasta);
 }
-//--------------------------------------------------------------------------------------------------
-
+//------------------------------------------------------------------------------------------------------------
 void afficher_sequences(TInfo_ensemble_sequences* ptr_info, TEnsemble_Sequences* ptr_ensemble )
 {
 	FILE * ptr_fichier;
@@ -103,4 +102,38 @@ void afficher_sequences(TInfo_ensemble_sequences* ptr_info, TEnsemble_Sequences*
 		cptr ++;
 	}
 }
-//------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
+int random_number(int max_number, int zero_excluded)
+{
+	int randomNumber;
+	if(zero_excluded==0) //on peut tomber sur 0 aléatoirement
+  {
+		randomNumber= rand() % max_number;
+	}else{
+    randomNumber= rand() % max_number +1;
+	}
+	return(randomNumber);
+}
+//------------------------------------------------------------------------------------------------------------
+void generation_masque(int longueur_masque, void* adr_masque, int nb_fenetre)
+{
+  int i;
+  int *p_masque= adr_masque;
+  int nb_fenetre_ouverte=0;
+
+  while (nb_fenetre_ouverte != nb_fenetre)
+  {
+	nb_fenetre_ouverte=0;
+    for (i=0; i<= (longueur_masque -1); i++)
+    {
+      p_masque[i]= random_number(2,0);
+      if (p_masque[i]==1)
+      {
+        nb_fenetre_ouverte++;
+      }
+    }
+  }
+  return;
+}
+//------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------

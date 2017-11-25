@@ -1,12 +1,17 @@
+#ifndef WRITE_HELLO_H
+#define WRITE_HELLO_H
+#include <stdio.h>
+
+
 #define TAILLE_MAX_SEQ 800
 /*******************************************************************************
  * * *                   VARIABLES GLOBALES                                * * *
  *******************************************************************************/
 
 extern bool convergence;
-extern int l;
+extern int longueur_masque;
 extern int d;
-extern int k;
+extern int nb_fenetre;
 extern int nb_masques;
 
 /*******************************************************************************
@@ -41,7 +46,6 @@ struct TCellkmer{
     struct TCellkmer* suiv_kmer; //Pointer sur le kmer suivant
     struct TCellSequence* tete_sequence; //Pointer qui pointe sur une liste chainée de séquence où le kmer est retrouvé
     char kmer[]; //"TCC" par exemple
-
 };
 typedef TCellkmer* TPtr_Cellkmer; //Pointeur sur Tcellkmer
 
@@ -67,7 +71,11 @@ typedef TCellPos* TPtr_CellPos;
 /*******************************************************************************
  * * *                      FONCTIONS                                      * * *
  *******************************************************************************/
-
-void importer_parametres(int* l, int* d, int* k, int* nb_masques);
+void importer_parametres(int* longueur_masque, int* d, int* nb_fenetre, int* nb_masques);
 void importer_sequences_fasta(TInfo_ensemble_sequences* ptr_info, TEnsemble_Sequences* ptr_ensemble );
-void afficher_sequences(TInfo_ensemble_sequences* ptr_info, TEnsemble_Sequences* ptr_ensemble  );
+void afficher_sequences(TInfo_ensemble_sequences* ptr_info, TEnsemble_Sequences* ptr_ensemble );
+
+int random_number(int max_number, int zero_excluded);
+void generation_masque(int longueur_masque, void* adr_masque, int nb_fenetre);
+
+#endif
