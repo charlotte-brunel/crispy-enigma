@@ -1,0 +1,13 @@
+KMER: ta 
+Present dans 8 sequences 
+MOTIF: ttaat 
+MOTIF: taatg 
+MOTIF: tgaga 
+MOTIF: tgaac 
+MOTIF: tcaaa 
+MOTIF: ttagc 
+MOTIF: taata 
+MOTIF: tgagc 
+MOTIF:  
+KMER:  
+Present dans 0 sequences 
