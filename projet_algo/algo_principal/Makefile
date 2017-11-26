@@ -1,7 +1,7 @@
 all: main.out
 
 main.out: main.o fonctions.o
-	gcc -Wall -o main.out main.o fonctions.o
+	gcc -g -Wall -o main.out main.o fonctions.o
 
 main.o: main.c fonctions.h
 	gcc -Wall -c -o main.o main.c

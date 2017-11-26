@@ -68,7 +68,7 @@ int main()
   TPtr_Mot_Ameliorer_PSSM p_mot= element_mot;
 
   //MATRICE PSSM ET MOTIF CONSENSUS:
-  double** matrice_PSSM[4][6];
+  double*** matrice_PSSM[4][6];
 
 //------------------------------------------------------------------------------------------------------------
 	//début de l'algorithme
@@ -83,20 +83,72 @@ int main()
 
 	for ( i=0; i<= nb_masques ; i++ )
 	{
+		printf("\nessais %d\n", i);
 		generation_masque(longueur_masque, &masque, nb_fenetre);
-		printf("done generation_masque \n");
+		printf("generation_masque \n");
 		// affiche masques
 		// printf("essais n°:%d\n", i);
 		// for(j=0; j<longueur_masque; j++){printf("%d\n", masque[j]);}
 
 		// creation_dictionnaire();
 		parcours_masque(longueur_masque, &masque, nb_fenetre, ptr_info->nb_sequences, &tete_liste_pour_parcours_masque, &tete_liste_kmer, &tete_liste_sequence, &tete_liste_pos);
-		printf("done parcours_masque \n");
+		printf("parcours_masque \n");
 		kmer_present_dans_chaque_sequence(ptr_info->nb_sequences, &tete_liste_kmer2, &tete_liste_sequence2, &tete_liste_pos2, &tete_liste_pour_recup_motif, &tete_liste_kmer_selectionne, &tete_liste_motif_PSSM);
-		printf("done kmer_present_dans_chaque_sequence\n");
+		printf("kmer_present_dans_chaque_sequence\n");
 		affichage_dictionnaire_kmer(&tete_liste_kmer3, &tete_liste_sequence3, &tete_liste_pos3);
-		printf("done affichage_dictionnaire_kmer\n");
-		//
+		printf("affichage_dictionnaire_kmer\n");
+
+		affichage_motif_selectionne(&tete_liste_kmer_selectionne2, &tete_liste_motif_PSSM2);
+		printf("affichage_motif_selectionné\n");
+		// On calculera la PSSM seulement pour les kmers qui sont présent dans plus de 7 sequences:
+		while (tete_liste_kmer4 != NULL)
+	  {
+			printf("while\n");
+	  	if (tete_liste_kmer4->nb_sequence >= 7)
+	  	{
+				printf("if\n");
+	  		calcul_PSSM(&tete_liste_kmer_selectionne_pour_calcul, &tete_liste_motif_PSSM_pour_calcul, &matrice_PSSM);
+				printf("calcul_PSSM\n");
+
+	  		// while (p_generation_seq != NULL) //pour chaque sequence
+	  		// {
+	  		// 	//pos_max= -1;
+	  		// 	//score_max= -100;
+	  		// 	//pour chaque mot:
+	  		// 	while (position<30)
+	  		// 	{
+	  		// 		n_sequence= p_generation_seq->numero_sequence;
+	  		// 		printf("numero seq: %d \n", n_sequence);
+	  		// 		for (cpt_mot=0; cpt_mot<=longueur_masque; cpt_mot++)
+	  		// 		{
+	  		// 			mot[cpt_mot]=p_generation_seq-> sequence[position];
+	  		// 			p_mot->mot[cpt_mot]= p_generation_seq-> sequence[position];
+	  		// 			position++;
+	  		// 			if (cpt_mot==longueur_masque)
+	  		// 			{
+	  		// 				mot[longueur_masque]= '\0';
+	  		// 				p_mot->mot[longueur_masque]= '\0';
+	  		// 				printf("%s \n", mot);
+	  		// 				printf("%s \n", p_mot->mot);
+	  		// 				printf("PSSM: %f \n", matrice_PSSM[0][0]);
+	  		// 				printf("longueur masque: %d \n", longueur_masque);
+	  		// 				// calcul_score(&p_mot, &matrice_PSSM, n_sequence, &p_generation_seq, longueur_masque);
+	  		// 			}
+	  		// 			printf("%d \n", position);
+	  		// 			printf("cpt mot: %d \n", cpt_mot);
+	  		// 			printf("longueur_masque: %d \n", longueur_masque);
+	  		// 		}
+	  		// 		printf("fonction ???");
+	  		// 		printf("FONCTION !!!");
+	  		// 		TPtr_Mot_Ameliorer_PSSM p_nouv_mot= malloc(sizeof(TMot_Ameliorer_PSSM));
+	  		// 		p_mot->next_mot= p_nouv_mot;
+	  		// 		p_mot=p_nouv_mot;
+	  		// 	}
+	  		// 	p_generation_seq= p_generation_seq-> next_sequence;
+	  		// }
+	  	}
+	  	tete_liste_kmer4= tete_liste_kmer4->suiv_kmer;
+	  }
 		// for () //pour chaque k-mere suffisemment représenté
 		// {
 		// 	convergence = FALSE;

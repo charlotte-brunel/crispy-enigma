@@ -6,7 +6,7 @@
 
 int main()
 {
-  FILE *file_info=NULL; //fichier contenant les infos sur les s�quences
+  FILE* file_info=NULL; //fichier contenant les infos sur les s�quences
   int longueur_masque = 5;
     int nb_fenetre=2;
   //int pos_max;
