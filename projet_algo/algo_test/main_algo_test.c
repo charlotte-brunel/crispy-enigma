@@ -8,17 +8,19 @@ int main()
 {
   FILE *file_info=NULL; //fichier contenant les infos sur les s�quences
   int longueur_masque = 5;
+    int nb_fenetre=2;
   //int pos_max;
   int position= 0;
   //int score_max;
   int cpt_mot;
   int n_sequence;
   //float score;
+
   char mot[longueur_masque+1];
   int masque[longueur_masque];
   memset(masque, 0, sizeof masque);
   //int* p_masque= masque;
-  int nb_fenetre=2;
+
   TPtr_Cellkmer element_kmer=malloc(sizeof(TCellkmer));
   TPtr_Cellkmer tete_liste_kmer= element_kmer;
   TPtr_Cellkmer tete_liste_kmer2= element_kmer;
@@ -51,11 +53,10 @@ int main()
   //MATRICE PSSM ET MOTIF CONSENSUS:
   double** matrice_PSSM[4][6];
 
-
+//------------------------------------------------------------------------------------------------------------
   /* GENERATION ALEATOIRE DE DIX SEQUENCES POUR TEST */
   //D�claration des variables
   srand(time(0));
-
   int nb_sequence= 10; // nombre de s�quence � g�n�rer
   int i,j; //it�rateur de boucle
   char nucleo= ' ';
@@ -68,9 +69,7 @@ int main()
   ptr_struct_seq element_generation_sequence_next= NULL;
   ptr_liste_motif element_motif= malloc(sizeof(liste_chaine_motif));
   ptr_liste_motif tete_liste_motif= element_motif;
-
-
-
+//------------------------------------------------------------------------------------------------------------
   /* GENERATION ALEATOIRE DE DIX SEQUENCES POUR TEST */
   // D�but du code:
   for(i=1; i<=nb_sequence; i++){ //Boucle qui permet de cr�� les 10 s�quences du fichier fasta
@@ -90,6 +89,7 @@ int main()
   	}
   }
   insert_motif(&tete_liste_pour_insertion_motif, nb_sequence, &tete_liste_motif);
+//------------------------------------------------------------------------------------------------------------
 
   generation_masque(longueur_masque, &masque, nb_fenetre);
   parcours_masque(longueur_masque, &masque, nb_fenetre, nb_sequence, &tete_liste_pour_parcours_masque, &tete_liste_kmer, &tete_liste_sequence, &tete_liste_pos);
