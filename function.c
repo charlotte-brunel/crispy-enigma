@@ -675,13 +675,13 @@ double dist_PSSM(double*** adr_matrice_PSSM, double*** adr_matrice_PSSM_nouv, do
 
 }
 
-int distanceHammingSt1(char (*adr_Ct)[6], TPtr_Cell_Motif_PSSM* adr_mot_selected, Ptr_st1* adr_st1)
+int distanceHammingSt1(char (*adr_Ct)[6], TPtr_Cell_Motif_PSSM* adr_mot_selected, Ptr_st* adr_st1)
 {
 	int i;
 	int Dh=0;
   int st1=0;
 	TPtr_Cell_Motif_PSSM p_mot_selected= *adr_mot_selected;
-	Ptr_st1 p_st1= *adr_st1;
+	Ptr_st p_st1= *adr_st1;
 
 	while (p_mot_selected !=NULL)
 	{
@@ -701,7 +701,7 @@ int distanceHammingSt1(char (*adr_Ct)[6], TPtr_Cell_Motif_PSSM* adr_mot_selected
     printf("p_st1->mot: %s \n", p_st1->mot);
     p_st1->distance_hamming=Dh;
     printf("p_st1->distance: %d \n", p_st1->distance_hamming);
-    Ptr_st1 p_st1_suiv= malloc(sizeof(st1));
+    Ptr_st p_st1_suiv= malloc(sizeof(st1));
     p_st1->next_mot= p_st1_suiv;
     p_st1=p_st1_suiv;
 		Dh=0;
@@ -711,14 +711,14 @@ int distanceHammingSt1(char (*adr_Ct)[6], TPtr_Cell_Motif_PSSM* adr_mot_selected
 
 }
 
-int distanceHammingSt2(char (*adr_Ct)[6], TPtr_Cell_Motif_PSSM* adr_mot_selected, Ptr_st2* adr_st2)
+int distanceHammingSt2(char (*adr_Ct)[6], TPtr_Cell_Motif_PSSM* adr_mot_selected, Ptr_st* adr_st2)
 {
   printf("DISTANCE HAMMING ST2");
   int st2=0;
 	int i;
 	int Dh=0;
 	TPtr_Cell_Motif_PSSM p_mot_selected= *adr_mot_selected;
-	Ptr_st2 p_st2= *adr_st2;
+	Ptr_st p_st2= *adr_st2;
 	printf("IN ST2");
 	while (p_mot_selected !=NULL)
 	{
@@ -729,17 +729,16 @@ int distanceHammingSt2(char (*adr_Ct)[6], TPtr_Cell_Motif_PSSM* adr_mot_selected
 				Dh++;
 			}
 		}
+    strcpy(p_st2->mot, p_mot_selected->motif);
+    printf("p_st2->mot: %s \n", p_st2->mot);
+    p_st2->distance_hamming=Dh;
+    printf("p_st2->distance: %d \n", p_st2->distance_hamming);
+    Ptr_st p_st2_suiv= malloc(sizeof(st2));
+    p_st2->next_mot= p_st2_suiv;
+    p_st2=p_st2_suiv;
 		if (Dh<2)
 		{
-			strcpy(p_st2->mot, p_mot_selected->motif);
-			printf("p_st2->mot: %s \n", p_st2->mot);
-			p_st2->distance_hamming=Dh;
-			printf("p_st2->distance: %d \n", p_st2->distance_hamming);
-			Ptr_st2 p_st2_suiv= malloc(sizeof(st2));
-			p_st2->next_mot= p_st2_suiv;
-			p_st2=p_st2_suiv;
       st2++;
-
 		}
 		Dh=0;
 		p_mot_selected=p_mot_selected->suiv_motif;
@@ -750,7 +749,7 @@ int distanceHammingSt2(char (*adr_Ct)[6], TPtr_Cell_Motif_PSSM* adr_mot_selected
 
 
 
-int distanceHammingSt2_prim(char (*adr_Ct)[6], ptr_struct_seq* adr_generation_sequence, TPtr_Mot_Ameliorer_PSSM *adr_mot, Ptr_st2* adr_st2_prim)
+int distanceHammingSt2_prim(char (*adr_Ct)[6], ptr_struct_seq* adr_generation_sequence, TPtr_Mot_Ameliorer_PSSM *adr_mot, Ptr_st* adr_st2_prim)
 {
 	printf("IN ST2 PRIM");
 	int i;
@@ -759,7 +758,7 @@ int distanceHammingSt2_prim(char (*adr_Ct)[6], ptr_struct_seq* adr_generation_se
 	int Dh_min=8;
 	int Dh=0;
 	ptr_struct_seq p_generation_seq= *adr_generation_sequence;
-	Ptr_st2 p_st2_prim= *adr_st2_prim;
+	Ptr_st p_st2_prim= *adr_st2_prim;
   TPtr_Mot_Ameliorer_PSSM p_mot= *adr_mot;
 
 	while (p_generation_seq !=NULL)
@@ -795,7 +794,7 @@ int distanceHammingSt2_prim(char (*adr_Ct)[6], ptr_struct_seq* adr_generation_se
     p_generation_seq=p_generation_seq->next_sequence;
 		printf("p_st2->mot (minimum): %s \n", p_st2_prim->mot);
 		printf("p_st2->distance (minimum): %d \n", p_st2_prim->distance_hamming);
-		Ptr_st2 p_st2_prim_suiv= malloc(sizeof(st2));
+		Ptr_st p_st2_prim_suiv= malloc(sizeof(st));
 		p_st2_prim->next_mot= p_st2_prim_suiv;
 		p_st2_prim=p_st2_prim_suiv;
 	}
@@ -870,12 +869,11 @@ void separer(int* v_St1_Dh, int* v_St1_Pos, int g, int d, int* adr_indice_pivot)
 
 
 
-void quick_sort_ST1(Ptr_st1* adr_st1)
+void quick_sort_ST(Ptr_st* adr_st1, int* v_St1_Pos)
 {
-  Ptr_st1 p_st1= *adr_st1;
+  Ptr_st p_st1= *adr_st1;
   int i;
   int v_St1_Dh[9]; //Distance de Hamming de chaque occurrence
-  int v_St1_Pos[9]; //Position dans la liste chainée
   int borne_gauche = 0;
   int borne_droite = 9;
   for (i=0; i<10; i++)
@@ -902,3 +900,28 @@ void quick_sort_ST1(Ptr_st1* adr_st1)
 }
 
 //--------------------------------------------------------------------------------------------------
+void fichier_sortie_st(Ptr_st* adr_st1, int* v_St1_Pos, char (*adr_Ct)[6])
+{
+  Ptr_st p_st1= *adr_st1;
+  int i, position, cpt;
+  FILE* fichier_sortie_st2;
+  fichier_sortie_st2= fopen("score_ST2.txt", "w");
+
+  for (i=0; i<10; i++)
+  {
+    p_st1=*adr_st1;
+    position= v_St1_Pos[i];
+    for (cpt=0; cpt<position; cpt++)
+    {
+      p_st1=p_st1->next_mot;
+    }
+    fprintf(fichier_sortie_st2, "OCCURRENCE: %s --> SCORE: %d \n", p_st1->mot, p_st1->distance_hamming);
+  }
+  fprintf(fichier_sortie_st2, "\n\nMOTIF CONSENSUS: \n");
+  for (i=0; i<5; i++)
+  {
+    fprintf(fichier_sortie_st2, "%c", *adr_Ct[i]);
+  }
+
+  return;
+}
