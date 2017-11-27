@@ -25,6 +25,7 @@ void importer_parametres(int* longueur_masque, int* d, int* nb_fenetre, int* nb_
   fscanf(ptr_fichier, "#nombre de masques à générer: %d\n", nb_masques);
 
   fclose(ptr_fichier); //fermeture du fichier
+	return;
 }
 //------------------------------------------------------------------------------------------------------------
 // Récupère les séquences et les stocke dans une liste chainée
@@ -78,6 +79,7 @@ void importer_sequences_fasta( TPtr_info_ensemble_sequences* ptr_info, TPtr_ense
 	  }
 	}	while(!feof(ptr_fichier_fasta));
   fclose(ptr_fichier_fasta);
+	return;
 }
 //------------------------------------------------------------------------------------------------------------
 void afficher_sequences(TPtr_info_ensemble_sequences* ptr_info, TPtr_ensemble_sequences* ptr_ensemble )
@@ -102,6 +104,7 @@ void afficher_sequences(TPtr_info_ensemble_sequences* ptr_info, TPtr_ensemble_se
 		p = p->suiv_seq;
 		cptr ++;
 	}
+	return;
 }
 //------------------------------------------------------------------------------------------------------------
 int random_number(int max_number, int zero_excluded)

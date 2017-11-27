@@ -393,210 +393,133 @@ void affichage_motif_selectionne(TPtr_Cellkmer_selectionne* adr_tete_kmer_select
   return;
 }
 
-
-void calcul_PSSM(TPtr_Cellkmer_selectionne *adr_cell_kmer_selectionne, TPtr_Cell_Motif_PSSM *adr_cell_motif_PSSM, FILE** file_info, double*** (*adr_matrice_PSSM)[4][6])
+void creation_matrice_PSSM(double*** adr_matrice_PSSM, int nb_ligne, int taille_motif)
 {
-  *file_info= fopen("PSSM_Motif_Trouve.txt", "a"); // Dans ce fichier on va �crire la PSSM pr�visionnelle
+  int i,j;
+  double** p_matrice_PSSM = *adr_matrice_PSSM;
+  p_matrice_PSSM = malloc(4 * sizeof(*p_matrice_PSSM));
+  /*if (matrice_PSSM == NULL)
+  {
+    free(matrice_PSSM);
+  }*/
+  for(i=0 ; i < nb_ligne ; i++)
+  {
+    p_matrice_PSSM[i] = malloc(taille_motif * sizeof(*(p_matrice_PSSM[i]))); //On alloue des tableaux de 'taille2' variables.
+    /*if(matrice_PSSM[i] == NULL)
+    {
+      for(i=0 ; i < nb_ligne  ; i++)
+      {
+        free(matrice_PSSM[i]);
+      }
+    }*/
+  }
+  //initialisation de la matrice � 0:
+  for (i=0; i < nb_ligne; i++)
+  {
+    for(j=0; j < taille_motif; j++)
+    {
+      (p_matrice_PSSM)[i][j] = 0;
+    }
+  }
+  return;
+}
+
+void calcul_PSSM(TPtr_Cellkmer_selectionne *adr_cell_kmer_selectionne, TPtr_Cell_Motif_PSSM *adr_cell_motif_PSSM, double*** adr_matrice_PSSM, int taille_motif)
+{
   TPtr_Cellkmer_selectionne p_kmer_selectionne= *adr_cell_kmer_selectionne;
   double nb_sequence=p_kmer_selectionne->nb_sequence;
-  int taille_motif=5;
   double add= 1/nb_sequence;
-  char to_print;
-  double maximum= -1;
-
-  /****
-   * MATRICE PSSM
-   ****/
-  int nb_ligne;
-  double** p_matrice_PSSM= *adr_matrice_PSSM[4][6];
-
-  p_matrice_PSSM = malloc(4 * sizeof(*p_matrice_PSSM));
-  if (p_matrice_PSSM==NULL)
-  {
-    free(p_matrice_PSSM);
-  }
-
-  for(nb_ligne=0 ; nb_ligne < 4 ; nb_ligne++)
-  {
-    p_matrice_PSSM[nb_ligne] = malloc(taille_motif * sizeof(*(p_matrice_PSSM[nb_ligne]))); //On alloue des tableaux de 'taille2' variables.
-    if(p_matrice_PSSM[nb_ligne] == NULL)
-    {
-      for(nb_ligne=0 ; nb_ligne < 4 ; nb_ligne++)
-      {
-        free(p_matrice_PSSM[nb_ligne]);
-      }
-    }
-  }
-
-  int cpt,k ;
-  //initialisation de la matrice � 0:
-  for (cpt=0; cpt<4; cpt++)
-  {
-    for(k=0; k<taille_motif; k++)
-    {
-      p_matrice_PSSM[cpt][k]= 0;
-    }
-  }
-
-  int i, j, a, t, c, g;
+  double** p_matrice_PSSM= *adr_matrice_PSSM;
+  int i;
   //calcul de la PSSM � partir de la liste chain�e de motif
   TPtr_Cell_Motif_PSSM p_motif=p_kmer_selectionne->tete_motif_PSSM;
-  do  // on remplit la PSSM
-  {
-    for (i=0; i<6; i++)
+  do
+  { // on remplit la PSSM
+    for (i=0; i< (taille_motif); i++)
     {
       switch(p_motif->motif[i])
       {
-        case 'a':
-            p_matrice_PSSM[0][i]= p_matrice_PSSM[0][i] + add;
-            break;
-        case 't':
-            p_matrice_PSSM[1][i]= p_matrice_PSSM[1][i] + add;
-            break;
-        case 'c':
-            p_matrice_PSSM[2][i]= p_matrice_PSSM[2][i] + add;
-            break;
-        case 'g':
-            p_matrice_PSSM[3][i]= p_matrice_PSSM[3][i] + add;
-            break;
+      case 'A':
+          p_matrice_PSSM[0][i]= p_matrice_PSSM[0][i] + add;
+          break;
+      case 'T':
+          p_matrice_PSSM[1][i]= p_matrice_PSSM[1][i] + add;
+          break;
+      case 'C':
+          p_matrice_PSSM[2][i]= p_matrice_PSSM[2][i] + add;
+          break;
+      case 'G':
+          p_matrice_PSSM[3][i]= p_matrice_PSSM[3][i] + add;
+          break;
       }
     }
     p_motif=p_motif->suiv_motif;
   }while (p_motif != NULL);
+  return;
+// }
+//
+// void affichage_PSSM(double*** adr_matrice_PSSM, int taille_motif)
+// {
+  FILE* ptr_fichier_PSSM;
+  char to_print;
+  double maximum= -1;
+  double** p_matrice_PSSM = *adr_matrice_PSSM;
+  int j, a, t, c, g, k;
+
+  ptr_fichier_PSSM = fopen("PSSM_Motif_Trouve.txt", "w"); // Dans ce fichier on va �crire la PSSM pr�visionnelle
 
   //ecriture de la matrice PSSM dans le fichier d'info.
-  fprintf(*file_info, "\n\nPSSM: \n");
-  fprintf(*file_info, "a  ");
+  fprintf(ptr_fichier_PSSM, "\n\nPSSM: \n");
+  fprintf(ptr_fichier_PSSM, "A  ");
   for (a=0; a<taille_motif; a++)
   {
-    fprintf(*file_info, "%.2f ", p_matrice_PSSM[0][a]);
+    fprintf(ptr_fichier_PSSM, "%.2f ", p_matrice_PSSM[0][a]);
   }
-  fprintf(*file_info, "\nt  ");
+  fprintf(ptr_fichier_PSSM, "\nT  ");
   for (t=0; t<taille_motif; t++)
   {
-    fprintf(*file_info, "%.2f ", p_matrice_PSSM[1][t]);
+    fprintf(ptr_fichier_PSSM, "%.2f ", p_matrice_PSSM[1][t]);
   }
-  fprintf(*file_info, "\nc  ");
+  fprintf(ptr_fichier_PSSM, "\nC  ");
   for (c=0; c<taille_motif; c++)
   {
-    fprintf(*file_info, "%.2f ", p_matrice_PSSM[2][c]);
+    fprintf(ptr_fichier_PSSM, "%.2f ", p_matrice_PSSM[2][c]);
   }
-  fprintf(*file_info, "\ng  ");
+  fprintf(ptr_fichier_PSSM, "\nG  ");
   for (g=0; g<taille_motif; g++)
   {
-    fprintf(*file_info, "%.2f ", p_matrice_PSSM[3][g]);
+    fprintf(ptr_fichier_PSSM, "%.2f ", p_matrice_PSSM[3][g]);
   }
-
   //ecriture du motif consensus dans le fichier a partir de la matrice PSSM:
-  fprintf(*file_info, "\n\nMotif Consensus: \n" );
+  fprintf(ptr_fichier_PSSM, "\n\nMotif Consensus: \n" );
   for (j=0; j<taille_motif; j++)
   {
     for(k=0; k<4; k++)
     {
-      if (p_matrice_PSSM[k][j]> maximum)
+      if (p_matrice_PSSM[k][j] > maximum)
       {
-        maximum=p_matrice_PSSM[k][j];
+        maximum = p_matrice_PSSM[k][j];
         switch (k)
         {
-          case 0:
-              to_print= 'a';
-              break;
-          case 1:
-              to_print= 't';
-              break;
-          case 2:
-              to_print= 'c';
-              break;
-          case 3:
-              to_print= 'g';
-              break;
+        case 0:
+            to_print= 'A';
+            break;
+        case 1:
+            to_print= 'T';
+            break;
+        case 2:
+            to_print= 'C';
+            break;
+        case 3:
+            to_print= 'G';
+            break;
         }
       }
     }
-    maximum=-1; //on remet maximum a -1 avant d'�valuer la nucl�otide majoritaire de la s�quence suivante !
-    fprintf(*file_info, "%c", to_print);
+    maximum = -1; //on remet maximum a -1 avant d'�valuer la nucl�otide majoritaire de la s�quence suivante !
+    fprintf(ptr_fichier_PSSM, "%c", to_print);
   }
-  fprintf(*file_info, "\n\n\n");
-
-  fclose(*file_info);
-  printf("PSSM: %f \n", p_matrice_PSSM[0][0]);
+  fprintf(ptr_fichier_PSSM, "\n\n\n");
+  fclose(ptr_fichier_PSSM);
   return;
 }
-
-// void calcul_score(TPtr_Mot_Ameliorer_PSSM* adr_mot, double*** (*adr_matrice_PSSM)[4][6], int n_sequence, ptr_struct_seq* adr_generation_sequence, int longueur_masque)
-// {
-//  printf("maouh");
-//  ptr_struct_seq p_generation_seq= *adr_generation_sequence;
-//  TPtr_Mot_Ameliorer_PSSM p_mot= *adr_mot;
-//  double** p_matrice_PSSM= *adr_matrice_PSSM[4][6];
-//  int position=0;
-//  int i;
-//  float nb_a=0;
-//  float nb_t=0;
-//  float nb_c=0;
-//  float nb_g=0;
-//  float prob_mot_background=0; //probabilite du mot selon le background P(M|B)
-//  float prob_mot_PSSM=0; // probabilite du mot selon la PSSM P(M|PSSM)
-//  float score; // P(M|PSSM)/P(M|B)
-//  //CALCUL DU BACKGROUND:
-//  //On vérifie qu'on est dans la bonne séquence:
-//  printf("In the function");
-//  if (p_generation_seq->numero_sequence !=  n_sequence)
-//  {
-//  	p_generation_seq=p_generation_seq->next_sequence;
-//  	printf("WARNING");
-//  }
-//  while (position<30)
-//  {
-//  	switch(p_generation_seq->sequence[position])
-//  	{
-//  		case 'a':
-//  			nb_a++;
-//  			break;
-//  		case 't':
-//  			nb_t++;
-//  			break;
-//  		case 'c':
-//  			nb_c++;
-//  			break;
-//  		case 'g':
-//  			nb_g++;
-//
-//  	}
-//  }
-//  nb_a= nb_a/30;
-//  nb_t= nb_t/30;
-//  nb_c= nb_c/30;
-//  nb_g= nb_g/30;
-//  position=0;
-//
-//  for (i=0; i<= longueur_masque; i++)
-//  {
-//  	switch(p_mot->mot[i])
-//  	{
-//  		case 'a':
-//  			prob_mot_background= prob_mot_background + nb_a;
-//  			prob_mot_PSSM= prob_mot_PSSM + p_matrice_PSSM[0][i];
-//  			break;
-//  		case 't':
-//  			prob_mot_background= prob_mot_background + nb_t;
-//  			prob_mot_PSSM= prob_mot_PSSM + p_matrice_PSSM[1][i];
-//  			break;
-//  		case 'c':
-//  			prob_mot_background= prob_mot_background + nb_c;
-//  			prob_mot_PSSM= prob_mot_PSSM + p_matrice_PSSM[2][i];
-//  			break;
-//  		case 'g':
-//  			prob_mot_background= prob_mot_background + nb_g;
-//  			prob_mot_PSSM= prob_mot_PSSM + p_matrice_PSSM[3][i];
-//  			break;
-//  	}
-//  }
-//  printf("P(M|B): %f \n", prob_mot_background);
-//  printf("P(M|PSSM): %f \n", prob_mot_PSSM);
-//  score= prob_mot_PSSM/prob_mot_background;
-//  printf("score: %f", score);
-//  p_mot->score_mot= score;
-//
-//  return;
-// }
