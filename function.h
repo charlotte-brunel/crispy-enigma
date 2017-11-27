@@ -112,30 +112,18 @@ struct TMot_Ameliorer_PSSM
 typedef TMot_Ameliorer_PSSM* TPtr_Mot_Ameliorer_PSSM;
 
 /****
- * STRUCTURE CHAINEE ST1 CONTENANT LES MOTS DONT LA DISTANCE DE HAMMING EST MAUVAISE:
+ * STRUCTURE CHAINEE ST1/ST2 CONTENANT LES MOTS DONT LA DISTANCE DE HAMMING EST MAUVAISE:
  ****/
 
-typedef struct st1 st1;
-struct st1
+typedef struct st st;
+struct st
 {
   int distance_hamming; //distance de hamming entre le mot et Ct
-  struct st1 * next_mot; //pointeur sur mot suivant
+  struct st * next_mot; //pointeur sur mot suivant
   char mot[]; //Mot qui ont une distance de hamming supérieur à 2
 };
-typedef st1* Ptr_st1;
+typedef st* Ptr_st;
 
-/****
- * STRUCTURE CHAINEE ST2 CONTENANT LES MOTS DONT LA DISTANCE DE HAMMING EST BONNE:
- ****/
-
-typedef struct st2 st2;
-struct st2
-{
-  int distance_hamming; //distance de hamming entre le mot et Ct
-  struct st2 * next_mot; //pointeur sur mot suivant
-  char mot[]; //Mot qui ont une distance de hamming supérieur à 2
-};
-typedef st2* Ptr_st2;
 
 
 //FONCTIONS:
@@ -154,10 +142,11 @@ void calcul_PSSM(TPtr_Cellkmer_selectionne *adr_cell_kmer_selectionne, TPtr_Cell
 void calcul_nouvelle_PSSM(TPtr_Cell_Motif_PSSM *adr_cell_mot_selected, double*** adr_matrice_PSSM, double nb_sequence, char (*adr_Ct)[6]);
 void calcul_score(TPtr_Mot_Ameliorer_PSSM* adr_mot, double*** adr_matrice_PSSM, int n_sequence, ptr_struct_seq* adr_generation_sequence, int longueur_masque);
 double dist_PSSM(double*** adr_matrice_PSSM, double*** adr_matrice_PSSM_nouv, double* distance_PSSM);
-int distanceHammingSt1(char (*adr_Ct)[6], TPtr_Cell_Motif_PSSM* adr_mot_selected, Ptr_st1* adr_st1);
-int distanceHammingSt2(char (*adr_Ct)[6], TPtr_Cell_Motif_PSSM* adr_mot_selected, Ptr_st2* adr_st2);
-int distanceHammingSt2_prim(char (*adr_Ct)[6], ptr_struct_seq* adr_generation_sequence, TPtr_Mot_Ameliorer_PSSM *adr_mot, Ptr_st2* adr_st2_prim);
-void quick_sort_ST1(Ptr_st1* adr_st1);
+int distanceHammingSt1(char (*adr_Ct)[6], TPtr_Cell_Motif_PSSM* adr_mot_selected, Ptr_st* adr_st1);
+int distanceHammingSt2(char (*adr_Ct)[6], TPtr_Cell_Motif_PSSM* adr_mot_selected, Ptr_st* adr_st2);
+int distanceHammingSt2_prim(char (*adr_Ct)[6], ptr_struct_seq* adr_generation_sequence, TPtr_Mot_Ameliorer_PSSM *adr_mot, Ptr_st* adr_st2_prim);
+void quick_sort_ST(Ptr_st* adr_st1, int* v_St1_Pos);
 void trier(int* v_St1_Dh, int* v_St1_Pos, int g, int d);
 void separer(int* v_St1_Dh, int* v_St1_Pos, int g, int d, int* adr_indice_pivot);
+void fichier_sortie_st(Ptr_st* adr_st1, int* v_St1_Pos, char (*adr_Ct)[6]);
 #endif
