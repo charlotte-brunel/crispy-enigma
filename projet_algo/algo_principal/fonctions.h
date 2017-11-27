@@ -2,7 +2,6 @@
 #define WRITE_HELLO_H
 #include <stdio.h>
 
-
   #define TAILLE_MAX_SEQ 800
 /*************************************************************************************************************
  * * *                                       VARIABLES GLOBALES                                          * * *
@@ -12,7 +11,6 @@
   extern int d;
   extern int nb_fenetre;
   extern int nb_masques;
-
 
 /*************************************************************************************************************
  * * *                                         STRUCTURES                                                * * *
@@ -35,15 +33,6 @@
   };
   typedef TInfo_ensemble_sequences* TPtr_info_ensemble_sequences;
 
-
-
-  // typedef struct structure_sequence structure_sequence;
-  // struct structure_sequence{
-  //   int numero_sequence; // 1 (indication de la s�quence)
-  //   char sequence[31]; // 'ATCGGACG...' s�quencede nucl�otide
-  //   struct structure_sequence *next_sequence; //pointeur sur le prochain num�ro de s�quence (ex: '>Seq2:')
-  // };
-  // typedef structure_sequence* ptr_struct_seq; // on cr�� le type ptr_struct_seq qui est un pointeur sur la structure de s�quence.
 
 /*******************************
  * STRUCTURE DICTIONNAIRE KMER *
@@ -119,6 +108,30 @@
   };
   typedef TMot_Ameliorer_PSSM* TPtr_Mot_Ameliorer_PSSM;
 
+/*************************************************************************************
+ * STRUCTURE CHAINEE ST1 CONTENANT LES MOTS DONT LA DISTANCE DE HAMMING EST MAUVAISE *
+ *************************************************************************************/
+  typedef struct st1 st1;
+  struct st1
+  {
+    int distance_hamming; //distance de hamming entre le mot et Ct
+    struct st1 * next_mot; //pointeur sur mot suivant
+    char mot[]; //Mot qui ont une distance de hamming supérieur à 2
+  };
+  typedef st1* Ptr_st1;
+
+/**********************************************************************************
+ * STRUCTURE CHAINEE ST2 CONTENANT LES MOTS DONT LA DISTANCE DE HAMMING EST BONNE *
+ **********************************************************************************/
+  typedef struct st2 st2;
+  struct st2
+  {
+    int distance_hamming; //distance de hamming entre le mot et Ct
+    struct st2 * next_mot; //pointeur sur mot suivant
+    char mot[]; //Mot qui ont une distance de hamming supérieur à 2
+  };
+  typedef st2* Ptr_st2;
+
 
 /*************************************************************************************************************
  * * *                                           FONCTIONS                                               * * *
@@ -139,7 +152,16 @@
   void affichage_dictionnaire_kmer(TPtr_Cellkmer* adr_tete_kmer, TPtr_CellSequence* adr_tete_sequence, TPtr_CellPos* adr_tete_pos);
   void affichage_motif_selectionne(TPtr_Cellkmer_selectionne* adr_tete_kmer_selectionne, TPtr_Cell_Motif_PSSM* adr_tete_motif);
 
-  void calcul_PSSM(TPtr_Cellkmer_selectionne *adr_cell_kmer_selectionne, TPtr_Cell_Motif_PSSM *adr_cell_motif_PSSM, double*** adr_matrice_PSSM[4][6]);
+  void calcul_PSSM(TPtr_Cellkmer_selectionne *adr_cell_kmer_selectionne, TPtr_Cell_Motif_PSSM *adr_cell_motif_PSSM, double*** adr_matrice_PSSM);
+
+  // void calcul_nouvelle_PSSM(TPtr_Cell_Motif_PSSM *adr_cell_mot_selected, double*** adr_matrice_PSSM, double nb_sequence, char (*adr_Ct)[6]);
+  //
+  // void calcul_score(TPtr_Mot_Ameliorer_PSSM* adr_mot, double*** adr_matrice_PSSM, int n_sequence, ptr_struct_seq* adr_generation_sequence, int longueur_masque);
+  // double dist_PSSM(double*** adr_matrice_PSSM, double*** adr_matrice_PSSM_nouv, double* distance_PSSM);
+  //
+  // void distanceHammingSt1(char (*adr_Ct)[6], TPtr_Cell_Motif_PSSM* adr_mot_selected, Ptr_st1* adr_st1);
+  // void distanceHammingSt2(char (*adr_Ct)[6], TPtr_Cell_Motif_PSSM* adr_mot_selected, Ptr_st2* adr_st2);
+  // void distanceHammingSt2_prim(char (*adr_Ct)[6], ptr_struct_seq* adr_generation_sequence, TPtr_Mot_Ameliorer_PSSM *adr_mot, Ptr_st2* adr_st2_prim);
 
 
 #endif
