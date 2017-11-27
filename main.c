@@ -65,14 +65,14 @@ int main()
 
 
   //VARIABLES SCORE ST1 ST2:
-  Ptr_st1 tete_st1=malloc(sizeof(st1));
-  Ptr_st1 p_st1=tete_st1;
+  Ptr_st tete_st1=malloc(sizeof(st));
+  Ptr_st p_st1=tete_st1;
 
-  Ptr_st2 tete_st2=malloc(sizeof(st2));
-  Ptr_st2 p_st2=tete_st2;
+  Ptr_st tete_st2=malloc(sizeof(st));
+  Ptr_st p_st2=tete_st2;
 
-  Ptr_st2 tete_st2_prim=malloc(sizeof(st2));
-  Ptr_st2 p_st2_prim=tete_st2_prim;
+  Ptr_st tete_st2_prim=malloc(sizeof(st));
+  Ptr_st p_st2_prim=tete_st2_prim;
 
   //MATRICE PSSM ET MOTIF CONSENSUS:
   double** matrice_PSSM;
@@ -273,8 +273,9 @@ int main()
   	p_mot_selected= tete_mot_selected;
   	//RAFFINER - Version 1:
   	st1=distanceHammingSt1(&Ct, &p_mot_selected, &p_st1);
-    quick_sort_ST1(&p_st1);
-    //fichier_sortie_st1()
+    int v_St1_Pos[9]; //Position dans la liste chainée
+    quick_sort_ST(&p_st1, v_St1_Pos);
+    fichier_sortie_st(&p_st1, v_St1_Pos, &Ct);
     printf("ST1= %d \n", st1);
   	// RAFFINER - Version 2:
   	p_mot_selected= tete_mot_selected;
@@ -312,7 +313,7 @@ int main()
         p_mot_selected= new_tete_mot_selected;
         calcul_nouvelle_PSSM(&p_mot_selected, &matrice_PSSM_nouv, nb_sequence, &Ct);
         p_mot_selected= new_tete_mot_selected;
-        Ptr_st2 new_tete_st2_prim= malloc(sizeof(st2));
+        Ptr_st new_tete_st2_prim= malloc(sizeof(st2));
         p_st2_prim=new_tete_st2_prim;
       }
       else
@@ -320,6 +321,10 @@ int main()
         convergence=1;
       }
     }while(convergence == 0);
+    int v_St2_Pos[9]; //Position dans la liste chainée
+    quick_sort_ST(&p_st2, v_St2_Pos);
+    fichier_sortie_st(&p_st2, v_St2_Pos, &Ct);
+
   }
   tete_liste_kmer4= tete_liste_kmer4->suiv_kmer;
   }
