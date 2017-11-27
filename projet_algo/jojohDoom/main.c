@@ -7,7 +7,7 @@
 int main()
 {
   int convergence=0; //convergence = 0 tant que T(p_mot_selected) est différent de T'(p_mot_selected_prim) et est égal à 1 quand la convergence est atteinte
-  FILE *file_info=NULL; //fichier contenant les infos sur les s�quences
+
   int st1, st2, st2_prim;
   int longueur_masque = 5;
   int pos_max;
@@ -73,8 +73,9 @@ int main()
   /****
   * MATRICE PSSM
   ****/
-  int nb_ligne;
+  int nb_ligne = 4;
   int taille_motif=5;
+  int i, j;
 
     matrice_PSSM= malloc(4 * sizeof(*matrice_PSSM));
     /*if (matrice_PSSM==NULL)
@@ -82,9 +83,9 @@ int main()
         free(matrice_PSSM);
     }*/
 
-    for(nb_ligne=0 ; nb_ligne < 4 ; nb_ligne++)
+    for(i=0 ; i < nb_ligne ; i++)
     {
-        matrice_PSSM[nb_ligne] = malloc(taille_motif * sizeof(*(matrice_PSSM[nb_ligne]))); //On alloue des tableaux de 'taille2' variables.
+        matrice_PSSM[i] = malloc(taille_motif * sizeof(*(matrice_PSSM[i]))); //On alloue des tableaux de 'taille2' variables.
         /*if(matrice_PSSM[nb_ligne] == NULL)
         {
             for(nb_ligne=0 ; nb_ligne < 4 ; nb_ligne++)
@@ -93,33 +94,31 @@ int main()
             }
         }*/
     }
-
-  int cpt,k ;
   //initialisation de la matrice � 0:
-    for (cpt=0; cpt<4; cpt++)
+    for (i=0; i < nb_ligne; i++)
     {
-        for(k=0; k<taille_motif; k++)
+        for(j=0; j < taille_motif; j++)
         {
-            (matrice_PSSM)[cpt][k]= 0;
+            (matrice_PSSM)[i][j]= 0;
         }
     }
 
 
-  double** matrice_PSSM_nouv;
+
 
   /****
   * MATRICE PSSM NOUV
   ****/
-
+  double** matrice_PSSM_nouv;
     matrice_PSSM_nouv= malloc(4 * sizeof(*matrice_PSSM_nouv));
     /*if (matrice_PSSM_nouv==NULL)
     {
         free(matrice_PSSM_nouv);
     }*/
 
-    for(nb_ligne=0 ; nb_ligne < 4 ; nb_ligne++)
+    for(i=0 ; i < nb_ligne ; i++)
     {
-        matrice_PSSM_nouv[nb_ligne] = malloc(taille_motif * sizeof(*(matrice_PSSM_nouv[nb_ligne]))); //On alloue des tableaux de 'taille2' variables.
+        matrice_PSSM_nouv[i] = malloc(taille_motif * sizeof(*(matrice_PSSM_nouv[i]))); //On alloue des tableaux de 'taille2' variables.
       /*  if(matrice_PSSM_nouv[nb_ligne] == NULL)
         {
             for(nb_ligne=0 ; nb_ligne < 4 ; nb_ligne++)
@@ -129,11 +128,11 @@ int main()
         }*/
     }
   //initialisation de la matrice � 0:
-    for (cpt=0; cpt<4; cpt++)
+    for (i=0; i < nb_ligne; i++)
     {
-        for(k=0; k<taille_motif; k++)
+        for(j=0; j < taille_motif; j++)
         {
-            (matrice_PSSM_nouv)[cpt][k]= 0;
+            (matrice_PSSM_nouv)[i][j]= 0;
         }
     }
 
@@ -143,7 +142,7 @@ int main()
     srand(time(0));
 
     double nb_sequence= 10; // nombre de s�quence � g�n�rer
-    int i,j; //it�rateur de boucle
+    // int i,j; //it�rateur de boucle
     char nucleo= ' ';
 
   ptr_struct_seq tete_generation_sequence=malloc(sizeof(structure_sequence)); // On cr�� le premier �l�ment de la structure
@@ -190,7 +189,8 @@ int main()
   {
     if (tete_liste_kmer4->nb_sequence>=7)
     {
-    calcul_PSSM(&tete_liste_kmer_selectionne_pour_calcul, &tete_liste_motif_PSSM_pour_calcul, &file_info, &matrice_PSSM);
+    calcul_PSSM(&tete_liste_kmer_selectionne_pour_calcul, &tete_liste_motif_PSSM_pour_calcul, &matrice_PSSM, taille_motif);
+    afficher_PSSM( &matrice_PSSM, taille_motif);
 
   	do //repeter l'amélioration de la PSSM jusqu'à convergence
   	{
@@ -240,18 +240,18 @@ int main()
 
   		if (distance_PSSM>0.8)
   		{
-  			for (cpt=0; cpt<4; cpt++) //ancienne_matrice= nouv_matrice.
+  			for (i=0; i<4; i++) //ancienne_matrice= nouv_matrice.
   			{
-  				for(k=0; k<taille_motif; k++)
+  				for(j=0; j<taille_motif; j++)
   				{
-  					(matrice_PSSM)[cpt][k]= (matrice_PSSM_nouv)[cpt][k];
+  					(matrice_PSSM)[i][j]= (matrice_PSSM_nouv)[i][j];
   				}
   			}
-  			for (cpt=0; cpt<4; cpt++) //reinitialisation de matrice_PSSM_nouv à 0.
+  			for (i=0; i<4; i++) //reinitialisation de matrice_PSSM_nouv à 0.
   			{
-  				for(k=0; k<taille_motif; k++)
+  				for(j=0; j<taille_motif; j++)
   				{
-  					(matrice_PSSM_nouv)[cpt][k]= 0;
+  					(matrice_PSSM_nouv)[i][j]= 0;
   				}
   			}
   			p_generation_seq=tete_generation_sequence;

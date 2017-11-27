@@ -384,22 +384,20 @@ void affichage_motif_selectionne(TPtr_Cellkmer_selectionne* adr_tete_kmer_select
 }
 
 
-void calcul_PSSM(TPtr_Cellkmer_selectionne *adr_cell_kmer_selectionne, TPtr_Cell_Motif_PSSM *adr_cell_motif_PSSM, FILE** file_info, double*** adr_matrice_PSSM)
+void calcul_PSSM(TPtr_Cellkmer_selectionne *adr_cell_kmer_selectionne, TPtr_Cell_Motif_PSSM *adr_cell_motif_PSSM, double*** adr_matrice_PSSM, int taille_motif)
 {
-    *file_info= fopen("PSSM_Motif_Trouve.txt", "w"); // Dans ce fichier on va �crire la PSSM pr�visionnelle
+
     TPtr_Cellkmer_selectionne p_kmer_selectionne= *adr_cell_kmer_selectionne;
     double nb_sequence=p_kmer_selectionne->nb_sequence;
-    int taille_motif=5;
     double add= 1/nb_sequence;
-    char to_print;
-    double maximum= -1;
+
     double** p_matrice_PSSM= *adr_matrice_PSSM;
-    int i, j, a, t, c, g, k;
+    int i, a, t, c, g;
     //calcul de la PSSM � partir de la liste chain�e de motif
     TPtr_Cell_Motif_PSSM p_motif=p_kmer_selectionne->tete_motif_PSSM;
     do
     { // on remplit la PSSM
-        for (i=0; i<6; i++)
+        for (i=0; i< taille_motif; i++)
         {
             switch(p_motif->motif[i])
             {
@@ -420,33 +418,44 @@ void calcul_PSSM(TPtr_Cellkmer_selectionne *adr_cell_kmer_selectionne, TPtr_Cell
         }
         p_motif=p_motif->suiv_motif;
     }while (p_motif != NULL);
+    return;
+}
+
+void afficher_PSSM( double*** adr_matrice_PSSM, int taille_motif)
+{
+
+  FILE* ptr_fichier_PSSM;
+  double** p_matrice_PSSM= *adr_matrice_PSSM;
+  char to_print;
+  double maximum= -1;
+  int k, j, a, t,c,g;
+  ptr_fichier_PSSM= fopen("PSSM_Motif_Trouve.txt", "w"); // Dans ce fichier on va �crire la PSSM pr�visionnelle
 
     //ecriture de la matrice PSSM dans le fichier d'info.
-    fprintf(*file_info, "\n\nPSSM: \n");
-    fprintf(*file_info, "a  ");
+    fprintf(ptr_fichier_PSSM, "\n\nPSSM: \n");
+    fprintf(ptr_fichier_PSSM, "a  ");
     for (a=0; a<taille_motif; a++)
     {
-        fprintf(*file_info, "%.2f ", p_matrice_PSSM[0][a]);
+        fprintf(ptr_fichier_PSSM, "%.2f ", p_matrice_PSSM[0][a]);
     }
-    fprintf(*file_info, "\nt  ");
+    fprintf(ptr_fichier_PSSM, "\nt  ");
     for (t=0; t<taille_motif; t++)
     {
-        fprintf(*file_info, "%.2f ", p_matrice_PSSM[1][t]);
+        fprintf(ptr_fichier_PSSM, "%.2f ", p_matrice_PSSM[1][t]);
     }
-    fprintf(*file_info, "\nc  ");
+    fprintf(ptr_fichier_PSSM, "\nc  ");
     for (c=0; c<taille_motif; c++)
     {
-        fprintf(*file_info, "%.2f ", p_matrice_PSSM[2][c]);
+        fprintf(ptr_fichier_PSSM, "%.2f ", p_matrice_PSSM[2][c]);
     }
-    fprintf(*file_info, "\ng  ");
+    fprintf(ptr_fichier_PSSM, "\ng  ");
     for (g=0; g<taille_motif; g++)
     {
-        fprintf(*file_info, "%.2f ", p_matrice_PSSM[3][g]);
+        fprintf(ptr_fichier_PSSM, "%.2f ", p_matrice_PSSM[3][g]);
     }
 
-
         //ecriture du motif consensus dans le fichier a partir de la matrice PSSM:
-        fprintf(*file_info, "\n\nMotif Consensus: \n" );
+        fprintf(ptr_fichier_PSSM, "\n\nMotif Consensus: \n" );
         for (j=0; j<taille_motif; j++)
         {
             for(k=0; k<4; k++)
@@ -472,11 +481,11 @@ void calcul_PSSM(TPtr_Cellkmer_selectionne *adr_cell_kmer_selectionne, TPtr_Cell
                 }
             }
             maximum=-1; //on remet maximum a -1 avant d'�valuer la nucl�otide majoritaire de la s�quence suivante !
-            fprintf(*file_info, "%c", to_print);
+            fprintf(ptr_fichier_PSSM, "%c", to_print);
         }
-        fprintf(*file_info, "\n\n\n");
+        fprintf(ptr_fichier_PSSM, "\n\n\n");
 
-    fclose(*file_info);
+    fclose(ptr_fichier_PSSM);
 
     return;
 
