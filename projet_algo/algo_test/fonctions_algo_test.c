@@ -397,21 +397,21 @@ void creation_matrice_PSSM(double*** adr_matrice_PSSM, int nb_ligne, int taille_
 {
   int i,j;
   double** p_matrice_PSSM = *adr_matrice_PSSM;
-  p_matrice_PSSM = malloc(4 * sizeof(*p_matrice_PSSM));
-  /*if (matrice_PSSM == NULL)
+  p_matrice_PSSM = malloc(nb_ligne * sizeof(*p_matrice_PSSM));
+  /*if (p_matrice_PSSM == NULL)
   {
-    free(matrice_PSSM);
+    free(p_matrice_PSSM);
   }*/
   for(i=0 ; i < nb_ligne ; i++)
   {
     p_matrice_PSSM[i] = malloc(taille_motif * sizeof(*(p_matrice_PSSM[i]))); //On alloue des tableaux de 'taille2' variables.
-    /*if(matrice_PSSM[i] == NULL)
+    if(p_matrice_PSSM[i] == NULL)
     {
       for(i=0 ; i < nb_ligne  ; i++)
       {
-        free(matrice_PSSM[i]);
+        free(p_matrice_PSSM[i]);
       }
-    }*/
+    }
   }
   //initialisation de la matrice � 0:
   for (i=0; i < nb_ligne; i++)
@@ -463,12 +463,14 @@ void calcul_PSSM(TPtr_Cellkmer_selectionne *adr_cell_kmer_selectionne, TPtr_Cell
   FILE* ptr_fichier_PSSM;
   char to_print;
   double maximum= -1;
-  double** p_matrice_PSSM = *adr_matrice_PSSM;
+  // double** p_matrice_PSSM = *adr_matrice_PSSM;
   int j, a, t, c, g, k;
 
   ptr_fichier_PSSM = fopen("PSSM_Motif_Trouve.txt", "w"); // Dans ce fichier on va �crire la PSSM pr�visionnelle
 
   //ecriture de la matrice PSSM dans le fichier d'info.
+  fprintf(ptr_fichier_PSSM, "\n\n%d \n", taille_motif);
+
   fprintf(ptr_fichier_PSSM, "\n\nPSSM: \n");
   fprintf(ptr_fichier_PSSM, "A  ");
   for (a=0; a<taille_motif; a++)

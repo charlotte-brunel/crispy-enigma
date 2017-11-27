@@ -18,6 +18,7 @@ struct TCellkmer{
     struct TCellSequence* tete_sequence; //Pointer qui pointe sur une liste chain�e de s�quence o� le kmer est retrouv�
     int nb_sequence; // nombre de séquence dans lesquelles le kmer est présent
     char kmer[]; //"TCC" par exemple
+
 };
 typedef TCellkmer* TPtr_Cellkmer; //Pointeur sur Tcellkmer
 
@@ -45,6 +46,9 @@ typedef TCellPos* TPtr_CellPos;
  ****/
 
 //1er element: liste chainee des kmers
+
+
+
 typedef struct TCellkmer_selectionne TCellkmer_selectionne;
 struct TCellkmer_selectionne{
     struct TCellkmer_selectionne* suiv_kmer_selectionne;

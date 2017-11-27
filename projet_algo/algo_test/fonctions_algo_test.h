@@ -111,7 +111,7 @@ void kmer_present_dans_chaque_sequence(int nb_sequence, TPtr_Cellkmer* adr_cell_
 void affichage_dictionnaire_kmer(TPtr_Cellkmer* adr_tete_kmer, TPtr_CellSequence* adr_tete_sequence, TPtr_CellPos* adr_tete_pos);
 void affichage_motif_selectionne(TPtr_Cellkmer_selectionne* adr_tete_kmer_selectionne, TPtr_Cell_Motif_PSSM* adr_tete_motif);
 
-void creation_matrice_PSSM(double*** adr_matrice_PSSM, int nb_ligne, int taille_motif); 
+void creation_matrice_PSSM(double*** adr_matrice_PSSM, int nb_ligne, int taille_motif);
 
 void calcul_PSSM(TPtr_Cellkmer_selectionne *adr_cell_kmer_selectionne, TPtr_Cell_Motif_PSSM *adr_cell_motif_PSSM, double*** adr_matrice_PSSM, int taille_motif);
 // void affichage_PSSM(double*** adr_matrice_PSSM, int taille_motif);

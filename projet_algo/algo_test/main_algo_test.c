@@ -98,7 +98,7 @@ int main()
 
   creation_matrice_PSSM(&matrice_PSSM, 4, longueur_masque);
   calcul_PSSM(&tete_liste_kmer_selectionne_pour_calcul, &tete_liste_motif_PSSM_pour_calcul, &matrice_PSSM, longueur_masque);
-  affichage_PSSM( &matrice_PSSM, longueur_masque);
+  // affichage_PSSM( &matrice_PSSM, longueur_masque);
 
   // On calculera la PSSM seulement pour les kmers qui sont présent dans plus de 7 sequences:
   // while (tete_liste_kmer4 != NULL)

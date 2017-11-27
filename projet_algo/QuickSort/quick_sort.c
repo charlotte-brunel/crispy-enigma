@@ -15,6 +15,7 @@ void trier(int* v, int g, int d)
     separer(v, g, d, &indice_pivot);
     trier(v, indice_pivot+1, d);
   }
+  return;
 }
 //--------------------------------------------------------------------------------------------------
 void separer(int* v, int g, int d, int* adr_indice_pivot)
@@ -47,6 +48,7 @@ void separer(int* v, int g, int d, int* adr_indice_pivot)
   *adr_indice_pivot = bas;
 
   //POST-CONDITIONS
+  return;
 }
 
 /*************************************************
