@@ -1,0 +1,12 @@
+KMER: aa 
+Present dans 7 sequences 
+MOTIF: agaac 
+MOTIF: agatc 
+MOTIF: aaaaa 
+MOTIF: ataat 
+MOTIF: aaaaa 
+MOTIF: acaga 
+MOTIF: agaaa 
+MOTIF:  
+KMER:  
+Present dans 0 sequences 
