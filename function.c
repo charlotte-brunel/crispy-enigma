@@ -3,6 +3,7 @@
 #include <time.h>
 #include <string.h>
 #include <math.h>
+#include <stdbool.h>
 #include "function.h"
 
 //Fonction insert motif � enlever
@@ -569,6 +570,7 @@ void calcul_nouvelle_PSSM(TPtr_Cell_Motif_PSSM *adr_cell_mot_selected, double***
                 }
             }
             *adr_Ct[j]=to_print;
+            printf("MOTIF CONSENSUS: %c", *adr_Ct[j]);
             maximum=-1; //on remet maximum a -1 avant d'�valuer la nucl�otide majoritaire de la s�quence suivante !
             fprintf(file_nouv_PSSM, "%c", to_print);
         }
@@ -673,10 +675,11 @@ double dist_PSSM(double*** adr_matrice_PSSM, double*** adr_matrice_PSSM_nouv, do
 
 }
 
-void distanceHammingSt1(char (*adr_Ct)[6], TPtr_Cell_Motif_PSSM* adr_mot_selected, Ptr_st1* adr_st1)
+int distanceHammingSt1(char (*adr_Ct)[6], TPtr_Cell_Motif_PSSM* adr_mot_selected, Ptr_st1* adr_st1)
 {
 	int i;
 	int Dh=0;
+  int st1=0;
 	TPtr_Cell_Motif_PSSM p_mot_selected= *adr_mot_selected;
 	Ptr_st1 p_st1= *adr_st1;
 
@@ -684,35 +687,34 @@ void distanceHammingSt1(char (*adr_Ct)[6], TPtr_Cell_Motif_PSSM* adr_mot_selecte
 	{
 		for (i=0; i<5; i++)
 		{
-			printf("*adr_Ct[i] : %c \n", *adr_Ct[i]);
-			printf("p_mot_selected[i] : %c \n", p_mot_selected->motif[i]);
 			if (*adr_Ct[i] != p_mot_selected->motif[i])
 			{
 				Dh++;
 				printf("Dh: %d \n", Dh);
 			}
 		}
-		if (Dh>1)
+    if (Dh>1)
 		{
-			strcpy(p_st1->mot, p_mot_selected->motif);
-			printf("p_st1->mot: %s \n", p_st1->mot);
-			p_st1->distance_hamming=Dh;
-			printf("p_st1->distance: %d \n", p_st1->distance_hamming);
-			Ptr_st1 p_st1_suiv= malloc(sizeof(st1));
-			p_st1->next_mot= p_st1_suiv;
-			p_st1=p_st1_suiv;
-
+		    st1++;
 		}
+    strcpy(p_st1->mot, p_mot_selected->motif);
+    printf("p_st1->mot: %s \n", p_st1->mot);
+    p_st1->distance_hamming=Dh;
+    printf("p_st1->distance: %d \n", p_st1->distance_hamming);
+    Ptr_st1 p_st1_suiv= malloc(sizeof(st1));
+    p_st1->next_mot= p_st1_suiv;
+    p_st1=p_st1_suiv;
 		Dh=0;
 		p_mot_selected=p_mot_selected->suiv_motif;
 	}
-	return;
+	return(st1-1); // Parce que le dernier mot NULL de la liste chainée est compté
 
 }
 
-void distanceHammingSt2(char (*adr_Ct)[6], TPtr_Cell_Motif_PSSM* adr_mot_selected, Ptr_st2* adr_st2)
+int distanceHammingSt2(char (*adr_Ct)[6], TPtr_Cell_Motif_PSSM* adr_mot_selected, Ptr_st2* adr_st2)
 {
   printf("DISTANCE HAMMING ST2");
+  int st2=0;
 	int i;
 	int Dh=0;
 	TPtr_Cell_Motif_PSSM p_mot_selected= *adr_mot_selected;
@@ -736,19 +738,23 @@ void distanceHammingSt2(char (*adr_Ct)[6], TPtr_Cell_Motif_PSSM* adr_mot_selecte
 			Ptr_st2 p_st2_suiv= malloc(sizeof(st2));
 			p_st2->next_mot= p_st2_suiv;
 			p_st2=p_st2_suiv;
+      st2++;
 
 		}
 		Dh=0;
 		p_mot_selected=p_mot_selected->suiv_motif;
 	}
-	return;
+	return(st2);
 
 }
 
-void distanceHammingSt2_prim(char (*adr_Ct)[6], ptr_struct_seq* adr_generation_sequence, TPtr_Mot_Ameliorer_PSSM *adr_mot, Ptr_st2* adr_st2_prim)
+
+
+int distanceHammingSt2_prim(char (*adr_Ct)[6], ptr_struct_seq* adr_generation_sequence, TPtr_Mot_Ameliorer_PSSM *adr_mot, Ptr_st2* adr_st2_prim)
 {
 	printf("IN ST2 PRIM");
 	int i;
+  int st2_prim=0;
   int position=0;
 	int Dh_min=8;
 	int Dh=0;
@@ -758,7 +764,6 @@ void distanceHammingSt2_prim(char (*adr_Ct)[6], ptr_struct_seq* adr_generation_s
 
 	while (p_generation_seq !=NULL)
 	{
-    printf("numero seq: %d \n", p_generation_seq->numero_sequence);
 		while (position<=25)
 		{
 			for (i=0; i<5; i++)
@@ -773,15 +778,12 @@ void distanceHammingSt2_prim(char (*adr_Ct)[6], ptr_struct_seq* adr_generation_s
         }
         position++;
 			}
-      position= position-5;
+      position= position-4;
 			if (Dh<=Dh_min)
 			{
         Dh_min=Dh;
 				strcpy(p_st2_prim->mot, p_mot->mot);
-				printf("p_st2->mot: %s \n", p_st2_prim->mot);
 				p_st2_prim->distance_hamming=Dh;
-				printf("p_st2->distance: %d \n", p_st2_prim->distance_hamming);
-
 			}
 			Dh=0;
       TPtr_Mot_Ameliorer_PSSM p_nouv_mot=malloc(sizeof(TMot_Ameliorer_PSSM));
@@ -797,6 +799,106 @@ void distanceHammingSt2_prim(char (*adr_Ct)[6], ptr_struct_seq* adr_generation_s
 		p_st2_prim->next_mot= p_st2_prim_suiv;
 		p_st2_prim=p_st2_prim_suiv;
 	}
+  p_st2_prim= *adr_st2_prim;
+  while (p_st2_prim != NULL)
+  {
+    if(p_st2_prim->distance_hamming < 2)
+    {
+      st2_prim++;
+    }
+    p_st2_prim=p_st2_prim->next_mot;
+  }
 
-	return;
+
+	return(st2_prim-1); //On met -1 car la boucle précedente prend en compte la case NULL de la fin de liste chainé
 }
+
+
+void trier(int* v_St1_Dh, int* v_St1_Pos, int g, int d)
+{
+  int indice_pivot;
+
+  if (g < d)
+  {
+    separer(v_St1_Dh, v_St1_Pos, g, d, &indice_pivot);
+    indice_pivot --;
+    separer(v_St1_Dh, v_St1_Pos, g, d, &indice_pivot);
+    trier(v_St1_Dh, v_St1_Pos, indice_pivot+1, d);
+  }
+  return;
+}
+//--------------------------------------------------------------------------------------------------
+void separer(int* v_St1_Dh, int* v_St1_Pos, int g, int d, int* adr_indice_pivot)
+{
+  //PRECONDITIONS
+  // g < d
+
+  int bas, haut; //indices de position dans le vecteur
+  int comp, pivot;  //comp pour comparateur, c'est variables sont des entiers car on trie un vecteur d'entiers
+  int comp_pos, pivot_pos;
+
+  bas = g;
+  haut = d;
+  pivot = v_St1_Dh[bas];
+  pivot_pos= v_St1_Pos[bas];
+  comp = v_St1_Dh[haut];
+  comp_pos=v_St1_Pos[haut];
+
+  while (bas < haut)
+  {
+    if ( comp > pivot)
+    {
+      v_St1_Dh[haut] = comp;
+      v_St1_Pos[haut]= comp_pos;
+      haut --;
+      comp = v_St1_Dh[haut];
+      comp_pos=v_St1_Pos[haut];
+    }else{
+      v_St1_Dh[bas] = comp;
+      v_St1_Pos[bas]= comp_pos;
+      bas ++;
+      comp = v_St1_Dh[bas];
+      comp_pos=v_St1_Pos[bas];
+    }
+  }
+  v_St1_Dh[bas] = pivot;
+  v_St1_Pos[bas]= pivot_pos;
+  *adr_indice_pivot = bas;
+  return;
+  //POST-CONDITIONS
+}
+
+
+
+void quick_sort_ST1(Ptr_st1* adr_st1)
+{
+  Ptr_st1 p_st1= *adr_st1;
+  int i;
+  int v_St1_Dh[9]; //Distance de Hamming de chaque occurrence
+  int v_St1_Pos[9]; //Position dans la liste chainée
+  int borne_gauche = 0;
+  int borne_droite = 9;
+  for (i=0; i<10; i++)
+  {
+    v_St1_Dh[i]= p_st1->distance_hamming;
+    v_St1_Pos[i]= i;
+    printf("Vecteur Distance Hamming: %d \n", v_St1_Dh[i]);
+    printf("Vecteur Pos: %d \n", v_St1_Pos[i]);
+    p_st1=p_st1->next_mot;
+  }
+  printf("\n");
+
+  trier(v_St1_Dh, v_St1_Pos, borne_gauche, borne_droite);
+
+  for(i=0; i<10; i++)
+ {
+   printf("Vecteur Distance Hamming après tri: %d \n", v_St1_Dh[i]);
+   printf("Vecteur Pos après tri: %d \n", v_St1_Pos[i]);
+ }
+ printf("\n");
+
+
+  return;
+}
+
+//--------------------------------------------------------------------------------------------------
