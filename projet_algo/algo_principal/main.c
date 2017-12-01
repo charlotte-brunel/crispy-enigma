@@ -122,7 +122,7 @@ int main()
   }
 
 //------------------------------------------------------------------------------------------------------------
-	//début de l'algorithme
+//début de l'algorithme
 
 	importer_parametres(&taille_motif, &d, &nb_fenetre, &nb_masques);
 	printf("taille_motif= %d, ",taille_motif);printf("d= %d, ",d);
@@ -130,7 +130,6 @@ int main()
 
 	importer_sequences_fasta(&ptr_info, &ptr_ensemble );
   afficher_sequences(&ptr_info, &ptr_ensemble );
-	printf("done\n");
 
 	for ( i = 0; i <= nb_masques; i++ )
 	{
@@ -144,7 +143,7 @@ int main()
 
 		affichage_motif_selectionne(&tete_liste_kmer_selectionne2, &tete_liste_motif_PSSM2);
 
-		// On calculera la PSSM seulement pour les kmers qui sont présent dans plus de 7 sequences:
+	// On calculera la PSSM seulement pour les kmers qui sont présent dans plus de 7 sequences:
 		while (tete_liste_kmer4 != NULL)
 		{
 			if (tete_liste_kmer4->nb_sequence >= 7)
