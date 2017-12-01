@@ -1,16 +1,16 @@
-all: main.out
+all: main_algo_test.out
 
-main.out: main.o function.o
-	gcc -Wall -o main.out main.o function.o
+main_algo_test.out: main_algo_test.o fonctions_algo_test.o
+	gcc -Wall -o main_algo_test.out main_algo_test.o fonctions_algo_test.o
 
-main.o: main.c function.h
-	gcc -Wall -c -o main.o main.c
+main_algo_test.o: main_algo_test.c fonctions_algo_test.h
+	gcc -Wall -c -o main_algo_test.o main_algo_test.c
 
-function.o: function.c function.h
-	gcc -Wall -c -o function.o function.c
+fonctions_algo_test.o: fonctions_algo_test.c fonctions_algo_test.h
+	gcc -Wall -c -o fonctions_algo_test.o fonctions_algo_test.c
 
 clean:
 	rm *.o *.out
 
 mrproper: clean
-rm -rf main.out
+	rm -rf main_algo_test.out
