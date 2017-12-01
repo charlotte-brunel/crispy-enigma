@@ -7,7 +7,7 @@
  * * *                                       VARIABLES GLOBALES                                          * * *
  *************************************************************************************************************/
   extern bool convergence;
-  extern int longueur_masque;
+  extern int taille_motif;
   extern int d;
   extern int nb_fenetre;
   extern int nb_masques;
@@ -124,7 +124,7 @@
 /*************************************************************************************************************
  * * *                                           FONCTIONS                                               * * *
  *************************************************************************************************************/
-  void importer_parametres(int* longueur_masque, int* d, int* nb_fenetre, int* nb_masques);
+  void importer_parametres(int* taille_motif, int* d, int* nb_fenetre, int* nb_masques);
   void importer_sequences_fasta(TPtr_info_ensemble_sequences* ptr_info, TPtr_ensemble_sequences* ptr_ensemble );
   void afficher_sequences(TPtr_info_ensemble_sequences* ptr_info, TPtr_ensemble_sequences* ptr_ensemble );
 
