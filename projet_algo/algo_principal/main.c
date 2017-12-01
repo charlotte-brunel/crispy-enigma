@@ -12,14 +12,14 @@ int taille_motif; //longueur motif/masque IE. l
 int d; // nombre maximal de substitutions autorisées
 int nb_fenetre; //nombre de fenêtres dans le masque IE. k
 int nb_masques;
-//------------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------------------------------------------------------
+/*************************************************************************************************************
+ * * *                                    MAIN                                                           * * *
+ *************************************************************************************************************/
 int main()
 {
 	srand(time(NULL));
 	//définition des variables utilitaires
-	int i,j;
-
+	int i, j;
 	int position = 0; // position de l'occ dans la sequence
 	int pos_max;
 	int cpt_mot;  //?
@@ -120,10 +120,9 @@ int main()
       (matrice_PSSM_nouv)[i][j]= 0;
     }
   }
-
-//------------------------------------------------------------------------------------------------------------
-//début de l'algorithme
-
+	/*************************************************************************************************************
+	 * * *                                    DEBUT DE L'ALGORITHME                                          * * *
+	 *************************************************************************************************************/
 	importer_parametres(&taille_motif, &d, &nb_fenetre, &nb_masques);
 	printf("taille_motif= %d, ",taille_motif);printf("d= %d, ",d);
 	printf("nb_fenetre= %d, ",nb_fenetre);printf("nb_masques= %d\n",nb_masques);
