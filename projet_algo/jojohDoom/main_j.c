@@ -1,13 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include<time.h>
-#include<string.h>
+#include <time.h>
+#include <string.h>
 #include "fonctions_j.h"
+
 
 int main()
 {
   int convergence=0; //convergence = 0 tant que T(p_mot_selected) est différent de T'(p_mot_selected_prim) et est égal à 1 quand la convergence est atteinte
-  FILE *file_info=NULL; //fichier contenant les infos sur les s�quences
   int st1, st2, st2_prim;
   int longueur_masque = 5;
   int pos_max;
@@ -15,11 +15,11 @@ int main()
   int position= 0;
   double score_max;
   int cpt_mot;
-  int n_sequence;
-  char Ct[longueur_masque];
+  int n_sequence; //numero de seq dans la liste chainée
+  char Ct[longueur_masque]; //motif_conscensus
   int masque[longueur_masque]; //motif consensus pour raffiner la PSSM
   memset(masque, 0, sizeof masque);
-  //int* p_masque= masque;
+
   int nb_fenetre=2;
   TPtr_Cellkmer element_kmer=malloc(sizeof(TCellkmer));
   TPtr_Cellkmer tete_liste_kmer= element_kmer;
@@ -70,82 +70,42 @@ int main()
 
   //MATRICE PSSM ET MOTIF CONSENSUS:
   double** matrice_PSSM;
-
-  /****
-  * MATRICE PSSM
-  ****/
-  int nb_ligne;
-  int taille_motif=5;
-
-    matrice_PSSM= malloc(4 * sizeof(*matrice_PSSM));
-    /*if (matrice_PSSM==NULL)
-    {
-        free(matrice_PSSM);
-    }*/
-
-    for(nb_ligne=0 ; nb_ligne < 4 ; nb_ligne++)
-    {
-        matrice_PSSM[nb_ligne] = malloc(taille_motif * sizeof(*(matrice_PSSM[nb_ligne]))); //On alloue des tableaux de 'taille2' variables.
-        /*if(matrice_PSSM[nb_ligne] == NULL)
-        {
-            for(nb_ligne=0 ; nb_ligne < 4 ; nb_ligne++)
-            {
-                free(matrice_PSSM[nb_ligne]);
-            }
-        }*/
-    }
-
-  int cpt,k ;
-  //initialisation de la matrice � 0:
-    for (cpt=0; cpt<4; cpt++)
-    {
-        for(k=0; k<taille_motif; k++)
-        {
-            (matrice_PSSM)[cpt][k]= 0;
-        }
-    }
-
-
   double** matrice_PSSM_nouv;
+  int nb_ligne = 4;
+  int taille_motif= longueur_masque;
+  int i,j;
 
-  /****
-  * MATRICE PSSM NOUV
-  ****/
-
-    matrice_PSSM_nouv= malloc(4 * sizeof(*matrice_PSSM_nouv));
-    /*if (matrice_PSSM_nouv==NULL)
+  matrice_PSSM = malloc(nb_ligne * sizeof(*matrice_PSSM));
+  for(i=0 ; i<nb_ligne ; i++)
+  {
+    matrice_PSSM[i] = malloc(taille_motif * sizeof(*(matrice_PSSM[i]))); //On alloue des tableaux de 'taille2' variables.
+  }
+  for (i=0; i<nb_ligne; i++) //initialisation de la matrice à 0:
+  {
+    for(j=0; j<taille_motif; j++)
     {
-        free(matrice_PSSM_nouv);
-    }*/
-
-    for(nb_ligne=0 ; nb_ligne < 4 ; nb_ligne++)
-    {
-        matrice_PSSM_nouv[nb_ligne] = malloc(taille_motif * sizeof(*(matrice_PSSM_nouv[nb_ligne]))); //On alloue des tableaux de 'taille2' variables.
-      /*  if(matrice_PSSM_nouv[nb_ligne] == NULL)
-        {
-            for(nb_ligne=0 ; nb_ligne < 4 ; nb_ligne++)
-            {
-                free(matrice_PSSM_nouv[nb_ligne]);
-            }
-        }*/
+      (matrice_PSSM)[i][j] = 0;
     }
-  //initialisation de la matrice � 0:
-    for (cpt=0; cpt<4; cpt++)
+  }
+  matrice_PSSM_nouv = malloc(4 * sizeof(*matrice_PSSM_nouv));
+  for(i=0 ; i<nb_ligne ; i++)
+  {
+    matrice_PSSM_nouv[i] = malloc(taille_motif * sizeof(*(matrice_PSSM_nouv[i]))); //On alloue des tableaux de 'taille2' variables.
+  }
+  for (i=0; i<nb_ligne; i++) //initialisation de la matrice à 0:
+  {
+    for(j=0; j<taille_motif; j++)
     {
-        for(k=0; k<taille_motif; k++)
-        {
-            (matrice_PSSM_nouv)[cpt][k]= 0;
-        }
+      (matrice_PSSM_nouv)[i][j]= 0;
     }
+  }
 
+  /* GENERATION ALEATOIRE DE DIX SEQUENCES POUR TEST */
+  //D�claration des variables
+  srand(time(0));
 
-    /* GENERATION ALEATOIRE DE DIX SEQUENCES POUR TEST */
-    //D�claration des variables
-    srand(time(0));
-
-    double nb_sequence= 10; // nombre de s�quence � g�n�rer
-    int i,j; //it�rateur de boucle
-    char nucleo= ' ';
+  double nb_sequence= 10; // nombre de s�quence � g�n�rer
+  char nucleo= ' ';
 
   ptr_struct_seq tete_generation_sequence=malloc(sizeof(structure_sequence)); // On cr�� le premier �l�ment de la structure
   ptr_struct_seq element_generation_sequence= tete_generation_sequence;
@@ -191,7 +151,7 @@ int main()
   {
     if (tete_liste_kmer4->nb_sequence>=7)
     {
-      calcul_PSSM(&tete_liste_kmer_selectionne_pour_calcul, &tete_liste_motif_PSSM_pour_calcul, &file_info, &matrice_PSSM);
+      calcul_PSSM(&tete_liste_kmer_selectionne_pour_calcul, &tete_liste_motif_PSSM_pour_calcul, &matrice_PSSM);
     	do //repeter l'amélioration de la PSSM jusqu'à convergence
     	{
     		while (p_generation_seq != NULL) //pour chaque sequence
@@ -241,18 +201,12 @@ int main()
 
     		if (distance_PSSM>0.8)
     		{
-    			for (cpt=0; cpt<4; cpt++) //ancienne_matrice= nouv_matrice.
+    			for (i=0; i<4; i++) //ancienne_matrice= nouv_matrice.
     			{
-    				for(k=0; k<taille_motif; k++)
+    				for(j=0; j<taille_motif; j++)
     				{
-    					(matrice_PSSM)[cpt][k]= (matrice_PSSM_nouv)[cpt][k];
-    				}
-    			}
-    			for (cpt=0; cpt<4; cpt++) //reinitialisation de matrice_PSSM_nouv à 0.
-    			{
-    				for(k=0; k<taille_motif; k++)
-    				{
-    					(matrice_PSSM_nouv)[cpt][k]= 0;
+    					(matrice_PSSM)[i][j]= (matrice_PSSM_nouv)[i][j];
+              (matrice_PSSM_nouv)[i][j]= 0;
     				}
     			}
     			p_generation_seq=tete_generation_sequence;
@@ -276,8 +230,7 @@ int main()
     	p_mot_selected= tete_mot_selected;
       //T' (p_st2_prim) <- mot mi de longueur l de Si, mi minimisant Dh(mi, Ct)
       TPtr_Mot_Ameliorer_PSSM p_mot_st2_prim = tete_mot_pour_st2_prim;
-    	do
-      {
+    	do{
     		st2=distanceHammingSt2(&Ct, &p_mot_selected, &p_st2);
     		p_generation_seq=tete_generation_sequence;
         p_mot_st2_prim=tete_mot_pour_st2_prim;

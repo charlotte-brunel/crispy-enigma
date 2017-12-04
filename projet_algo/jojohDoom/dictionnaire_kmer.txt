@@ -1,186 +1,185 @@
-KMER: tc 
+KMER: ga 
 Sequence: 1 
-Position: 0 
- Sequence: 2 
-Position: 25 
- Sequence: 4 
-Position: 5 
- Sequence: 5 
-Position: 15 
- Sequence: 6 
-Position: 25 
- Nb de séquence dans lesquelles le kmer est présent: 5 
+Position: 1 
+ Position: 6 
+ Sequence: 9 
+Position: 21 
+ Nb de séquence dans lesquelles le kmer est présent: 2 
 
 
 
 KMER: tt 
 Sequence: 1 
-Position: 5 
- Sequence: 6 
-Position: 10 
- Nb de séquence dans lesquelles le kmer est présent: 2 
-
-
-
-KMER: ag 
-Sequence: 1 
-Position: 10 
- Position: 15 
+Position: 11 
+ Sequence: 8 
+Position: 21 
  Sequence: 9 
-Position: 0 
- Sequence: 10 
-Position: 25 
+Position: 1 
  Nb de séquence dans lesquelles le kmer est présent: 3 
 
 
 
 KMER: ta 
 Sequence: 1 
-Position: 20 
- Sequence: 8 
-Position: 20 
- Sequence: 9 
-Position: 20 
- Nb de séquence dans lesquelles le kmer est présent: 3 
-
-
-
-KMER: gg 
-Sequence: 1 
-Position: 25 
+Position: 16 
+ Position: 21 
+ Sequence: 2 
+Position: 1 
  Sequence: 4 
-Position: 15 
- Position: 20 
- Position: 25 
- Sequence: 5 
-Position: 5 
+Position: 6 
  Sequence: 8 
-Position: 5 
- Nb de séquence dans lesquelles le kmer est présent: 4 
-
-
-
-KMER: ac 
-Sequence: 2 
-Position: 0 
- Sequence: 5 
-Position: 0 
- Sequence: 8 
-Position: 15 
- Nb de séquence dans lesquelles le kmer est présent: 3 
+Position: 6 
+ Sequence: 10 
+Position: 1 
+ Nb de séquence dans lesquelles le kmer est présent: 5 
 
 
 
 KMER: aa 
-Sequence: 2 
-Position: 5 
- Position: 10 
- Position: 15 
- Position: 20 
+Sequence: 1 
+Position: 26 
+ Sequence: 2 
+Position: 21 
  Sequence: 3 
-Position: 15 
+Position: 6 
+ Position: 11 
  Sequence: 4 
-Position: 10 
+Position: 16 
  Sequence: 5 
-Position: 10 
+Position: 1 
+ Position: 6 
  Sequence: 6 
-Position: 5 
- Position: 15 
+Position: 6 
  Sequence: 7 
-Position: 25 
+Position: 1 
+ Sequence: 8 
+Position: 11 
  Sequence: 9 
-Position: 15 
+Position: 16 
  Sequence: 10 
-Position: 20 
- Nb de séquence dans lesquelles le kmer est présent: 8 
+Position: 16 
+ Position: 21 
+ Nb de séquence dans lesquelles le kmer est présent: 10 
 
 
 
 KMER: cg 
-Sequence: 3 
-Position: 0 
- Position: 25 
+Sequence: 2 
+Position: 6 
+ Position: 26 
+ Sequence: 7 
+Position: 21 
+ Sequence: 8 
+Position: 1 
  Sequence: 9 
-Position: 25 
- Sequence: 10 
-Position: 10 
+Position: 11 
+ Nb de séquence dans lesquelles le kmer est présent: 4 
+
+
+
+KMER: cc 
+Sequence: 2 
+Position: 11 
+ Sequence: 3 
+Position: 21 
+ Sequence: 9 
+Position: 6 
  Nb de séquence dans lesquelles le kmer est présent: 3 
 
 
 
 KMER: at 
-Sequence: 3 
-Position: 5 
- Sequence: 5 
-Position: 20 
- Sequence: 9 
-Position: 10 
- Nb de séquence dans lesquelles le kmer est présent: 3 
-
-
-
-KMER: ca 
-Sequence: 3 
-Position: 10 
+Sequence: 2 
+Position: 16 
+ Sequence: 4 
+Position: 1 
  Sequence: 6 
-Position: 0 
- Sequence: 7 
-Position: 15 
+Position: 16 
  Sequence: 8 
-Position: 10 
- Sequence: 9 
-Position: 5 
- Sequence: 10 
-Position: 0 
- Nb de séquence dans lesquelles le kmer est présent: 6 
+Position: 16 
+ Nb de séquence dans lesquelles le kmer est présent: 4 
 
 
 
-KMER: ct 
+KMER: tc 
 Sequence: 3 
-Position: 20 
- Sequence: 7 
-Position: 0 
- Position: 5 
+Position: 1 
+ Position: 16 
+ Sequence: 4 
+Position: 26 
  Nb de séquence dans lesquelles le kmer est présent: 2 
-
-
-
-KMER: tg 
-Sequence: 4 
-Position: 0 
- Sequence: 6 
-Position: 20 
- Sequence: 8 
-Position: 0 
- Nb de séquence dans lesquelles le kmer est présent: 3 
 
 
 
 KMER: gt 
-Sequence: 5 
-Position: 25 
- Nb de séquence dans lesquelles le kmer est présent: 1 
+Sequence: 3 
+Position: 26 
+ Sequence: 5 
+Position: 16 
+ Nb de séquence dans lesquelles le kmer est présent: 2 
 
 
 
-KMER: gc 
-Sequence: 7 
-Position: 10 
- Sequence: 8 
-Position: 25 
+KMER: ca 
+Sequence: 4 
+Position: 11 
+ Sequence: 6 
+Position: 1 
+ Sequence: 7 
+Position: 6 
+ Sequence: 9 
+Position: 26 
+ Nb de séquence dans lesquelles le kmer est présent: 4 
+
+
+
+KMER: ag 
+Sequence: 4 
+Position: 21 
+ Sequence: 7 
+Position: 11 
+ Position: 26 
  Sequence: 10 
-Position: 5 
+Position: 6 
  Nb de séquence dans lesquelles le kmer est présent: 3 
 
 
 
-KMER: ga 
-Sequence: 7 
-Position: 20 
+KMER: ct 
+Sequence: 5 
+Position: 11 
+ Position: 21 
+ Nb de séquence dans lesquelles le kmer est présent: 1 
+
+
+
+KMER: ac 
+Sequence: 5 
+Position: 26 
+ Sequence: 6 
+Position: 11 
+ Position: 21 
+ Sequence: 7 
+Position: 16 
  Sequence: 10 
-Position: 15 
+Position: 26 
+ Nb de séquence dans lesquelles le kmer est présent: 4 
+
+
+
+KMER: gg 
+Sequence: 6 
+Position: 26 
+ Sequence: 10 
+Position: 11 
  Nb de séquence dans lesquelles le kmer est présent: 2 
+
+
+
+KMER: gc 
+Sequence: 8 
+Position: 26 
+ Nb de séquence dans lesquelles le kmer est présent: 1 
 
 
 

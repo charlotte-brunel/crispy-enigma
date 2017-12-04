@@ -99,7 +99,7 @@
   typedef struct TMot_Ameliorer_PSSM TMot_Ameliorer_PSSM;
   struct TMot_Ameliorer_PSSM
   {
-    int score_mot; //score du mot
+    double score_mot; //score du mot
     struct TMot_Ameliorer_PSSM * next_mot; //pointeur sur mot suivant
     char mot[]; //Mot de longueur motif
   };

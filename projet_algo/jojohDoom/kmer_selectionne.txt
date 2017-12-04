@@ -1,12 +1,14 @@
 KMER: aa 
-Present dans 8 sequences 
-MOTIF: aatta 
-MOTIF: aactc 
+Present dans 10 sequences 
+MOTIF: atata 
+MOTIF: agaaa 
 MOTIF: aaaaa 
-MOTIF: aaaag 
-MOTIF: aacga 
-MOTIF: aaaga 
-MOTIF: aagtg 
+MOTIF: aaaaa 
+MOTIF: aaaat 
+MOTIF: aaaac 
+MOTIF: aaatc 
+MOTIF: aaaaa 
+MOTIF: ataaa 
 MOTIF:  
 KMER:  
 Present dans 0 sequences 
