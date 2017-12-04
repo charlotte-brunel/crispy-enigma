@@ -1,22 +1,15 @@
 KMER: aa 
-Present dans 9.000000 sequences 
-MOTIF: aaaat 
+Present dans 10.000000 sequences 
+MOTIF: aaaaa 
+MOTIF: aaaaa 
+MOTIF: aataa 
+MOTIF: aaaaa 
 MOTIF: aaaag 
-MOTIF: aaaag 
-MOTIF: aaacg 
-MOTIF: acaaa 
+MOTIF: aaata 
 MOTIF: aaaaa 
-MOTIF: aaaca 
+MOTIF: aactc 
+MOTIF: aagct 
 MOTIF: aaaaa 
-MOTIF: aaaaa 
-MOTIF:  
-KMER: at 
-Present dans 7.000000 sequences 
-MOTIF: attca 
-MOTIF: atttt 
-MOTIF: aatcg 
-MOTIF: attaa 
-MOTIF: acttt 
 MOTIF:  
 KMER: ! 
 Present dans 0.000000 sequences 

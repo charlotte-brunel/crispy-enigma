@@ -142,7 +142,7 @@ int main()
 //------------------------------------------------------------------------------------------------------------
   generation_masque(longueur_masque, &masque, nb_fenetre);
   parcours_masque(longueur_masque, &masque, nb_fenetre, nb_sequence_dico, &tete_liste_pour_parcours_masque, &tete_liste_kmer, &tete_liste_sequence, &tete_liste_pos);
-  kmer_present_dans_chaque_sequence(nb_sequence_dico, &tete_liste_kmer2, &tete_liste_sequence2, &tete_liste_pos2, &tete_liste_pour_recup_motif, &tete_liste_kmer_selectionne, &tete_liste_motif_PSSM);
+  kmer_present_dans_chaque_sequence(nb_sequence_dico, &tete_liste_kmer2, &tete_liste_sequence2, &tete_liste_pos2, &tete_liste_pour_recup_motif, &tete_liste_kmer_selectionne, &tete_liste_motif_PSSM, longueur_masque);
   affichage_dictionnaire_kmer(&tete_liste_kmer3, &tete_liste_sequence3, &tete_liste_pos3);
   affichage_motif_selectionne(&tete_liste_kmer_selectionne2, &tete_liste_motif_PSSM2);
   // On calculera la PSSM seulement pour les kmers qui sont présent dans plus de 7 sequences:
@@ -221,8 +221,8 @@ int main()
     	//RAFFINER - Version 1:
     	st1=distanceHammingSt1(&Ct, &p_mot_selected, &p_st1, longueur_masque);
       int v_St1_Pos[9]; //Position dans la liste chainée
-      quick_sort_ST(&p_st1, v_St1_Pos);
-      fichier_sortie_st(&p_st1, v_St1_Pos, &Ct, longueur_masque);
+      quick_sort_ST(&p_st1, v_St1_Pos, nb_sequence_dico);
+      fichier_sortie_st(&p_st1, v_St1_Pos, &Ct, longueur_masque, nb_sequence_dico);
       printf("ST1= %d \n", st1);
 
     	// RAFFINER - Version 2:
@@ -270,8 +270,8 @@ int main()
         }
       }while(convergence == 0);
       int v_St2_Pos[9]; //Position dans la liste chainée
-      quick_sort_ST(&p_st2, v_St2_Pos);
-      fichier_sortie_st(&p_st2, v_St2_Pos, &Ct, longueur_masque);
+      quick_sort_ST(&p_st2, v_St2_Pos, nb_sequence_dico);
+      fichier_sortie_st(&p_st2, v_St2_Pos, &Ct, longueur_masque, nb_sequence_dico);
     }
     tete_liste_kmer4= tete_liste_kmer4->suiv_kmer;
   }
