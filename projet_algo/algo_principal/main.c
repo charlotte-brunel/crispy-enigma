@@ -38,7 +38,8 @@ int main()
 	TPtr_ensemble_sequences ptr_ensemble = malloc(sizeof(TEnsemble_Sequences));
 	ptr_info->tete_ensemble_seq = ptr_ensemble; //tete dictionnaire des séquences
 
-	TPtr_ensemble_sequences element_dictionnaire_sequence = malloc(sizeof(TEnsemble_Sequences)); // On cr�� le premier �l�ment de la structure
+	// TPtr_ensemble_sequences element_dictionnaire_sequence = malloc(sizeof(TEnsemble_Sequences)); // On cr�� le premier �l�ment de la structure
+	TPtr_ensemble_sequences element_dictionnaire_sequence = ptr_ensemble;
   TPtr_ensemble_sequences tete_liste_pour_parcours_masque = element_dictionnaire_sequence;
   TPtr_ensemble_sequences p_dictionnaire_seq = element_dictionnaire_sequence;
   TPtr_ensemble_sequences tete_liste_pour_recup_motif = element_dictionnaire_sequence;
@@ -113,7 +114,7 @@ int main()
   {
     matrice_PSSM_nouv[i] = malloc(taille_motif * sizeof(*(matrice_PSSM_nouv[i]))); //On alloue des tableaux de 'taille2' variables.
   }
-  for (i=0; i<4; i++) //initialisation de la matrice à 0:
+  for (i=0; i<nb_ligne; i++) //initialisation de la matrice à 0:
   {
     for(j=0; j<taille_motif; j++)
     {
@@ -128,7 +129,7 @@ int main()
 	printf("nb_fenetre= %d, ",nb_fenetre);printf("nb_masques= %d\n",nb_masques);
 
 	importer_sequences_fasta(&ptr_info, &ptr_ensemble );
-  afficher_sequences(&ptr_info, &ptr_ensemble );
+  //afficher_sequences(&ptr_info, &ptr_ensemble );
 
 	for ( i = 0; i <= nb_masques; i++ )
 	{
@@ -147,24 +148,25 @@ int main()
 		{
 			if (tete_liste_kmer4->nb_sequence >= 7)
 			{
-				calcul_PSSM(&tete_liste_kmer_selectionne_pour_calcul, &tete_liste_motif_PSSM_pour_calcul, &matrice_PSSM);
+				calcul_PSSM(&tete_liste_kmer_selectionne_pour_calcul, &tete_liste_motif_PSSM_pour_calcul, &matrice_PSSM, taille_motif);
 				do //repeter l'amélioration de la PSSM jusqu'à convergence
 				{
-					while (p_generation_seq != NULL) //pour chaque sequence
+					while (p_dictionnaire_seq != NULL) //pour chaque sequence
 					{
 						pos_max = -1;
 						score_max = -100;
 						//pour chaque mot:
 						while (position <= 25)
 						{
-							n_sequence = p_generation_seq->numero_sequence;
-							for (cpt_mot=0; cpt_mot <= longueur_masque; cpt_mot++)
+							n_sequence = p_dictionnaire_seq->numero_sequence;
+							for (cpt_mot=0; cpt_mot <= taille_motif; cpt_mot++)
 							{
-								p_mot->mot[cpt_mot] = p_generation_seq->sequence[position];
-								if (cpt_mot == longueur_masque)
+								p_mot->mot[cpt_mot] = p_dictionnaire_seq->sequence[position];
+								if (cpt_mot == taille_motif)
 								{
-									p_mot->mot[longueur_masque] = '\0';
-									calcul_score(&p_mot, &matrice_PSSM, n_sequence, &p_generation_seq, longueur_masque);
+									p_mot->mot[taille_motif] = '\0';
+									calcul_score(&p_mot, &matrice_PSSM, n_sequence, &p_dictionnaire_seq, taille_motif);
+									afficher_PSSM( &matrice_PSSM, taille_motif);
 								}
 								position++;
 							}
@@ -188,11 +190,11 @@ int main()
 						p_mot_selected = p_mot_selected_suiv;
 						score_max = -100;
 						pos_max = 0;
-						p_generation_seq = p_generation_seq->next_sequence;
+						p_dictionnaire_seq = p_dictionnaire_seq->suiv_seq;
 					}
-					calcul_nouvelle_PSSM(&tete_mot_selected_calcul_PSSM, &matrice_PSSM_nouv, nb_sequence, &Ct);
+					calcul_nouvelle_PSSM(&tete_mot_selected_calcul_PSSM, &matrice_PSSM_nouv, ptr_info->nb_sequences, &Ct, taille_motif);
 					printf("Ct: %s \n", Ct);
-					distance_PSSM = dist_PSSM(&matrice_PSSM, &matrice_PSSM_nouv, &distance_PSSM);
+					distance_PSSM = dist_PSSM(&matrice_PSSM, &matrice_PSSM_nouv, &distance_PSSM, taille_motif);
 					if (distance_PSSM > 0.8)
 					{
 						for (i=0; i<nb_ligne; i++) //ancienne_matrice= nouv_matrice.
@@ -209,7 +211,7 @@ int main()
 								(matrice_PSSM_nouv)[i][j] = 0;
 							}
 						}
-						p_generation_seq = tete_generation_sequence;
+						p_dictionnaire_seq = ptr_ensemble;
 						p_mot_selected = tete_mot_selected;
 						p_mot = tete_mot;
 					}
@@ -220,10 +222,10 @@ int main()
 				p_mot_selected = tete_mot_selected;
 
 				//RAFFINER - Version 1:
-				st1 = distanceHammingSt1(&Ct, &p_mot_selected, &p_st1);
+				st1 = distanceHammingSt1(&Ct, &p_mot_selected, &p_st1, taille_motif);
 				int v_St1_Pos[9]; //Position dans la liste chainée
-				quick_sort_ST(&p_st1, v_St1_Pos);
-				fichier_sortie_st(&p_st1, v_St1_Pos, &Ct);
+				quick_sort_ST(&p_st1, v_St1_Pos, ptr_info->nb_sequences);
+				fichier_sortie_st(&p_st1, v_St1_Pos, &Ct, ptr_info->nb_sequences);
 				printf("ST1= %d \n", st1);
 
 				// RAFFINER - Version 2:
@@ -231,10 +233,10 @@ int main()
 				//T' (p_st2_prim) <- mot mi de longueur l de Si, mi minimisant Dh(mi, Ct)
 				TPtr_Mot_Ameliorer_PSSM p_mot_st2_prim = tete_mot_pour_st2_prim;
 				do{
-					st2 = distanceHammingSt2(&Ct, &p_mot_selected, &p_st2);
-					p_generation_seq = tete_generation_sequence;
+					st2 = distanceHammingSt2(&Ct, &p_mot_selected, &p_st2, taille_motif);
+					p_dictionnaire_seq = ptr_ensemble;
 					p_mot_st2_prim = tete_mot_pour_st2_prim;
-					st2_prim = distanceHammingSt2_prim(&Ct, &p_generation_seq, &p_mot_st2_prim, &p_st2_prim);
+					st2_prim = distanceHammingSt2_prim(&Ct, &p_dictionnaire_seq, &p_mot_st2_prim, &p_st2_prim, taille_motif);
 					printf("St2: %d, St2 prim%d ", st2, st2_prim);
 					p_st2_prim = tete_st2_prim;
 					if (st2_prim > st2)
@@ -260,7 +262,7 @@ int main()
 						}
 						//Calcul du nouveau motif consensus à partir de la nouvelle liste T
 						p_mot_selected = new_tete_mot_selected;
-						calcul_nouvelle_PSSM(&p_mot_selected, &matrice_PSSM_nouv, nb_sequence, &Ct);
+						calcul_nouvelle_PSSM(&p_mot_selected, &matrice_PSSM_nouv, ptr_info->nb_sequences, &Ct, taille_motif);
 						p_mot_selected = new_tete_mot_selected;
 						Ptr_st new_tete_st2_prim = malloc(sizeof(st2));
 						p_st2_prim = new_tete_st2_prim;
@@ -269,8 +271,8 @@ int main()
 					}
 				}while(convergence == 0);
 				int v_St2_Pos[9]; //Position dans la liste chainée
-				quick_sort_ST(&p_st2, v_St2_Pos);
-				fichier_sortie_st(&p_st2, v_St2_Pos, &Ct);
+				quick_sort_ST(&p_st2, v_St2_Pos, ptr_info->nb_sequences);
+				fichier_sortie_st(&p_st2, v_St2_Pos, &Ct, ptr_info->nb_sequences);
 			}
 			tete_liste_kmer4 = tete_liste_kmer4->suiv_kmer;
 		}

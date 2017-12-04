@@ -276,7 +276,8 @@ int main()
     	p_mot_selected= tete_mot_selected;
       //T' (p_st2_prim) <- mot mi de longueur l de Si, mi minimisant Dh(mi, Ct)
       TPtr_Mot_Ameliorer_PSSM p_mot_st2_prim = tete_mot_pour_st2_prim;
-    	do{
+    	do
+      {
     		st2=distanceHammingSt2(&Ct, &p_mot_selected, &p_st2);
     		p_generation_seq=tete_generation_sequence;
         p_mot_st2_prim=tete_mot_pour_st2_prim;
@@ -310,7 +311,9 @@ int main()
           p_mot_selected= new_tete_mot_selected;
           Ptr_st new_tete_st2_prim= malloc(sizeof(st2));
           p_st2_prim=new_tete_st2_prim;
-        }else{
+        }
+        else
+        {
           convergence=1;
         }
       }while(convergence == 0);
