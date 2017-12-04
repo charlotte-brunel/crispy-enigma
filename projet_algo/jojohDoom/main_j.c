@@ -3,8 +3,7 @@
 #include <time.h>
 #include <string.h>
 #include "fonctions_j.h"
-
-
+//------------------------------------------------------------------------------------------------------------
 int main()
 {
   int convergence=0; //convergence = 0 tant que T(p_mot_selected) est différent de T'(p_mot_selected_prim) et est égal à 1 quand la convergence est atteinte
@@ -100,11 +99,11 @@ int main()
     }
   }
 
+//------------------------------------------------------------------------------------------------------------
   /* GENERATION ALEATOIRE DE DIX SEQUENCES POUR TEST */
   //D�claration des variables
   srand(time(0));
-
-  double nb_sequence= 10; // nombre de s�quence � g�n�rer
+  double nb_sequence_dico= 10; // nombre de s�quence � g�n�rer
   char nucleo= ' ';
 
   ptr_struct_seq tete_generation_sequence=malloc(sizeof(structure_sequence)); // On cr�� le premier �l�ment de la structure
@@ -117,10 +116,9 @@ int main()
   ptr_liste_motif element_motif= malloc(sizeof(liste_chaine_motif));
   ptr_liste_motif tete_liste_motif= element_motif;
 
-
   /* GENERATION ALEATOIRE DE DIX SEQUENCES POUR TEST */
   // D�but du code:
-  for(i=1; i<=nb_sequence; i++)
+  for(i=1; i<=nb_sequence_dico; i++)
   { //Boucle qui permet de cr�� les 10 s�quences du fichier fasta
     element_generation_sequence->numero_sequence= i;
     for (j=0; j<30; j++)
@@ -139,11 +137,12 @@ int main()
     	element_generation_sequence->next_sequence= NULL;
     }
   }
-  insert_motif(&tete_liste_pour_insertion_motif, nb_sequence, &tete_liste_motif);
+  insert_motif(&tete_liste_pour_insertion_motif, nb_sequence_dico, &tete_liste_motif);
 
+//------------------------------------------------------------------------------------------------------------
   generation_masque(longueur_masque, &masque, nb_fenetre);
-  parcours_masque(longueur_masque, &masque, nb_fenetre, nb_sequence, &tete_liste_pour_parcours_masque, &tete_liste_kmer, &tete_liste_sequence, &tete_liste_pos);
-  kmer_present_dans_chaque_sequence(nb_sequence, &tete_liste_kmer2, &tete_liste_sequence2, &tete_liste_pos2, &tete_liste_pour_recup_motif, &tete_liste_kmer_selectionne, &tete_liste_motif_PSSM);
+  parcours_masque(longueur_masque, &masque, nb_fenetre, nb_sequence_dico, &tete_liste_pour_parcours_masque, &tete_liste_kmer, &tete_liste_sequence, &tete_liste_pos);
+  kmer_present_dans_chaque_sequence(nb_sequence_dico, &tete_liste_kmer2, &tete_liste_sequence2, &tete_liste_pos2, &tete_liste_pour_recup_motif, &tete_liste_kmer_selectionne, &tete_liste_motif_PSSM);
   affichage_dictionnaire_kmer(&tete_liste_kmer3, &tete_liste_sequence3, &tete_liste_pos3);
   affichage_motif_selectionne(&tete_liste_kmer_selectionne2, &tete_liste_motif_PSSM2);
   // On calculera la PSSM seulement pour les kmers qui sont présent dans plus de 7 sequences:
@@ -151,7 +150,7 @@ int main()
   {
     if (tete_liste_kmer4->nb_sequence>=7)
     {
-      calcul_PSSM(&tete_liste_kmer_selectionne_pour_calcul, &tete_liste_motif_PSSM_pour_calcul, &matrice_PSSM);
+      calcul_PSSM(&tete_liste_kmer_selectionne_pour_calcul, &tete_liste_motif_PSSM_pour_calcul, &matrice_PSSM, longueur_masque);
     	do //repeter l'amélioration de la PSSM jusqu'à convergence
     	{
     		while (p_generation_seq != NULL) //pour chaque sequence
@@ -195,7 +194,7 @@ int main()
     			pos_max=0;
     			p_generation_seq= p_generation_seq-> next_sequence;
     		}
-    		calcul_nouvelle_PSSM(&tete_mot_selected_calcul_PSSM, &matrice_PSSM_nouv, nb_sequence, &Ct);
+    		calcul_nouvelle_PSSM(&tete_mot_selected_calcul_PSSM, &matrice_PSSM_nouv, nb_sequence_dico, &Ct);
     		printf("Ct: %s \n", Ct);
     		distance_PSSM=dist_PSSM(&matrice_PSSM, &matrice_PSSM_nouv, &distance_PSSM);
 
@@ -260,7 +259,7 @@ int main()
           }
           //Calcul du nouveau motif consensus à partir de la nouvelle liste T
           p_mot_selected= new_tete_mot_selected;
-          calcul_nouvelle_PSSM(&p_mot_selected, &matrice_PSSM_nouv, nb_sequence, &Ct);
+          calcul_nouvelle_PSSM(&p_mot_selected, &matrice_PSSM_nouv, nb_sequence_dico, &Ct);
           p_mot_selected= new_tete_mot_selected;
           Ptr_st new_tete_st2_prim= malloc(sizeof(st2));
           p_st2_prim=new_tete_st2_prim;

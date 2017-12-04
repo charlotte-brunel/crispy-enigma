@@ -27,7 +27,7 @@
   typedef struct TInfo_ensemble_sequences TInfo_ensemble_sequences;
   struct TInfo_ensemble_sequences
   {
-    int nb_sequences;
+    double nb_sequences;
     TPtr_ensemble_sequences tete_ensemble_seq; //tete pointant sur la liste chainée de sequences
   };
   typedef TInfo_ensemble_sequences* TPtr_info_ensemble_sequences;

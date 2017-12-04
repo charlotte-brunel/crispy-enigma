@@ -21,7 +21,7 @@ typedef structure_sequence* ptr_struct_seq; // on cr�� le type ptr_struct_se
   struct TCellkmer{
     struct TCellkmer* suiv_kmer; //Pointeur sur le kmer suivant
     struct TCellSequence* tete_sequence; //Pointer qui pointe sur une liste chain�e de s�quence o� le kmer est retrouv�
-    int nb_sequence; // nombre de séquence dans lesquelles le kmer est présent
+    double nb_sequence; // nombre de séquence dans lesquelles le kmer est présent
     char kmer[]; //"TCC" par exemple
   };
   typedef TCellkmer* TPtr_Cellkmer; //Pointeur sur Tcellkmer
@@ -51,7 +51,7 @@ typedef structure_sequence* ptr_struct_seq; // on cr�� le type ptr_struct_se
   struct TCellkmer_selectionne{
     struct TCellkmer_selectionne* suiv_kmer_selectionne;
     struct TCell_Motif_PSSM* tete_motif_PSSM;
-    int nb_sequence;
+    double nb_sequence;// nombre de séquence dans lesquelles le kmer est présent
     char kmer[];
   };
   typedef TCellkmer_selectionne* TPtr_Cellkmer_selectionne;
@@ -102,21 +102,21 @@ typedef structure_sequence* ptr_struct_seq; // on cr�� le type ptr_struct_se
  * * *                                           FONCTIONS                                               * * *
  *************************************************************************************************************/
 
-void insert_motif(ptr_struct_seq* adr_tete_structure, int nb_sequence, ptr_liste_motif* tete_liste_motif);
+void insert_motif(ptr_struct_seq* adr_tete_structure, double nb_sequence, ptr_liste_motif* tete_liste_motif);
 int random_number(int max_number, int zero_excluded);
 void random_nucleotide(void* adr_nucleo);
 void generation_masque(int longueur_masque, void* adr_masque, int nb_fenetre);
 
 void generation_kmer(int position_kmer, char* k_mer, TPtr_Cellkmer* adr_liste_kmer, TPtr_CellSequence* adr_liste_sequence, ptr_struct_seq* adr_liste_generation_sequence, TPtr_CellPos* adr_liste_pos);
-void parcours_masque(int longueur_masque, void* adr_masque, int nb_fenetre, int nb_sequence, ptr_struct_seq* adr_tete_struct_sequence, TPtr_Cellkmer* adr_tete_liste_kmer, TPtr_CellSequence* adr_tete_liste_sequence, TPtr_CellPos* adr_tete_liste_pos);
+void parcours_masque(int longueur_masque, void* adr_masque, int nb_fenetre, double nb_sequence, ptr_struct_seq* adr_tete_struct_sequence, TPtr_Cellkmer* adr_tete_liste_kmer, TPtr_CellSequence* adr_tete_liste_sequence, TPtr_CellPos* adr_tete_liste_pos);
 
-void recuperer_motif_kmer(TPtr_Cellkmer* adr_parcours_kmer, TPtr_Cellkmer_selectionne *adr_tete_kmer_selectionne, TPtr_Cell_Motif_PSSM* adr_tete_motif_PSSM, TPtr_CellSequence* adr_cell_sequence, TPtr_CellPos* adr_cell_pos, ptr_struct_seq* adr_generation_sequence, int nb_sequence_kmer);
-void kmer_present_dans_chaque_sequence(int nb_sequence, TPtr_Cellkmer* adr_cell_kmer, TPtr_CellSequence *adr_cell_sequence, TPtr_CellPos *adr_cell_pos, ptr_struct_seq* adr_cell_generation_sequence, TPtr_Cellkmer_selectionne* adr_cell_kmer_selectionne, TPtr_Cell_Motif_PSSM* adr_cell_motif_PSSM);
+void recuperer_motif_kmer(TPtr_Cellkmer* adr_parcours_kmer, TPtr_Cellkmer_selectionne *adr_tete_kmer_selectionne, TPtr_Cell_Motif_PSSM* adr_tete_motif_PSSM, TPtr_CellSequence* adr_cell_sequence, TPtr_CellPos* adr_cell_pos, ptr_struct_seq* adr_generation_sequence, double nb_sequence_kmer);
+void kmer_present_dans_chaque_sequence(double nb_sequence, TPtr_Cellkmer* adr_cell_kmer, TPtr_CellSequence *adr_cell_sequence, TPtr_CellPos *adr_cell_pos, ptr_struct_seq* adr_cell_generation_sequence, TPtr_Cellkmer_selectionne* adr_cell_kmer_selectionne, TPtr_Cell_Motif_PSSM* adr_cell_motif_PSSM);
 
 void affichage_dictionnaire_kmer(TPtr_Cellkmer* adr_tete_kmer, TPtr_CellSequence* adr_tete_sequence, TPtr_CellPos* adr_tete_pos);
 void affichage_motif_selectionne(TPtr_Cellkmer_selectionne* adr_tete_kmer_selectionne, TPtr_Cell_Motif_PSSM* adr_tete_motif);
 
-void calcul_PSSM(TPtr_Cellkmer_selectionne *adr_cell_kmer_selectionne, TPtr_Cell_Motif_PSSM *adr_cell_motif_PSSM, double*** adr_matrice_PSSM);
+void calcul_PSSM(TPtr_Cellkmer_selectionne *adr_cell_kmer_selectionne, TPtr_Cell_Motif_PSSM *adr_cell_motif_PSSM, double*** adr_matrice_PSSM, int taille_motif);
 void calcul_nouvelle_PSSM(TPtr_Cell_Motif_PSSM *adr_cell_mot_selected, double*** adr_matrice_PSSM, double nb_sequence, char (*adr_Ct)[6]);
 void calcul_score(TPtr_Mot_Ameliorer_PSSM* adr_mot, double*** adr_matrice_PSSM, int n_sequence, ptr_struct_seq* adr_generation_sequence, int longueur_masque);
 double dist_PSSM(double*** adr_matrice_PSSM, double*** adr_matrice_PSSM_nouv, double* distance_PSSM);

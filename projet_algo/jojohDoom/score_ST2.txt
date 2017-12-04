@@ -1,14 +1,14 @@
-OCCURRENCE: aaaaa --> SCORE: 0 
-OCCURRENCE: aaaaa --> SCORE: 0 
-OCCURRENCE: aaaaa --> SCORE: 0 
-OCCURRENCE: aaaaa --> SCORE: 0 
-OCCURRENCE: aaaaa --> SCORE: 0 
-OCCURRENCE: aaaaa --> SCORE: 0 
-OCCURRENCE: aaaaa --> SCORE: 0 
-OCCURRENCE: caaaa --> SCORE: 1 
-OCCURRENCE: ataaa --> SCORE: 1 
-OCCURRENCE: ataaa --> SCORE: 1 
+OCCURRENCE: aaaag --> SCORE: 0 
+OCCURRENCE: aaaag --> SCORE: 0 
+OCCURRENCE: aaaag --> SCORE: 0 
+OCCURRENCE: aaaag --> SCORE: 0 
+OCCURRENCE: aaatg --> SCORE: 1 
+OCCURRENCE: gaaag --> SCORE: 1 
+OCCURRENCE: aaacg --> SCORE: 1 
+OCCURRENCE: aaagg --> SCORE: 1 
+OCCURRENCE: aaaac --> SCORE: 1 
+OCCURRENCE: aaacc --> SCORE: 2 
 
 
 MOTIF CONSENSUS: 
-aaaaa
+aaaag
