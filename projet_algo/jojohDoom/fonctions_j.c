@@ -7,10 +7,10 @@
 #include "fonctions_j.h"
 //------------------------------------------------------------------------------------------------------------
 //Fonction insert motif � enlever
-void insert_motif(ptr_struct_seq* adr_tete_structure, int nb_sequence, ptr_liste_motif* tete_liste_motif)
+void insert_motif(ptr_struct_seq* adr_tete_structure, double nb_sequence, ptr_liste_motif* tete_liste_motif)
 {
   char subst= ' ';
-  int i,k; // compteur
+  int i,j; // compteur
   ptr_struct_seq p= *adr_tete_structure;
   ptr_liste_motif p_motif= *tete_liste_motif;
   p_motif->next_motif= NULL;
@@ -38,14 +38,14 @@ void insert_motif(ptr_struct_seq* adr_tete_structure, int nb_sequence, ptr_liste
         motif[position_subst]=subst;
         break;
     }
-    for (k=0; k<(6); k++)
+    for (j=0; j<6; j++)
     {
-      p->sequence[pos+k]= motif[k]; // On remplace la s�quence actuelle par une occurrence du motif
+      p->sequence[pos+j]= motif[j]; // On remplace la séquence actuelle par une occurrence du motif
     }
     p=p->next_sequence;
     if (i != nb_sequence)
     {
-      ptr_liste_motif p_motif_next= (liste_chaine_motif*)malloc(sizeof(liste_chaine_motif)); // On cr�e le prochain �l�ment de la liste chain�e de motif
+      ptr_liste_motif p_motif_next= (liste_chaine_motif*)malloc(sizeof(liste_chaine_motif)); // On créer le prochain élément de la liste chainée de motif
       strcpy(p_motif->motif_substitue, motif);
       p_motif-> next_motif= p_motif_next;
       p_motif=p_motif_next;
@@ -60,8 +60,8 @@ void insert_motif(ptr_struct_seq* adr_tete_structure, int nb_sequence, ptr_liste
  int random_number(int max_number, int zero_excluded)
  {
 	int randomNumber;
-	if(zero_excluded==0)
-  { //on peut tomber sur 0 al�atoirement
+	if(zero_excluded==0) //on peut tomber sur 0 al�atoirement
+  {
 		randomNumber= rand() % max_number;
 	}else{
     randomNumber= rand() % max_number +1;
@@ -128,8 +128,8 @@ void generation_kmer(int position_kmer, char* k_mer, TPtr_Cellkmer* adr_liste_km
         //premier element de la liste chainee de sequence:
         while (p_liste_sequence->suiv_sequence != NULL)
         {
-          if (p_generation_seq->numero_sequence==p_liste_sequence->sequence)
-          { //Si le kmer a d�j� �t� trouv� dans cette s�quence
+          if (p_generation_seq->numero_sequence==p_liste_sequence->sequence)//Si le kmer a d�j� �t� trouv� dans cette s�quence
+          {
             TPtr_CellPos p_liste_pos= p_liste_sequence->tete_pos;
             while (p_liste_pos->suiv_pos != NULL)
             {
@@ -143,8 +143,8 @@ void generation_kmer(int position_kmer, char* k_mer, TPtr_Cellkmer* adr_liste_km
           }
           p_liste_sequence=p_liste_sequence->suiv_sequence;
         }
-        if (p_generation_seq->numero_sequence==p_liste_sequence->sequence)
-        { //Si le kmer a d�j� �t� trouv� dans cette s�quence
+        if (p_generation_seq->numero_sequence==p_liste_sequence->sequence) //Si le kmer a d�j� �t� trouv� dans cette s�quence
+        {
           TPtr_CellPos p_liste_pos= p_liste_sequence->tete_pos;
           while (p_liste_pos->suiv_pos != NULL)
           {
@@ -185,7 +185,7 @@ void generation_kmer(int position_kmer, char* k_mer, TPtr_Cellkmer* adr_liste_km
   }
 }
 //------------------------------------------------------------------------------------------------------------
-void parcours_masque(int longueur_masque, void* adr_masque, int nb_fenetre, int nb_sequence, ptr_struct_seq* adr_tete_struct_sequence, TPtr_Cellkmer* adr_tete_liste_kmer, TPtr_CellSequence* adr_tete_liste_sequence, TPtr_CellPos* adr_tete_liste_pos)
+void parcours_masque(int longueur_masque, void* adr_masque, int nb_fenetre, double nb_sequence, ptr_struct_seq* adr_tete_struct_sequence, TPtr_Cellkmer* adr_tete_liste_kmer, TPtr_CellSequence* adr_tete_liste_sequence, TPtr_CellPos* adr_tete_liste_pos)
 {
   ptr_struct_seq p_generation_seq = *adr_tete_struct_sequence;
   TPtr_Cellkmer p_kmer= *adr_tete_liste_kmer;
@@ -227,13 +227,13 @@ void parcours_masque(int longueur_masque, void* adr_masque, int nb_fenetre, int 
 }
 //------------------------------------------------------------------------------------------------------------
 //Procedure pour remplir le dictionnaire de kmer s�lectionn� pour le calcul de la PSSM:
-void recuperer_motif_kmer(TPtr_Cellkmer* adr_parcours_kmer, TPtr_Cellkmer_selectionne *adr_tete_kmer_selectionne, TPtr_Cell_Motif_PSSM* adr_tete_motif_PSSM, TPtr_CellSequence* adr_cell_sequence, TPtr_CellPos* adr_cell_pos, ptr_struct_seq* adr_generation_sequence, int nb_sequence_kmer)
+void recuperer_motif_kmer(TPtr_Cellkmer* adr_parcours_kmer, TPtr_Cellkmer_selectionne *adr_tete_kmer_selectionne, TPtr_Cell_Motif_PSSM* adr_tete_motif_PSSM, TPtr_CellSequence* adr_cell_sequence, TPtr_CellPos* adr_cell_pos, ptr_struct_seq* adr_generation_sequence, double nb_sequence_kmer)
 {
   TPtr_Cellkmer p_kmer= *adr_parcours_kmer;
   TPtr_Cellkmer_selectionne p_kmer_selectionne= *adr_tete_kmer_selectionne;
   ptr_struct_seq tete_generation_seq = *adr_generation_sequence;
   ptr_struct_seq p_generation_seq= tete_generation_seq;
-  int longueur_sequence= 30;
+  int longueur_sequence= 30; //TAILLE_MAX_SEQ
   int longueur_motif=5;
   int i, sequence_actuelle;
   if (p_kmer_selectionne->suiv_kmer_selectionne == NULL) //la liste est vide:
@@ -310,7 +310,7 @@ void recuperer_motif_kmer(TPtr_Cellkmer* adr_parcours_kmer, TPtr_Cellkmer_select
 }
 //------------------------------------------------------------------------------------------------------------
 //Fonction pour trouver si le kmer est trouv� dans chaque sequence:
-void kmer_present_dans_chaque_sequence(int nb_sequence, TPtr_Cellkmer* adr_cell_kmer, TPtr_CellSequence *adr_cell_sequence, TPtr_CellPos *adr_cell_pos, ptr_struct_seq* adr_cell_generation_sequence, TPtr_Cellkmer_selectionne* adr_cell_kmer_selectionne, TPtr_Cell_Motif_PSSM* adr_cell_motif_PSSM)
+void kmer_present_dans_chaque_sequence(double nb_sequence, TPtr_Cellkmer* adr_cell_kmer, TPtr_CellSequence *adr_cell_sequence, TPtr_CellPos *adr_cell_pos, ptr_struct_seq* adr_cell_generation_sequence, TPtr_Cellkmer_selectionne* adr_cell_kmer_selectionne, TPtr_Cell_Motif_PSSM* adr_cell_motif_PSSM)
 {
   TPtr_Cellkmer p_parcours_kmer= *adr_cell_kmer;
   TPtr_Cellkmer_selectionne tete_kmer_selectionne= *adr_cell_kmer_selectionne;
@@ -320,7 +320,7 @@ void kmer_present_dans_chaque_sequence(int nb_sequence, TPtr_Cellkmer* adr_cell_
   TPtr_CellSequence tete_sequence= *adr_cell_sequence;
   TPtr_CellPos tete_pos= *adr_cell_pos;
   ptr_struct_seq tete_generation_sequence= *adr_cell_generation_sequence;
-  int nb_sequence_par_kmer=0;
+  double nb_sequence_par_kmer=0;
 
   while (p_parcours_kmer != NULL)
   {
@@ -345,7 +345,7 @@ void kmer_present_dans_chaque_sequence(int nb_sequence, TPtr_Cellkmer* adr_cell_
 void affichage_dictionnaire_kmer(TPtr_Cellkmer* adr_tete_kmer, TPtr_CellSequence* adr_tete_sequence, TPtr_CellPos* adr_tete_pos)
 {
   TPtr_Cellkmer p_kmer= *adr_tete_kmer;
-  FILE* fichier_dictionnaire= NULL;
+  FILE* fichier_dictionnaire;
   fichier_dictionnaire= fopen("dictionnaire_kmer.txt", "w");
   while (p_kmer != NULL)
   {
@@ -362,7 +362,7 @@ void affichage_dictionnaire_kmer(TPtr_Cellkmer* adr_tete_kmer, TPtr_CellSequence
       }
       p_sequence=p_sequence->suiv_sequence;
     }
-    fprintf(fichier_dictionnaire, "Nb de séquence dans lesquelles le kmer est présent: %d \n", p_kmer->nb_sequence);
+    fprintf(fichier_dictionnaire, "Nb de séquence dans lesquelles le kmer est présent: %lf \n", p_kmer->nb_sequence);
     fprintf(fichier_dictionnaire, "\n\n\n");
     p_kmer=p_kmer->suiv_kmer;
   }
@@ -379,7 +379,7 @@ void affichage_motif_selectionne(TPtr_Cellkmer_selectionne* adr_tete_kmer_select
   {
     TPtr_Cell_Motif_PSSM p_motif= p_kmer_selectionne->tete_motif_PSSM;
     fprintf(fichier_kmer_selectionne, "KMER: %s \n", p_kmer_selectionne->kmer);
-    fprintf(fichier_kmer_selectionne, "Present dans %d sequences \n", p_kmer_selectionne->nb_sequence);
+    fprintf(fichier_kmer_selectionne, "Present dans %lf sequences \n", p_kmer_selectionne->nb_sequence);
     while(p_motif != NULL)
     {
       fprintf(fichier_kmer_selectionne, "MOTIF: %s \n", p_motif->motif);
@@ -391,22 +391,22 @@ void affichage_motif_selectionne(TPtr_Cellkmer_selectionne* adr_tete_kmer_select
   return;
 }
 //------------------------------------------------------------------------------------------------------------
-void calcul_PSSM(TPtr_Cellkmer_selectionne *adr_cell_kmer_selectionne, TPtr_Cell_Motif_PSSM *adr_cell_motif_PSSM, FILE** file_info, double*** adr_matrice_PSSM)
+void calcul_PSSM(TPtr_Cellkmer_selectionne *adr_cell_kmer_selectionne, TPtr_Cell_Motif_PSSM *adr_cell_motif_PSSM, double*** adr_matrice_PSSM, int taille_motif)
 {
-  *file_info= fopen("PSSM_Motif_Trouve.txt", "w"); // Dans ce fichier on va �crire la PSSM pr�visionnelle
+  FILE* file_PSSM;
+  file_PSSM= fopen("PSSM_Motif_Trouve.txt", "w"); // Dans ce fichier on va �crire la PSSM pr�visionnelle
+
   TPtr_Cellkmer_selectionne p_kmer_selectionne= *adr_cell_kmer_selectionne;
-  double nb_sequence=p_kmer_selectionne->nb_sequence;
-  int taille_motif=5;
-  double add= 1/nb_sequence;
+  double add = 1/(p_kmer_selectionne->nb_sequence);
   char to_print;
   double maximum= -1;
   double** p_matrice_PSSM= *adr_matrice_PSSM;
-  int i, j, a, t, c, g, k;
-  //calcul de la PSSM � partir de la liste chain�e de motif
+  int i, j, a, t, c, g;
+  //calcul de la PSSM à partir de la liste chain�e de motif
   TPtr_Cell_Motif_PSSM p_motif=p_kmer_selectionne->tete_motif_PSSM;
   do
   { // on remplit la PSSM
-    for (i=0; i<6; i++)
+    for (i=0; i<taille_motif; i++)
     {
       switch(p_motif->motif[i])
       {
@@ -428,38 +428,37 @@ void calcul_PSSM(TPtr_Cellkmer_selectionne *adr_cell_kmer_selectionne, TPtr_Cell
   }while (p_motif != NULL);
 
   //ecriture de la matrice PSSM dans le fichier d'info.
-  fprintf(*file_info, "\n\nPSSM: \n");
-  fprintf(*file_info, "a  ");
+  fprintf(file_PSSM, "\n\nPSSM: \n");
+  fprintf(file_PSSM, "a  ");
   for (a=0; a<taille_motif; a++)
   {
-    fprintf(*file_info, "%.2f ", p_matrice_PSSM[0][a]);
+    fprintf(file_PSSM, "%.2f ", p_matrice_PSSM[0][a]);
   }
-  fprintf(*file_info, "\nt  ");
+  fprintf(file_PSSM, "\nt  ");
   for (t=0; t<taille_motif; t++)
   {
-    fprintf(*file_info, "%.2f ", p_matrice_PSSM[1][t]);
+    fprintf(file_PSSM, "%.2f ", p_matrice_PSSM[1][t]);
   }
-  fprintf(*file_info, "\nc  ");
+  fprintf(file_PSSM, "\nc  ");
   for (c=0; c<taille_motif; c++)
   {
-    fprintf(*file_info, "%.2f ", p_matrice_PSSM[2][c]);
+    fprintf(file_PSSM, "%.2f ", p_matrice_PSSM[2][c]);
   }
-  fprintf(*file_info, "\ng  ");
+  fprintf(file_PSSM, "\ng  ");
   for (g=0; g<taille_motif; g++)
   {
-    fprintf(*file_info, "%.2f ", p_matrice_PSSM[3][g]);
+    fprintf(file_PSSM, "%.2f ", p_matrice_PSSM[3][g]);
   }
-
   //ecriture du motif consensus dans le fichier a partir de la matrice PSSM:
-  fprintf(*file_info, "\n\nMotif Consensus: \n" );
-  for (j=0; j<taille_motif; j++)
+  fprintf(file_PSSM, "\n\nMotif Consensus: \n" );
+  for (i=0; i<taille_motif; i++)
   {
-    for(k=0; k<4; k++)
+    for(j=0; j<4; j++)
     {
-      if (p_matrice_PSSM[k][j]> maximum)
+      if (p_matrice_PSSM[j][i]> maximum)
       {
-        maximum=p_matrice_PSSM[k][j];
-        switch (k)
+        maximum=p_matrice_PSSM[j][i];
+        switch (j)
         {
           case 0:
               to_print= 'a';
@@ -477,28 +476,27 @@ void calcul_PSSM(TPtr_Cellkmer_selectionne *adr_cell_kmer_selectionne, TPtr_Cell
       }
     }
     maximum=-1; //on remet maximum a -1 avant d'�valuer la nucl�otide majoritaire de la s�quence suivante !
-    fprintf(*file_info, "%c", to_print);
+    fprintf(file_PSSM, "%c", to_print);
   }
-  fprintf(*file_info, "\n\n\n");
-  fclose(*file_info);
+  fprintf(file_PSSM, "\n\n\n");
+  fclose(file_PSSM);
   return;
 }
 //------------------------------------------------------------------------------------------------------------
-void calcul_nouvelle_PSSM(TPtr_Cell_Motif_PSSM *adr_cell_mot_selected, double*** adr_matrice_PSSM_nouv, double nb_sequence, char (*adr_Ct)[6])
+void calcul_nouvelle_PSSM(TPtr_Cell_Motif_PSSM *adr_cell_mot_selected, double*** adr_matrice_PSSM_nouv, double nb_sequence, char (*adr_Ct)[6], int taille_motif)
 {
   FILE* file_nouv_PSSM;
   file_nouv_PSSM= fopen("Nouvelle_PSSM_Motif_Trouve.txt", "a"); // Dans ce fichier on va �crire la PSSM pr�visionnelle
-  int taille_motif=5;
-  double add= 1/nb_sequence;
+  double add = 1/nb_sequence;
   TPtr_Cell_Motif_PSSM p_mot= *adr_cell_mot_selected;
   char to_print;
   double maximum= -1;
   double** p_matrice_PSSM_nouv= *adr_matrice_PSSM_nouv;
-  int i, j, a, t, c, g, k;
+  int i, j, a, t, c, g;
   //calcul de la PSSM � partir de la liste chain�e de motif
   do
   { // on remplit la PSSM
-    for (i=0; i<6; i++)
+    for (i=0; i< taille_motif; i++)
     {
       switch(p_mot->motif[i])
       {
@@ -543,13 +541,13 @@ void calcul_nouvelle_PSSM(TPtr_Cell_Motif_PSSM *adr_cell_mot_selected, double***
   }
   //ecriture du motif consensus dans le fichier a partir de la matrice PSSM:
   fprintf(file_nouv_PSSM, "\n\nMotif Consensus: \n" );
-  for (j=0; j<taille_motif; j++)
+  for (i=0; i<taille_motif; i++)
   {
-    for(k=0; k<4; k++)
+    for(j=0; j<4; j++)
     {
-      if (p_matrice_PSSM_nouv[k][j]> maximum){
-        maximum=p_matrice_PSSM_nouv[k][j];
-        switch (k)
+      if (p_matrice_PSSM_nouv[j][i]> maximum){
+        maximum=p_matrice_PSSM_nouv[j][i];
+        switch (j)
         {
           case 0:
               to_print= 'a';
@@ -566,8 +564,8 @@ void calcul_nouvelle_PSSM(TPtr_Cell_Motif_PSSM *adr_cell_mot_selected, double***
         }
       }
     }
-    *adr_Ct[j]=to_print;
-    printf("MOTIF CONSENSUS: %c", *adr_Ct[j]);
+    *adr_Ct[i]=to_print;
+    printf("MOTIF CONSENSUS: %c", *adr_Ct[i]);
     maximum=-1; //on remet maximum a -1 avant d'�valuer la nucl�otide majoritaire de la s�quence suivante !
     fprintf(file_nouv_PSSM, "%c", to_print);
   }
@@ -648,7 +646,7 @@ void calcul_score(TPtr_Mot_Ameliorer_PSSM* adr_mot, double*** adr_matrice_PSSM, 
   return;
 }
 //------------------------------------------------------------------------------------------------------------
-double dist_PSSM(double*** adr_matrice_PSSM, double*** adr_matrice_PSSM_nouv, double* distance_PSSM)
+double dist_PSSM(double*** adr_matrice_PSSM, double*** adr_matrice_PSSM_nouv, double* distance_PSSM, int taille_motif)
 {
 	double** p_ancienne_matrice_PSSM= *adr_matrice_PSSM;
 	double** p_nouvelle_matrice_PSSM= *adr_matrice_PSSM_nouv;
@@ -656,7 +654,7 @@ double dist_PSSM(double*** adr_matrice_PSSM, double*** adr_matrice_PSSM_nouv, do
 	double somme_distance=0;
 	for (i=0; i< 4; i++)
 	{
-		for (j=0; j<6; j++)
+		for (j=0; j<taille_motif; j++)
 		{
 			somme_distance= somme_distance + fabs(p_ancienne_matrice_PSSM[i][j] - p_nouvelle_matrice_PSSM[i][j]);
 		}
@@ -666,7 +664,7 @@ double dist_PSSM(double*** adr_matrice_PSSM, double*** adr_matrice_PSSM_nouv, do
 	return(somme_distance);
 }
 //------------------------------------------------------------------------------------------------------------
-int distanceHammingSt1(char (*adr_Ct)[6], TPtr_Cell_Motif_PSSM* adr_mot_selected, Ptr_st* adr_st1)
+int distanceHammingSt1(char (*adr_Ct)[6], TPtr_Cell_Motif_PSSM* adr_mot_selected, Ptr_st* adr_st1, int taille_motif)
 {
 	int i;
 	int Dh=0;
@@ -676,7 +674,7 @@ int distanceHammingSt1(char (*adr_Ct)[6], TPtr_Cell_Motif_PSSM* adr_mot_selected
 
 	while (p_mot_selected !=NULL)
 	{
-		for (i=0; i<5; i++)
+		for (i=0; i<taille_motif; i++)
 		{
 			if (*adr_Ct[i] != p_mot_selected->motif[i])
 			{
@@ -701,7 +699,7 @@ int distanceHammingSt1(char (*adr_Ct)[6], TPtr_Cell_Motif_PSSM* adr_mot_selected
 	return(st1-1); // Parce que le dernier mot NULL de la liste chainée est compté
 }
 //------------------------------------------------------------------------------------------------------------
-int distanceHammingSt2(char (*adr_Ct)[6], TPtr_Cell_Motif_PSSM* adr_mot_selected, Ptr_st* adr_st2)
+int distanceHammingSt2(char (*adr_Ct)[6], TPtr_Cell_Motif_PSSM* adr_mot_selected, Ptr_st* adr_st2, int taille_motif)
 {
   printf("DISTANCE HAMMING ST2");
   int st2=0;
@@ -712,7 +710,7 @@ int distanceHammingSt2(char (*adr_Ct)[6], TPtr_Cell_Motif_PSSM* adr_mot_selected
 	printf("IN ST2");
 	while (p_mot_selected !=NULL)
 	{
-		for (i=0; i<5; i++)
+		for (i=0; i<taille_motif; i++)
 		{
 			if (*adr_Ct[i] != p_mot_selected->motif[i])
 			{
@@ -736,7 +734,7 @@ int distanceHammingSt2(char (*adr_Ct)[6], TPtr_Cell_Motif_PSSM* adr_mot_selected
 	return(st2);
 }
 //------------------------------------------------------------------------------------------------------------
-int distanceHammingSt2_prim(char (*adr_Ct)[6], ptr_struct_seq* adr_generation_sequence, TPtr_Mot_Ameliorer_PSSM *adr_mot, Ptr_st* adr_st2_prim)
+int distanceHammingSt2_prim(char (*adr_Ct)[6], ptr_struct_seq* adr_generation_sequence, TPtr_Mot_Ameliorer_PSSM *adr_mot, Ptr_st* adr_st2_prim, int taille_motif)
 {
 	printf("IN ST2 PRIM");
 	int i;
@@ -752,7 +750,7 @@ int distanceHammingSt2_prim(char (*adr_Ct)[6], ptr_struct_seq* adr_generation_se
 	{
 		while (position<=25)
 		{
-			for (i=0; i<5; i++)
+			for (i=0; i<taille_motif; i++)
 			{
         p_mot->mot[i]=p_generation_seq->sequence[position];
 				if (*adr_Ct[i] != p_mot->mot[i])
@@ -876,7 +874,7 @@ void quick_sort_ST(Ptr_st* adr_st1, int* v_St1_Pos)
   return;
 }
 //--------------------------------------------------------------------------------------------------
-void fichier_sortie_st(Ptr_st* adr_st1, int* v_St1_Pos, char (*adr_Ct)[6])
+void fichier_sortie_st(Ptr_st* adr_st1, int* v_St1_Pos, char (*adr_Ct)[6], int taille_motif)
 {
   Ptr_st p_st1= *adr_st1;
   int i, position, cpt;
@@ -894,7 +892,7 @@ void fichier_sortie_st(Ptr_st* adr_st1, int* v_St1_Pos, char (*adr_Ct)[6])
     fprintf(fichier_sortie_st2, "OCCURRENCE: %s --> SCORE: %d \n", p_st1->mot, p_st1->distance_hamming);
   }
   fprintf(fichier_sortie_st2, "\n\nMOTIF CONSENSUS: \n");
-  for (i=0; i<5; i++)
+  for (i=0; i<taille_motif; i++)
   {
     fprintf(fichier_sortie_st2, "%c", *adr_Ct[i]);
   }

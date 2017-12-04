@@ -27,7 +27,7 @@
   typedef struct TInfo_ensemble_sequences TInfo_ensemble_sequences;
   struct TInfo_ensemble_sequences
   {
-    int nb_sequences;
+    double nb_sequences;
     TPtr_ensemble_sequences tete_ensemble_seq; //tete pointant sur la liste chainée de sequences
   };
   typedef TInfo_ensemble_sequences* TPtr_info_ensemble_sequences;
@@ -99,7 +99,7 @@
   typedef struct TMot_Ameliorer_PSSM TMot_Ameliorer_PSSM;
   struct TMot_Ameliorer_PSSM
   {
-    int score_mot; //score du mot
+    double score_mot; //score du mot
     struct TMot_Ameliorer_PSSM * next_mot; //pointeur sur mot suivant
     char mot[]; //Mot de longueur motif
   };
