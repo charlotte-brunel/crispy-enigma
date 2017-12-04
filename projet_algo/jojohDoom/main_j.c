@@ -194,9 +194,9 @@ int main()
     			pos_max=0;
     			p_generation_seq= p_generation_seq-> next_sequence;
     		}
-    		calcul_nouvelle_PSSM(&tete_mot_selected_calcul_PSSM, &matrice_PSSM_nouv, nb_sequence_dico, &Ct);
+    		calcul_nouvelle_PSSM(&tete_mot_selected_calcul_PSSM, &matrice_PSSM_nouv, nb_sequence_dico, &Ct, longueur_masque);
     		printf("Ct: %s \n", Ct);
-    		distance_PSSM=dist_PSSM(&matrice_PSSM, &matrice_PSSM_nouv, &distance_PSSM);
+    		distance_PSSM=dist_PSSM(&matrice_PSSM, &matrice_PSSM_nouv, &distance_PSSM, longueur_masque);
 
     		if (distance_PSSM>0.8)
     		{
@@ -219,10 +219,10 @@ int main()
     	p_mot_selected= tete_mot_selected;
 
     	//RAFFINER - Version 1:
-    	st1=distanceHammingSt1(&Ct, &p_mot_selected, &p_st1);
+    	st1=distanceHammingSt1(&Ct, &p_mot_selected, &p_st1, longueur_masque);
       int v_St1_Pos[9]; //Position dans la liste chainée
       quick_sort_ST(&p_st1, v_St1_Pos);
-      fichier_sortie_st(&p_st1, v_St1_Pos, &Ct);
+      fichier_sortie_st(&p_st1, v_St1_Pos, &Ct, longueur_masque);
       printf("ST1= %d \n", st1);
 
     	// RAFFINER - Version 2:
@@ -230,10 +230,10 @@ int main()
       //T' (p_st2_prim) <- mot mi de longueur l de Si, mi minimisant Dh(mi, Ct)
       TPtr_Mot_Ameliorer_PSSM p_mot_st2_prim = tete_mot_pour_st2_prim;
     	do{
-    		st2=distanceHammingSt2(&Ct, &p_mot_selected, &p_st2);
+    		st2=distanceHammingSt2(&Ct, &p_mot_selected, &p_st2, longueur_masque);
     		p_generation_seq=tete_generation_sequence;
         p_mot_st2_prim=tete_mot_pour_st2_prim;
-    		st2_prim=distanceHammingSt2_prim(&Ct, &p_generation_seq, &p_mot_st2_prim, &p_st2_prim);
+    		st2_prim=distanceHammingSt2_prim(&Ct, &p_generation_seq, &p_mot_st2_prim, &p_st2_prim, longueur_masque);
     		printf("St2: %d, St2 prim%d ", st2, st2_prim);
         p_st2_prim= tete_st2_prim;
         if (st2_prim> st2)
@@ -259,7 +259,7 @@ int main()
           }
           //Calcul du nouveau motif consensus à partir de la nouvelle liste T
           p_mot_selected= new_tete_mot_selected;
-          calcul_nouvelle_PSSM(&p_mot_selected, &matrice_PSSM_nouv, nb_sequence_dico, &Ct);
+          calcul_nouvelle_PSSM(&p_mot_selected, &matrice_PSSM_nouv, nb_sequence_dico, &Ct, longueur_masque);
           p_mot_selected= new_tete_mot_selected;
           Ptr_st new_tete_st2_prim= malloc(sizeof(st2));
           p_st2_prim=new_tete_st2_prim;
@@ -271,7 +271,7 @@ int main()
       }while(convergence == 0);
       int v_St2_Pos[9]; //Position dans la liste chainée
       quick_sort_ST(&p_st2, v_St2_Pos);
-      fichier_sortie_st(&p_st2, v_St2_Pos, &Ct);
+      fichier_sortie_st(&p_st2, v_St2_Pos, &Ct, longueur_masque);
     }
     tete_liste_kmer4= tete_liste_kmer4->suiv_kmer;
   }
