@@ -795,20 +795,20 @@ int distanceHammingSt2_prim(char (*adr_Ct)[6], ptr_struct_seq* adr_generation_se
 	return(st2_prim-1); //On met -1 car la boucle précedente prend en compte la case NULL de la fin de liste chainé
 }
 //------------------------------------------------------------------------------------------------------------
-void trier(int* v_St1_Dh, int* v_St1_Pos, int g, int d)
+void trier(int* v_St_Dh, int* v_St_Pos, int g, int d)
 {
   int indice_pivot;
   if (g < d)
   {
-    separer(v_St1_Dh, v_St1_Pos, g, d, &indice_pivot);
+    separer(v_St_Dh, v_St_Pos, g, d, &indice_pivot);
     indice_pivot --;
-    separer(v_St1_Dh, v_St1_Pos, g, d, &indice_pivot);
-    trier(v_St1_Dh, v_St1_Pos, indice_pivot+1, d);
+    separer(v_St_Dh, v_St_Pos, g, d, &indice_pivot);
+    trier(v_St_Dh, v_St_Pos, indice_pivot+1, d);
   }
   return;
 }
 //--------------------------------------------------------------------------------------------------
-void separer(int* v_St1_Dh, int* v_St1_Pos, int g, int d, int* adr_indice_pivot)
+void separer(int* v_St_Dh, int* v_St_Pos, int g, int d, int* adr_indice_pivot)
 {
   //PRECONDITIONS
   // g < d
@@ -818,87 +818,92 @@ void separer(int* v_St1_Dh, int* v_St1_Pos, int g, int d, int* adr_indice_pivot)
 
   bas = g;
   haut = d;
-  pivot = v_St1_Dh[bas];
-  pivot_pos= v_St1_Pos[bas];
-  comp = v_St1_Dh[haut];
-  comp_pos=v_St1_Pos[haut];
+  pivot = v_St_Dh[bas];
+  pivot_pos= v_St_Pos[bas];
+  comp = v_St_Dh[haut];
+  comp_pos=v_St_Pos[haut];
 
   while (bas < haut)
   {
     if ( comp > pivot)
     {
-      v_St1_Dh[haut] = comp;
-      v_St1_Pos[haut]= comp_pos;
+      v_St_Dh[haut] = comp;
+      v_St_Pos[haut]= comp_pos;
       haut --;
-      comp = v_St1_Dh[haut];
-      comp_pos=v_St1_Pos[haut];
+      comp = v_St_Dh[haut];
+      comp_pos=v_St_Pos[haut];
     }else{
-      v_St1_Dh[bas] = comp;
-      v_St1_Pos[bas]= comp_pos;
+      v_St_Dh[bas] = comp;
+      v_St_Pos[bas]= comp_pos;
       bas ++;
-      comp = v_St1_Dh[bas];
-      comp_pos=v_St1_Pos[bas];
+      comp = v_St_Dh[bas];
+      comp_pos=v_St_Pos[bas];
     }
   }
-  v_St1_Dh[bas] = pivot;
-  v_St1_Pos[bas]= pivot_pos;
+  v_St_Dh[bas] = pivot;
+  v_St_Pos[bas]= pivot_pos;
   *adr_indice_pivot = bas;
   return;
 }
 //------------------------------------------------------------------------------------------------------------
-void quick_sort_ST(Ptr_st* adr_st1, int* v_St1_Pos, int nb_sequence_dico)
+void quick_sort_ST(Ptr_st* adr_st, int* v_St_Pos, int nb_sequence_dico)
 {
-  Ptr_st p_st1= *adr_st1;
+  Ptr_st p_st= *adr_st;
   int i;
-  int v_St1_Dh[nb_sequence_dico]; //Distance de Hamming de chaque occurrence
+  int v_St_Dh[nb_sequence_dico]; //Distance de Hamming de chaque occurrence
   int borne_gauche = 0;
   int borne_droite = nb_sequence_dico-1;
   for (i=0; i<nb_sequence_dico; i++)
   {
-    v_St1_Dh[i]= p_st1->distance_hamming;
-    v_St1_Pos[i]= i;
-    printf("Vecteur Distance Hamming: %d \n", v_St1_Dh[i]);
-    printf("Vecteur Pos: %d \n", v_St1_Pos[i]);
-    p_st1=p_st1->next_mot;
+    v_St_Dh[i]= p_st->distance_hamming;
+    v_St_Pos[i]= i;
+    printf("Vecteur Distance Hamming: %d \n", v_St_Dh[i]);
+    printf("Vecteur Pos: %d \n", v_St_Pos[i]);
+    p_st=p_st->next_mot;
   }
   printf("\n");
 
-  trier(v_St1_Dh, v_St1_Pos, borne_gauche, borne_droite);
+  trier(v_St_Dh, v_St_Pos, borne_gauche, borne_droite);
 
   for(i=0; i<nb_sequence_dico; i++)
   {
-    printf("Vecteur Distance Hamming après tri: %d \n", v_St1_Dh[i]);
-    printf("Vecteur Pos après tri: %d \n", v_St1_Pos[i]);
+    printf("Vecteur Distance Hamming après tri: %d \n", v_St_Dh[i]);
+    printf("Vecteur Pos après tri: %d \n", v_St_Pos[i]);
   }
   printf("\n");
   return;
 }
 //--------------------------------------------------------------------------------------------------
-void fichier_sortie_st(Ptr_st* adr_st1, int* v_St1_Pos, char (*adr_Ct)[6], int taille_motif, int nb_sequence_dico, char nb_essais)
+void fichier_sortie_st(Ptr_st* adr_st, int* v_St_Pos, char (*adr_Ct)[6], int taille_motif, int nb_sequence_dico, char nb_essais, int quel_st)
 {
-  Ptr_st p_st1= *adr_st1;
-  int i, position, cpt;
+  Ptr_st p_st= *adr_st;
+  int i, j, position;
   char nom_fichier[50];
-  snprintf( nom_fichier, 50, "fichier_resultats_essais_%d.txt", nb_essais);
+  snprintf( nom_fichier, 50, "fichier_resultats_masque_%d.txt", nb_essais);
 
   FILE* ptr_fichier_sortie;
   ptr_fichier_sortie= fopen(nom_fichier, "a");
 
+  fprintf(ptr_fichier_sortie, "-----------------------------------\n");
+  if (quel_st == 1){ fprintf(ptr_fichier_sortie, "ST1:\n");}
+  if (quel_st == 2){ fprintf(ptr_fichier_sortie, "ST2:\n");}
+
   for (i=0; i< nb_sequence_dico; i++)
   {
-    p_st1=*adr_st1;
-    position= v_St1_Pos[i];
-    for (cpt=0; cpt<position; cpt++)
+    p_st=*adr_st;
+    position= v_St_Pos[i];
+    for (j=0; j<position; j++)
     {
-      p_st1=p_st1->next_mot;
+      p_st=p_st->next_mot;
     }
-    fprintf(ptr_fichier_sortie, "OCCURRENCE: %s --> SCORE: %d \n", p_st1->mot, p_st1->distance_hamming);
+    fprintf(ptr_fichier_sortie, "OCCURRENCE: %s --> SCORE: %d \n", p_st->mot, p_st->distance_hamming);
   }
-  fprintf(ptr_fichier_sortie, "\n\nMOTIF CONSENSUS: \n");
+  fprintf(ptr_fichier_sortie, "\nMOTIF CONSENSUS: ");
   for (i=0; i<taille_motif; i++)
   {
-    fprintf(ptr_fichier_sortie, "%c\n", *adr_Ct[i]);
+    fprintf(ptr_fichier_sortie, "%c", *adr_Ct[i]);
   }
+  fprintf(ptr_fichier_sortie, "\n");
   fclose(ptr_fichier_sortie);
   return;
 }

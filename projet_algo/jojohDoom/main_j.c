@@ -145,10 +145,10 @@ int main()
     kmer_present_dans_chaque_sequence(nb_sequence_dico, &tete_liste_kmer2, &tete_liste_sequence2, &tete_liste_pos2, &tete_liste_pour_recup_motif, &tete_liste_kmer_selectionne, &tete_liste_motif_PSSM, longueur_masque);
     affichage_dictionnaire_kmer(&tete_liste_kmer3, &tete_liste_sequence3, &tete_liste_pos3);
     affichage_motif_selectionne(&tete_liste_kmer_selectionne2, &tete_liste_motif_PSSM2);
-    // On calculera la PSSM seulement pour les kmers qui sont présent dans plus de 7 sequences:
+
     while (tete_liste_kmer4 != NULL)
     {
-      if (tete_liste_kmer4->nb_sequence>=7)
+      if (tete_liste_kmer4->nb_sequence >= (nb_sequence_dico*0.7))  // On calculera la PSSM seulement pour les kmers qui sont présent dans plus de 70% sequences:
       {
         calcul_PSSM(&tete_liste_kmer_selectionne_pour_calcul, &tete_liste_motif_PSSM_pour_calcul, &matrice_PSSM, longueur_masque);
       	do //repeter l'amélioration de la PSSM jusqu'à convergence
@@ -157,8 +157,8 @@ int main()
       		{
       			pos_max= -1;
       			score_max= -100;
-      			//pour chaque mot:
-      			while (position<=25)
+
+      			while (position<=25)  //pour chaque mot:
       			{
       				n_sequence= p_generation_seq->numero_sequence;
       				for (cpt_mot=0; cpt_mot<=longueur_masque; cpt_mot++)
@@ -173,14 +173,13 @@ int main()
       					position++;
       				}
       				position= position -5;
-      				//si le score de ce mot est supérieur au score max
-      				if (p_mot->score_mot> score_max)
+
+      				if (p_mot->score_mot> score_max)  //si le score de ce mot est supérieur au score max
       				{
       					score_max= p_mot-> score_mot;
       					pos_max= position;
       					strcpy(p_mot_selected->motif, p_mot->mot);
       				}
-      				//p_mot->seq=n_sequence;
       				TPtr_Mot_Ameliorer_PSSM p_nouv_mot=malloc(sizeof(TMot_Ameliorer_PSSM));
       				p_mot->next_mot= p_nouv_mot;
       				p_mot=p_nouv_mot;
@@ -200,7 +199,7 @@ int main()
 
       		if (distance_PSSM>0.8)
       		{
-      			for (i=0; i<4; i++) //ancienne_matrice= nouv_matrice.
+      			for (i=0; i<4; i++) //ancienne_matrice = nouv_matrice.
       			{
       				for(j=0; j<taille_motif; j++)
       				{
@@ -212,7 +211,7 @@ int main()
       			p_mot_selected=tete_mot_selected;
       			p_mot=tete_mot;
       		}
-      	}while(distance_PSSM>0.8);
+      	}while(distance_PSSM > 0.8);
       	//Post-condition: tous les mots de longueur l maximisant le score sont contenu dans la structure chainée p_mot_selected.
       	//Le motif consensus de cette structure a été calculé
       	//Il faut maintenant calculer la distance de Hamming entre le motif consensus et tous les mots de longueur l contenu dans la structure p_mot
@@ -222,7 +221,7 @@ int main()
       	st1=distanceHammingSt1(&Ct, &p_mot_selected, &p_st1, longueur_masque);
         int v_St1_Pos[9]; //Position dans la liste chainée
         quick_sort_ST(&p_st1, v_St1_Pos, nb_sequence_dico);
-        fichier_sortie_st(&p_st1, v_St1_Pos, &Ct, longueur_masque, nb_sequence_dico, i);
+        fichier_sortie_st(&p_st1, v_St1_Pos, &Ct, longueur_masque, nb_sequence_dico, i, 1);
         printf("ST1= %d \n", st1);
 
       	// RAFFINER - Version 2:
@@ -271,7 +270,7 @@ int main()
         }while(convergence == 0);
         int v_St2_Pos[9]; //Position dans la liste chainée
         quick_sort_ST(&p_st2, v_St2_Pos, nb_sequence_dico);
-        fichier_sortie_st(&p_st2, v_St2_Pos, &Ct, longueur_masque, nb_sequence_dico, i);
+        fichier_sortie_st(&p_st2, v_St2_Pos, &Ct, longueur_masque, nb_sequence_dico, i, 2);
       }
       tete_liste_kmer4= tete_liste_kmer4->suiv_kmer;
     }

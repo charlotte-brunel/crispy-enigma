@@ -123,8 +123,8 @@ double dist_PSSM(double*** adr_matrice_PSSM, double*** adr_matrice_PSSM_nouv, do
 int distanceHammingSt1(char (*adr_Ct)[6], TPtr_Cell_Motif_PSSM* adr_mot_selected, Ptr_st* adr_st1, int taille_motif);
 int distanceHammingSt2(char (*adr_Ct)[6], TPtr_Cell_Motif_PSSM* adr_mot_selected, Ptr_st* adr_st2, int taille_motif);
 int distanceHammingSt2_prim(char (*adr_Ct)[6], ptr_struct_seq* adr_generation_sequence, TPtr_Mot_Ameliorer_PSSM *adr_mot, Ptr_st* adr_st2_prim, int taille_motif);
-void quick_sort_ST(Ptr_st* adr_st1, int* v_St1_Pos, int nb_sequence_dico);
-void trier(int* v_St1_Dh, int* v_St1_Pos, int g, int d);
-void separer(int* v_St1_Dh, int* v_St1_Pos, int g, int d, int* adr_indice_pivot);
-void fichier_sortie_st(Ptr_st* adr_st1, int* v_St1_Pos, char (*adr_Ct)[6], int taille_motif, int nb_sequence_dico, char nb_essais);
+void quick_sort_ST(Ptr_st* adr_st, int* v_St_Pos, int nb_sequence_dico);
+void trier(int* v_St_Dh, int* v_St_Pos, int g, int d);
+void separer(int* v_St_Dh, int* v_St_Pos, int g, int d, int* adr_indice_pivot);
+void fichier_sortie_st(Ptr_st* adr_st, int* v_St_Pos, char (*adr_Ct)[6], int taille_motif, int nb_sequence_dico, char nb_essais, int quel_st);
 #endif
