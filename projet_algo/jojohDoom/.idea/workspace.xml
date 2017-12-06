@@ -12,17 +12,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="09ef5349-f0f1-4b05-82f9-6ddca0a51638" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Nouvelle_PSSM_Motif_Trouve.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/PSSM_Motif_Trouve.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dictionnaire_kmer.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/fichier_resultats_masque_0.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/fichier_resultats_masque_4.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/kmer_selectionne.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/score_ST2.txt" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Makefile" afterPath="$PROJECT_DIR$/Makefile" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fonctions_j.c" afterPath="$PROJECT_DIR$/fonctions_j.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fonctions_j.h" afterPath="$PROJECT_DIR$/fonctions_j.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main_j.c" afterPath="$PROJECT_DIR$/main_j.c" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../jojohDoom.zip" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../matrice_bidimentionelle.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../projet_algo.zip" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../algo_principal/fonctions.c" afterPath="$PROJECT_DIR$/../algo_principal/fonctions.c" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../algo_principal/fonctions.h" afterPath="$PROJECT_DIR$/../algo_principal/fonctions.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../algo_principal/main.c" afterPath="$PROJECT_DIR$/../algo_principal/main.c" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -95,7 +91,7 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="128" />
     <option name="y" value="-4" />
     <option name="width" value="1293" />
@@ -257,7 +253,7 @@
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
-    <navigator currentView="ProjectPane" proportions="" version="1">
+    <navigator proportions="" version="1">
       <flattenPackages />
       <showMembers />
       <showModules />
@@ -270,19 +266,7 @@
       <manualOrder />
       <foldersAlwaysOnTop value="true" />
     </navigator>
-    <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="jojohDoom" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
-              <item name="jojohDoom" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-    </panes>
+    <panes />
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -329,15 +313,15 @@
       <workItem from="1512470108238" duration="433000" />
       <workItem from="1512470606078" duration="3548000" />
       <workItem from="1512479311076" duration="12692000" />
-      <workItem from="1512566744457" duration="877000" />
+      <workItem from="1512566744457" duration="1087000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="17550000" />
+    <option name="totallyTimeSpent" value="17760000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="128" y="-4" width="1315" height="780" extended-state="7" />
+    <frame x="128" y="-4" width="1315" height="780" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20792079" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />

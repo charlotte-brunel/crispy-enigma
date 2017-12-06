@@ -1,0 +1,1 @@
+/usr/bin/cc -g   CMakeFiles/algo_principal.dir/fonctions.c.o CMakeFiles/algo_principal.dir/fonctions_masques_kmers.c.o CMakeFiles/algo_principal.dir/fonctions_PSSM.c.o CMakeFiles/algo_principal.dir/fonctions_sequences.c.o CMakeFiles/algo_principal.dir/main.c.o  -o algo_principal 
