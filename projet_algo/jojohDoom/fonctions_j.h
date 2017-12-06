@@ -126,5 +126,5 @@ int distanceHammingSt2_prim(char (*adr_Ct)[6], ptr_struct_seq* adr_generation_se
 void quick_sort_ST(Ptr_st* adr_st, int* v_St_Pos, int nb_sequence_dico);
 void trier(int* v_St_Dh, int* v_St_Pos, int g, int d);
 void separer(int* v_St_Dh, int* v_St_Pos, int g, int d, int* adr_indice_pivot);
-void fichier_sortie_st(Ptr_st* adr_st, int* v_St_Pos, char (*adr_Ct)[6], int taille_motif, int nb_sequence_dico, char nb_essais, int quel_st);
+void fichier_sortie_st(Ptr_st* adr_st, int* v_St_Pos, char (*adr_Ct)[6], int taille_motif, int nb_sequence_dico, int nb_essais, int quel_st);
 #endif

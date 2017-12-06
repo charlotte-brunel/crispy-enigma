@@ -11,6 +11,7 @@ int main()
   int longueur_masque = 5;
   int nb_fenetre=2;
   int nb_essais=3;
+  int essais;
   int pos_max;
   double distance_PSSM; //distance entre deux matrice PSSM
   int position= 0;
@@ -138,8 +139,9 @@ int main()
   insert_motif(&tete_liste_pour_insertion_motif, nb_sequence_dico, &tete_liste_motif);
 
 //------------------------------------------------------------------------------------------------------------
-  for (i=0; i < nb_essais; i++)
+  for (essais=0; essais < nb_essais; essais++)
   {
+    printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
     generation_masque(longueur_masque, &masque, nb_fenetre);
     parcours_masque(longueur_masque, &masque, nb_fenetre, nb_sequence_dico, &tete_liste_pour_parcours_masque, &tete_liste_kmer, &tete_liste_sequence, &tete_liste_pos);
     kmer_present_dans_chaque_sequence(nb_sequence_dico, &tete_liste_kmer2, &tete_liste_sequence2, &tete_liste_pos2, &tete_liste_pour_recup_motif, &tete_liste_kmer_selectionne, &tete_liste_motif_PSSM, longueur_masque);
@@ -219,9 +221,9 @@ int main()
 
       	//RAFFINER - Version 1:
       	st1=distanceHammingSt1(&Ct, &p_mot_selected, &p_st1, longueur_masque);
-        int v_St1_Pos[9]; //Position dans la liste chainée
+        int v_St1_Pos[nb_sequence_dico]; //Position dans la liste chainée
         quick_sort_ST(&p_st1, v_St1_Pos, nb_sequence_dico);
-        fichier_sortie_st(&p_st1, v_St1_Pos, &Ct, longueur_masque, nb_sequence_dico, i, 1);
+        fichier_sortie_st(&p_st1, v_St1_Pos, &Ct, longueur_masque, nb_sequence_dico, essais, 1);
         printf("ST1= %d \n", st1);
 
       	// RAFFINER - Version 2:
@@ -268,12 +270,13 @@ int main()
             convergence=1;
           }
         }while(convergence == 0);
-        int v_St2_Pos[9]; //Position dans la liste chainée
+        int v_St2_Pos[nb_sequence_dico]; //Position dans la liste chainée
         quick_sort_ST(&p_st2, v_St2_Pos, nb_sequence_dico);
-        fichier_sortie_st(&p_st2, v_St2_Pos, &Ct, longueur_masque, nb_sequence_dico, i, 2);
-      }
+        fichier_sortie_st(&p_st2, v_St2_Pos, &Ct, longueur_masque, nb_sequence_dico, essais, 2);
+      } //fin if
       tete_liste_kmer4= tete_liste_kmer4->suiv_kmer;
-    }
+    }//fin while
+      printf("FIN");
   }
   return 0;
 }

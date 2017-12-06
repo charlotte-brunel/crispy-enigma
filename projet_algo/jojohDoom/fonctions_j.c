@@ -234,6 +234,7 @@ void recuperer_motif_kmer(TPtr_Cellkmer* adr_parcours_kmer, TPtr_Cellkmer_select
   ptr_struct_seq tete_generation_seq = *adr_generation_sequence;
   ptr_struct_seq p_generation_seq= tete_generation_seq;
   int longueur_sequence= 30; //TAILLE_MAX_SEQ
+  // int taille_motif=5;
   int i, sequence_actuelle;
   if (p_kmer_selectionne->suiv_kmer_selectionne == NULL) //la liste est vide:
   {
@@ -268,6 +269,7 @@ void recuperer_motif_kmer(TPtr_Cellkmer* adr_parcours_kmer, TPtr_Cellkmer_select
     p_generation_seq= tete_generation_seq;
     return;
   }
+
   do //Cas o� on a plusieurs kmer selectionn�
   {
     p_kmer_selectionne=p_kmer_selectionne->suiv_kmer_selectionne;
@@ -334,7 +336,7 @@ void kmer_present_dans_chaque_sequence(int nb_sequence, TPtr_Cellkmer* adr_cell_
     { //Pour l"instant pour pouvoir continuer
       recuperer_motif_kmer(&p_parcours_kmer, &p_kmer_selectionne, &p_motif_PSSM, &tete_sequence, &tete_pos, &tete_generation_sequence, nb_sequence_par_kmer, taille_motif);
       p_kmer_selectionne= tete_kmer_selectionne;
-    }
+}
     nb_sequence_par_kmer=0;
     p_parcours_kmer=p_parcours_kmer->suiv_kmer;
   }
@@ -378,7 +380,7 @@ void affichage_motif_selectionne(TPtr_Cellkmer_selectionne* adr_tete_kmer_select
   {
     TPtr_Cell_Motif_PSSM p_motif= p_kmer_selectionne->tete_motif_PSSM;
     fprintf(fichier_kmer_selectionne, "KMER: %s \n", p_kmer_selectionne->kmer);
-    fprintf(fichier_kmer_selectionne, "Present dans %lf sequences \n", p_kmer_selectionne->nb_sequence);
+    fprintf(fichier_kmer_selectionne, "Present dans %f sequences \n", p_kmer_selectionne->nb_sequence);
     while(p_motif != NULL)
     {
       fprintf(fichier_kmer_selectionne, "MOTIF: %s \n", p_motif->motif);
@@ -802,7 +804,7 @@ void trier(int* v_St_Dh, int* v_St_Pos, int g, int d)
   {
     separer(v_St_Dh, v_St_Pos, g, d, &indice_pivot);
     indice_pivot --;
-    separer(v_St_Dh, v_St_Pos, g, d, &indice_pivot);
+    trier(v_St_Dh, v_St_Pos, g, indice_pivot-1 );
     trier(v_St_Dh, v_St_Pos, indice_pivot+1, d);
   }
   return;
@@ -857,24 +859,24 @@ void quick_sort_ST(Ptr_st* adr_st, int* v_St_Pos, int nb_sequence_dico)
   {
     v_St_Dh[i]= p_st->distance_hamming;
     v_St_Pos[i]= i;
-    printf("Vecteur Distance Hamming: %d \n", v_St_Dh[i]);
-    printf("Vecteur Pos: %d \n", v_St_Pos[i]);
+    // printf("Vecteur Distance Hamming: %d \n", v_St_Dh[i]);
+    // printf("Vecteur Pos: %d \n", v_St_Pos[i]);
     p_st=p_st->next_mot;
   }
-  printf("\n");
+  // printf("\n");
 
   trier(v_St_Dh, v_St_Pos, borne_gauche, borne_droite);
 
   for(i=0; i<nb_sequence_dico; i++)
   {
-    printf("Vecteur Distance Hamming après tri: %d \n", v_St_Dh[i]);
-    printf("Vecteur Pos après tri: %d \n", v_St_Pos[i]);
+    // printf("Vecteur Distance Hamming après tri: %d \n", v_St_Dh[i]);
+    // printf("Vecteur Pos après tri: %d \n", v_St_Pos[i]);
   }
-  printf("\n");
+  // printf("\n");
   return;
 }
 //--------------------------------------------------------------------------------------------------
-void fichier_sortie_st(Ptr_st* adr_st, int* v_St_Pos, char (*adr_Ct)[6], int taille_motif, int nb_sequence_dico, char nb_essais, int quel_st)
+void fichier_sortie_st(Ptr_st* adr_st, int* v_St_Pos, char (*adr_Ct)[6], int taille_motif, int nb_sequence_dico, int nb_essais, int quel_st)
 {
   Ptr_st p_st= *adr_st;
   int i, j, position;

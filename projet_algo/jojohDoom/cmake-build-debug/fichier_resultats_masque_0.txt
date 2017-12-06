@@ -1,0 +1,1148 @@
+-----------------------------------
+ST1:
+OCCURRENCE: agaaa --> SCORE: 1 
+OCCURRENCE: aaaaa --> SCORE: 1 
+OCCURRENCE: acaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 1 
+OCCURRENCE: acaaa --> SCORE: 0 
+OCCURRENCE: actaa --> SCORE: 1 
+OCCURRENCE: accag --> SCORE: 2 
+OCCURRENCE: acgat --> SCORE: 2 
+OCCURRENCE: aaaag --> SCORE: 2 
+OCCURRENCE: atcaa --> SCORE: 2 
+
+MOTIF CONSENSUS: acaaa
+-----------------------------------
+ST2:
+OCCURRENCE: agaaa --> SCORE: 1 
+OCCURRENCE: aaaaa --> SCORE: 1 
+OCCURRENCE: acaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 1 
+OCCURRENCE: acaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 1 
+OCCURRENCE: acaac --> SCORE: 1 
+OCCURRENCE: actaa --> SCORE: 1 
+OCCURRENCE: tcaaa --> SCORE: 1 
+OCCURRENCE:  --> SCORE: 5 
+
+MOTIF CONSENSUS: acaaa
+-----------------------------------
+ST1:
+OCCURRENCE: caaaa --> SCORE: 0 
+OCCURRENCE: caaaa --> SCORE: 0 
+OCCURRENCE: ctaaa --> SCORE: 1 
+OCCURRENCE: caaca --> SCORE: 1 
+OCCURRENCE: caaat --> SCORE: 1 
+OCCURRENCE: ctaaa --> SCORE: 1 
+OCCURRENCE: ccaag --> SCORE: 2 
+OCCURRENCE: caagg --> SCORE: 2 
+OCCURRENCE: cgagt --> SCORE: 3 
+OCCURRENCE: ctacg --> SCORE: 3 
+
+MOTIF CONSENSUS: caaaa
+-----------------------------------
+ST2:
+OCCURRENCE: caaaa --> SCORE: 0 
+OCCURRENCE: caaaa --> SCORE: 0 
+OCCURRENCE: caaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 1 
+OCCURRENCE: aaaaa --> SCORE: 1 
+OCCURRENCE: caaga --> SCORE: 1 
+OCCURRENCE: caaat --> SCORE: 1 
+OCCURRENCE: aaaaa --> SCORE: 1 
+OCCURRENCE:  --> SCORE: 5 
+OCCURRENCE:  --> SCORE: 5 
+
+MOTIF CONSENSUS: caaaa
+-----------------------------------
+ST1:
+OCCURRENCE: aaaat --> SCORE: 1 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaat --> SCORE: 1 
+OCCURRENCE: aaaat --> SCORE: 1 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaag --> SCORE: 1 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaca --> SCORE: 1 
+OCCURRENCE: aaaac --> SCORE: 1 
+OCCURRENCE: aaatt --> SCORE: 2 
+
+MOTIF CONSENSUS: aaaaa
+-----------------------------------
+ST2:
+OCCURRENCE: aaaga --> SCORE: 1 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaag --> SCORE: 1 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaca --> SCORE: 1 
+OCCURRENCE: agaaa --> SCORE: 1 
+OCCURRENCE: aaaac --> SCORE: 1 
+
+MOTIF CONSENSUS: aaaaa
+-----------------------------------
+ST1:
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaat --> SCORE: 1 
+OCCURRENCE: aaaag --> SCORE: 1 
+OCCURRENCE: aaaag --> SCORE: 1 
+OCCURRENCE: aataa --> SCORE: 1 
+OCCURRENCE: aaaac --> SCORE: 1 
+OCCURRENCE: attaa --> SCORE: 2 
+OCCURRENCE: aagcg --> SCORE: 3 
+
+MOTIF CONSENSUS: aaaaa
+-----------------------------------
+ST2:
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aagaa --> SCORE: 1 
+OCCURRENCE: ataaa --> SCORE: 1 
+OCCURRENCE: acaaa --> SCORE: 1 
+OCCURRENCE: aaaca --> SCORE: 1 
+
+MOTIF CONSENSUS: aaaaa
+-----------------------------------
+ST1:
+OCCURRENCE: aagaa --> SCORE: 0 
+OCCURRENCE: aagaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 1 
+OCCURRENCE: aaggt --> SCORE: 2 
+OCCURRENCE: aatac --> SCORE: 2 
+OCCURRENCE: aatga --> SCORE: 2 
+OCCURRENCE: aatca --> SCORE: 2 
+OCCURRENCE: aaaca --> SCORE: 2 
+OCCURRENCE: aagtt --> SCORE: 2 
+OCCURRENCE: aactt --> SCORE: 3 
+
+MOTIF CONSENSUS: aagaa
+-----------------------------------
+ST1:
+OCCURRENCE: gaaaa --> SCORE: 0 
+OCCURRENCE: gaaaa --> SCORE: 0 
+OCCURRENCE: gaaaa --> SCORE: 0 
+OCCURRENCE: gaaaa --> SCORE: 0 
+OCCURRENCE: gaaaa --> SCORE: 0 
+OCCURRENCE: gaaaa --> SCORE: 0 
+OCCURRENCE: gtaaa --> SCORE: 1 
+OCCURRENCE: ggaaa --> SCORE: 1 
+OCCURRENCE: gccaa --> SCORE: 2 
+OCCURRENCE: gtgaa --> SCORE: 2 
+
+MOTIF CONSENSUS: gaaaa
+-----------------------------------
+ST2:
+OCCURRENCE: gaaaa --> SCORE: 0 
+OCCURRENCE: gaaaa --> SCORE: 0 
+OCCURRENCE: gaaaa --> SCORE: 0 
+OCCURRENCE: gaaaa --> SCORE: 0 
+OCCURRENCE: gaaaa --> SCORE: 0 
+OCCURRENCE: gaaaa --> SCORE: 0 
+OCCURRENCE: gaaaa --> SCORE: 0 
+OCCURRENCE: gaata --> SCORE: 1 
+OCCURRENCE: aaaaa --> SCORE: 1 
+OCCURRENCE: gtaaa --> SCORE: 1 
+
+MOTIF CONSENSUS: gaaaa
+-----------------------------------
+ST1:
+OCCURRENCE: aataa --> SCORE: 1 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: ataaa --> SCORE: 1 
+OCCURRENCE: aaaag --> SCORE: 1 
+OCCURRENCE: aaaac --> SCORE: 1 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaca --> SCORE: 1 
+OCCURRENCE: aataa --> SCORE: 1 
+
+MOTIF CONSENSUS: aaaaa
+-----------------------------------
+ST2:
+OCCURRENCE: aataa --> SCORE: 1 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: ataaa --> SCORE: 1 
+OCCURRENCE: aaaag --> SCORE: 1 
+OCCURRENCE: aaaac --> SCORE: 1 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaca --> SCORE: 1 
+OCCURRENCE: aataa --> SCORE: 1 
+
+MOTIF CONSENSUS: aaaaa
+-----------------------------------
+ST1:
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aacaa --> SCORE: 1 
+OCCURRENCE: ataaa --> SCORE: 1 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aacaa --> SCORE: 1 
+OCCURRENCE: accaa --> SCORE: 2 
+OCCURRENCE: acgaa --> SCORE: 2 
+OCCURRENCE: aggaa --> SCORE: 2 
+OCCURRENCE: atcga --> SCORE: 3 
+
+MOTIF CONSENSUS: aaaaa
+-----------------------------------
+ST2:
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaata --> SCORE: 1 
+OCCURRENCE: aaata --> SCORE: 1 
+OCCURRENCE:  --> SCORE: 5 
+
+MOTIF CONSENSUS: aaaaa
+-----------------------------------
+ST1:
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaag --> SCORE: 1 
+OCCURRENCE: aaaag --> SCORE: 1 
+OCCURRENCE: aataa --> SCORE: 1 
+OCCURRENCE: aaaat --> SCORE: 1 
+OCCURRENCE: ataat --> SCORE: 2 
+OCCURRENCE: acgat --> SCORE: 3 
+
+MOTIF CONSENSUS: aaaaa
+-----------------------------------
+ST2:
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aataa --> SCORE: 1 
+OCCURRENCE: aaaga --> SCORE: 1 
+OCCURRENCE: aataa --> SCORE: 1 
+OCCURRENCE: aaaac --> SCORE: 1 
+OCCURRENCE:  --> SCORE: 5 
+
+MOTIF CONSENSUS: aaaaa
+-----------------------------------
+ST1:
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: ataaa --> SCORE: 1 
+OCCURRENCE: ataaa --> SCORE: 1 
+OCCURRENCE: aaaga --> SCORE: 1 
+OCCURRENCE: aaaat --> SCORE: 1 
+OCCURRENCE: aaaat --> SCORE: 1 
+
+MOTIF CONSENSUS: aaaaa
+-----------------------------------
+ST2:
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: ataaa --> SCORE: 1 
+OCCURRENCE: ataaa --> SCORE: 1 
+OCCURRENCE: aaaga --> SCORE: 1 
+OCCURRENCE: aaaat --> SCORE: 1 
+OCCURRENCE: aaaat --> SCORE: 1 
+
+MOTIF CONSENSUS: aaaaa
+-----------------------------------
+ST1:
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaata --> SCORE: 1 
+OCCURRENCE: aaaca --> SCORE: 1 
+OCCURRENCE: aaaca --> SCORE: 1 
+OCCURRENCE: aaaca --> SCORE: 1 
+OCCURRENCE: aaata --> SCORE: 1 
+
+MOTIF CONSENSUS: aaaaa
+-----------------------------------
+ST2:
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaata --> SCORE: 1 
+OCCURRENCE: aaaca --> SCORE: 1 
+OCCURRENCE: aaaca --> SCORE: 1 
+OCCURRENCE: aaaca --> SCORE: 1 
+OCCURRENCE: aaata --> SCORE: 1 
+
+MOTIF CONSENSUS: aaaaa
+-----------------------------------
+ST1:
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaat --> SCORE: 1 
+OCCURRENCE: aaaag --> SCORE: 1 
+OCCURRENCE: aaaag --> SCORE: 1 
+OCCURRENCE: aaaat --> SCORE: 1 
+OCCURRENCE: aggaa --> SCORE: 2 
+
+MOTIF CONSENSUS: aaaaa
+-----------------------------------
+ST2:
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaat --> SCORE: 1 
+OCCURRENCE: aaaag --> SCORE: 1 
+OCCURRENCE: aaaag --> SCORE: 1 
+OCCURRENCE: aaaat --> SCORE: 1 
+OCCURRENCE: aggaa --> SCORE: 2 
+
+MOTIF CONSENSUS: aaaaa
+-----------------------------------
+ST1:
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: agaaa --> SCORE: 1 
+OCCURRENCE: aacaa --> SCORE: 1 
+OCCURRENCE: aataa --> SCORE: 1 
+OCCURRENCE: agaca --> SCORE: 2 
+
+MOTIF CONSENSUS: aaaaa
+-----------------------------------
+ST2:
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: agaaa --> SCORE: 1 
+OCCURRENCE: aacaa --> SCORE: 1 
+OCCURRENCE: aataa --> SCORE: 1 
+OCCURRENCE: agaca --> SCORE: 2 
+
+MOTIF CONSENSUS: aaaaa
+-----------------------------------
+ST1:
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaac --> SCORE: 1 
+OCCURRENCE: aacaa --> SCORE: 1 
+OCCURRENCE: aacaa --> SCORE: 1 
+OCCURRENCE: aagaa --> SCORE: 1 
+OCCURRENCE: aataa --> SCORE: 1 
+OCCURRENCE: aagat --> SCORE: 2 
+OCCURRENCE: aagag --> SCORE: 2 
+
+MOTIF CONSENSUS: aaaaa
+-----------------------------------
+ST2:
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaga --> SCORE: 1 
+OCCURRENCE: aaata --> SCORE: 1 
+OCCURRENCE: aaaca --> SCORE: 1 
+OCCURRENCE: acaaa --> SCORE: 1 
+OCCURRENCE: ataaa --> SCORE: 1 
+
+MOTIF CONSENSUS: aaaaa
+-----------------------------------
+ST1:
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aagaa --> SCORE: 1 
+OCCURRENCE: aacaa --> SCORE: 1 
+OCCURRENCE: aaaac --> SCORE: 1 
+OCCURRENCE: aagaa --> SCORE: 1 
+OCCURRENCE: aaaac --> SCORE: 1 
+OCCURRENCE: aacaa --> SCORE: 1 
+OCCURRENCE: aagat --> SCORE: 2 
+
+MOTIF CONSENSUS: aaaaa
+-----------------------------------
+ST2:
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaac --> SCORE: 1 
+OCCURRENCE: aaaag --> SCORE: 1 
+OCCURRENCE: aaaac --> SCORE: 1 
+OCCURRENCE: aagaa --> SCORE: 1 
+OCCURRENCE: aacaa --> SCORE: 1 
+
+MOTIF CONSENSUS: aaaaa
+-----------------------------------
+ST1:
+OCCURRENCE: aagaa --> SCORE: 1 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aataa --> SCORE: 1 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaca --> SCORE: 1 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aagaa --> SCORE: 1 
+OCCURRENCE: gagaa --> SCORE: 2 
+
+MOTIF CONSENSUS: aaaaa
+-----------------------------------
+ST2:
+OCCURRENCE: aagaa --> SCORE: 1 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aataa --> SCORE: 1 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaca --> SCORE: 1 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aagaa --> SCORE: 1 
+OCCURRENCE: gagaa --> SCORE: 2 
+
+MOTIF CONSENSUS: aaaaa
+-----------------------------------
+ST1:
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aagaa --> SCORE: 1 
+OCCURRENCE: agaaa --> SCORE: 1 
+OCCURRENCE: aataa --> SCORE: 1 
+OCCURRENCE: aatca --> SCORE: 2 
+
+MOTIF CONSENSUS: aaaaa
+-----------------------------------
+ST2:
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aagaa --> SCORE: 1 
+OCCURRENCE: agaaa --> SCORE: 1 
+OCCURRENCE: aataa --> SCORE: 1 
+OCCURRENCE: aatca --> SCORE: 2 
+
+MOTIF CONSENSUS: aaaaa
+-----------------------------------
+ST1:
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aacaa --> SCORE: 1 
+OCCURRENCE: aaata --> SCORE: 1 
+OCCURRENCE: aataa --> SCORE: 1 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: ataaa --> SCORE: 1 
+OCCURRENCE: aacca --> SCORE: 2 
+OCCURRENCE: aagca --> SCORE: 2 
+OCCURRENCE: aagca --> SCORE: 2 
+
+MOTIF CONSENSUS: aaaaa
+-----------------------------------
+ST2:
+OCCURRENCE: aaaat --> SCORE: 1 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aataa --> SCORE: 1 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaata --> SCORE: 1 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaag --> SCORE: 1 
+
+MOTIF CONSENSUS: aaaaa
+-----------------------------------
+ST1:
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaata --> SCORE: 1 
+OCCURRENCE: aaaat --> SCORE: 1 
+OCCURRENCE: aaaat --> SCORE: 1 
+OCCURRENCE: aaagt --> SCORE: 2 
+OCCURRENCE: aaagg --> SCORE: 2 
+OCCURRENCE: aaagg --> SCORE: 2 
+
+MOTIF CONSENSUS: aaaaa
+-----------------------------------
+ST2:
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaat --> SCORE: 1 
+OCCURRENCE: aaata --> SCORE: 1 
+OCCURRENCE: aagaa --> SCORE: 1 
+OCCURRENCE: aacaa --> SCORE: 1 
+
+MOTIF CONSENSUS: aaaaa
+-----------------------------------
+ST1:
+OCCURRENCE: taaaa --> SCORE: 1 
+OCCURRENCE: taaca --> SCORE: 1 
+OCCURRENCE: tcaga --> SCORE: 1 
+OCCURRENCE: taaaa --> SCORE: 1 
+OCCURRENCE: taagc --> SCORE: 1 
+OCCURRENCE: taagc --> SCORE: 1 
+OCCURRENCE: taagc --> SCORE: 1 
+OCCURRENCE: ttcga --> SCORE: 2 
+OCCURRENCE: taacg --> SCORE: 2 
+OCCURRENCE: taaag --> SCORE: 2 
+
+MOTIF CONSENSUS: taaga
+-----------------------------------
+ST2:
+OCCURRENCE: taaaa --> SCORE: 1 
+OCCURRENCE: taaca --> SCORE: 1 
+OCCURRENCE: taagc --> SCORE: 1 
+OCCURRENCE: taagc --> SCORE: 1 
+OCCURRENCE: taaaa --> SCORE: 1 
+OCCURRENCE: caaga --> SCORE: 1 
+OCCURRENCE: tcaga --> SCORE: 1 
+OCCURRENCE: taagc --> SCORE: 1 
+OCCURRENCE:  --> SCORE: 5 
+OCCURRENCE:  --> SCORE: 5 
+
+MOTIF CONSENSUS: taaga
+-----------------------------------
+ST1:
+OCCURRENCE: aaaag --> SCORE: 0 
+OCCURRENCE: aaaag --> SCORE: 0 
+OCCURRENCE: aaaag --> SCORE: 0 
+OCCURRENCE: aaaag --> SCORE: 0 
+OCCURRENCE: aaatg --> SCORE: 1 
+OCCURRENCE: aaacg --> SCORE: 1 
+OCCURRENCE: aaata --> SCORE: 2 
+OCCURRENCE: aaatt --> SCORE: 2 
+OCCURRENCE: atacg --> SCORE: 2 
+OCCURRENCE: aacta --> SCORE: 3 
+
+MOTIF CONSENSUS: aaaag
+-----------------------------------
+ST2:
+OCCURRENCE: aaaag --> SCORE: 0 
+OCCURRENCE: aaaag --> SCORE: 0 
+OCCURRENCE: aaaag --> SCORE: 0 
+OCCURRENCE: aaaag --> SCORE: 0 
+OCCURRENCE: aaatg --> SCORE: 1 
+OCCURRENCE: aaaat --> SCORE: 1 
+OCCURRENCE: aaacg --> SCORE: 1 
+OCCURRENCE: aaaat --> SCORE: 1 
+OCCURRENCE:  --> SCORE: 5 
+OCCURRENCE:  --> SCORE: 5 
+
+MOTIF CONSENSUS: aaaag
+-----------------------------------
+ST1:
+OCCURRENCE: aacaa --> SCORE: 1 
+OCCURRENCE: aataa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 1 
+OCCURRENCE: aacaa --> SCORE: 1 
+OCCURRENCE: aaaaa --> SCORE: 1 
+OCCURRENCE: aatat --> SCORE: 1 
+OCCURRENCE: aatca --> SCORE: 1 
+OCCURRENCE: aatat --> SCORE: 1 
+OCCURRENCE: aagaa --> SCORE: 1 
+OCCURRENCE: aacag --> SCORE: 2 
+
+MOTIF CONSENSUS: aataa
+-----------------------------------
+ST2:
+OCCURRENCE: aacaa --> SCORE: 1 
+OCCURRENCE: aataa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 1 
+OCCURRENCE: aaaaa --> SCORE: 1 
+OCCURRENCE: aaaaa --> SCORE: 1 
+OCCURRENCE: aatat --> SCORE: 1 
+OCCURRENCE: aatga --> SCORE: 1 
+OCCURRENCE: aatat --> SCORE: 1 
+OCCURRENCE: aagaa --> SCORE: 1 
+OCCURRENCE: aagaa --> SCORE: 1 
+
+MOTIF CONSENSUS: aataa
+-----------------------------------
+ST1:
+OCCURRENCE: ccttc --> SCORE: 1 
+OCCURRENCE: cttac --> SCORE: 1 
+OCCURRENCE: cctac --> SCORE: 0 
+OCCURRENCE: cccac --> SCORE: 1 
+OCCURRENCE: actac --> SCORE: 1 
+OCCURRENCE: catcc --> SCORE: 2 
+OCCURRENCE: cattc --> SCORE: 2 
+OCCURRENCE: cgaac --> SCORE: 2 
+OCCURRENCE: gctcc --> SCORE: 2 
+OCCURRENCE: cgata --> SCORE: 4 
+
+MOTIF CONSENSUS: cctac
+-----------------------------------
+ST2:
+OCCURRENCE: ccttc --> SCORE: 1 
+OCCURRENCE: cttac --> SCORE: 1 
+OCCURRENCE: cctac --> SCORE: 0 
+OCCURRENCE: cccac --> SCORE: 1 
+OCCURRENCE: actac --> SCORE: 1 
+OCCURRENCE: catcc --> SCORE: 2 
+OCCURRENCE: cattc --> SCORE: 2 
+OCCURRENCE: cgaac --> SCORE: 2 
+OCCURRENCE: gctcc --> SCORE: 2 
+OCCURRENCE: cgata --> SCORE: 4 
+
+MOTIF CONSENSUS: cctac
+-----------------------------------
+ST1:
+OCCURRENCE: ccttc --> SCORE: 1 
+OCCURRENCE: cttac --> SCORE: 1 
+OCCURRENCE: cctac --> SCORE: 0 
+OCCURRENCE: cccac --> SCORE: 1 
+OCCURRENCE: actac --> SCORE: 1 
+OCCURRENCE: catcc --> SCORE: 2 
+OCCURRENCE: cattc --> SCORE: 2 
+OCCURRENCE: cgaac --> SCORE: 2 
+OCCURRENCE: gctcc --> SCORE: 2 
+OCCURRENCE: cgata --> SCORE: 4 
+
+MOTIF CONSENSUS: cctac
+-----------------------------------
+ST2:
+OCCURRENCE: ccttc --> SCORE: 1 
+OCCURRENCE: cttac --> SCORE: 1 
+OCCURRENCE: cctac --> SCORE: 0 
+OCCURRENCE: cccac --> SCORE: 1 
+OCCURRENCE: actac --> SCORE: 1 
+OCCURRENCE: catcc --> SCORE: 2 
+OCCURRENCE: cattc --> SCORE: 2 
+OCCURRENCE: cgaac --> SCORE: 2 
+OCCURRENCE: gctcc --> SCORE: 2 
+OCCURRENCE: cgata --> SCORE: 4 
+
+MOTIF CONSENSUS: cctac
+-----------------------------------
+ST1:
+OCCURRENCE: aaatg --> SCORE: 0 
+OCCURRENCE: aaatg --> SCORE: 0 
+OCCURRENCE: agatg --> SCORE: 1 
+OCCURRENCE: aaata --> SCORE: 1 
+OCCURRENCE: aaacg --> SCORE: 1 
+OCCURRENCE: aaata --> SCORE: 1 
+OCCURRENCE: aaaag --> SCORE: 1 
+OCCURRENCE: aaaag --> SCORE: 1 
+OCCURRENCE: agacg --> SCORE: 2 
+OCCURRENCE: aaaca --> SCORE: 2 
+
+MOTIF CONSENSUS: aaatg
+-----------------------------------
+ST2:
+OCCURRENCE: aaatg --> SCORE: 0 
+OCCURRENCE: aaatg --> SCORE: 0 
+OCCURRENCE: agatg --> SCORE: 1 
+OCCURRENCE: aaata --> SCORE: 1 
+OCCURRENCE: aaacg --> SCORE: 1 
+OCCURRENCE: aaata --> SCORE: 1 
+OCCURRENCE: aaaag --> SCORE: 1 
+OCCURRENCE: aaaag --> SCORE: 1 
+OCCURRENCE: agacg --> SCORE: 2 
+OCCURRENCE: aaaca --> SCORE: 2 
+
+MOTIF CONSENSUS: aaatg
+-----------------------------------
+ST1:
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aagaa --> SCORE: 1 
+OCCURRENCE: aataa --> SCORE: 1 
+
+MOTIF CONSENSUS: aaaaa
+-----------------------------------
+ST2:
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aagaa --> SCORE: 1 
+OCCURRENCE: aataa --> SCORE: 1 
+
+MOTIF CONSENSUS: aaaaa
+-----------------------------------
+ST1:
+OCCURRENCE: aaaaa --> SCORE: 1 
+OCCURRENCE: aaaaa --> SCORE: 1 
+OCCURRENCE: aatag --> SCORE: 1 
+OCCURRENCE: aaacg --> SCORE: 1 
+OCCURRENCE: aaaag --> SCORE: 0 
+OCCURRENCE: aaacg --> SCORE: 1 
+OCCURRENCE: aacgg --> SCORE: 2 
+OCCURRENCE: gaagg --> SCORE: 2 
+OCCURRENCE: aaaga --> SCORE: 2 
+OCCURRENCE: aacca --> SCORE: 3 
+
+MOTIF CONSENSUS: aaaag
+-----------------------------------
+ST2:
+OCCURRENCE: aaaag --> SCORE: 0 
+OCCURRENCE: aaaag --> SCORE: 0 
+OCCURRENCE: aatag --> SCORE: 1 
+OCCURRENCE: aaacg --> SCORE: 1 
+OCCURRENCE: taaag --> SCORE: 1 
+OCCURRENCE: aaaat --> SCORE: 1 
+OCCURRENCE: ataag --> SCORE: 1 
+OCCURRENCE: aaaat --> SCORE: 1 
+OCCURRENCE: aaacg --> SCORE: 1 
+OCCURRENCE:  --> SCORE: 5 
+
+MOTIF CONSENSUS: aaaag
+-----------------------------------
+ST1:
+OCCURRENCE: aaacg --> SCORE: 1 
+OCCURRENCE: aaaag --> SCORE: 0 
+OCCURRENCE: aaaag --> SCORE: 0 
+OCCURRENCE: aaaag --> SCORE: 0 
+OCCURRENCE: aaaag --> SCORE: 0 
+OCCURRENCE: aaaac --> SCORE: 1 
+OCCURRENCE: aaaac --> SCORE: 1 
+OCCURRENCE: aaaac --> SCORE: 1 
+OCCURRENCE: aatag --> SCORE: 1 
+OCCURRENCE: aaaat --> SCORE: 1 
+
+MOTIF CONSENSUS: aaaag
+-----------------------------------
+ST2:
+OCCURRENCE: aaacg --> SCORE: 1 
+OCCURRENCE: aaaag --> SCORE: 0 
+OCCURRENCE: aaaag --> SCORE: 0 
+OCCURRENCE: aaaag --> SCORE: 0 
+OCCURRENCE: aaaag --> SCORE: 0 
+OCCURRENCE: aaaac --> SCORE: 1 
+OCCURRENCE: aaaac --> SCORE: 1 
+OCCURRENCE: aaaac --> SCORE: 1 
+OCCURRENCE: aatag --> SCORE: 1 
+OCCURRENCE: aaaat --> SCORE: 1 
+
+MOTIF CONSENSUS: aaaag
+-----------------------------------
+ST1:
+OCCURRENCE: aagta --> SCORE: 1 
+OCCURRENCE: atgtt --> SCORE: 1 
+OCCURRENCE: acgtt --> SCORE: 1 
+OCCURRENCE: aagtt --> SCORE: 0 
+OCCURRENCE: aagtc --> SCORE: 1 
+OCCURRENCE: cggtt --> SCORE: 2 
+OCCURRENCE: gtgtt --> SCORE: 2 
+OCCURRENCE: cggtt --> SCORE: 2 
+OCCURRENCE: tagtc --> SCORE: 2 
+OCCURRENCE: gcgtt --> SCORE: 2 
+
+MOTIF CONSENSUS: aagtt
+-----------------------------------
+ST2:
+OCCURRENCE: aaatt --> SCORE: 1 
+OCCURRENCE: atgtt --> SCORE: 1 
+OCCURRENCE: aagtt --> SCORE: 0 
+OCCURRENCE: aagtt --> SCORE: 0 
+OCCURRENCE: acgtt --> SCORE: 1 
+OCCURRENCE: aagta --> SCORE: 1 
+OCCURRENCE: aaatt --> SCORE: 1 
+OCCURRENCE: aagtc --> SCORE: 1 
+OCCURRENCE:  --> SCORE: 5 
+OCCURRENCE:  --> SCORE: 5 
+
+MOTIF CONSENSUS: aagtt
+-----------------------------------
+ST1:
+OCCURRENCE: gcgtt --> SCORE: 1 
+OCCURRENCE: ccctt --> SCORE: 1 
+OCCURRENCE: cggtt --> SCORE: 1 
+OCCURRENCE: cggtt --> SCORE: 1 
+OCCURRENCE: ccgct --> SCORE: 1 
+OCCURRENCE: acgtt --> SCORE: 1 
+OCCURRENCE: ccgct --> SCORE: 1 
+OCCURRENCE: aagtt --> SCORE: 2 
+OCCURRENCE: gtgtt --> SCORE: 2 
+OCCURRENCE: atgtt --> SCORE: 2 
+
+MOTIF CONSENSUS: ccgtt
+-----------------------------------
+ST2:
+OCCURRENCE: gcgtt --> SCORE: 1 
+OCCURRENCE: ccctt --> SCORE: 1 
+OCCURRENCE: cggtt --> SCORE: 1 
+OCCURRENCE: cggtt --> SCORE: 1 
+OCCURRENCE: ccgct --> SCORE: 1 
+OCCURRENCE: acgtt --> SCORE: 1 
+OCCURRENCE: ccgct --> SCORE: 1 
+OCCURRENCE: aagtt --> SCORE: 2 
+OCCURRENCE: gtgtt --> SCORE: 2 
+OCCURRENCE: atgtt --> SCORE: 2 
+
+MOTIF CONSENSUS: ccgtt
+-----------------------------------
+ST1:
+OCCURRENCE: aaaag --> SCORE: 1 
+OCCURRENCE: aaaac --> SCORE: 1 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaat --> SCORE: 1 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaac --> SCORE: 1 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaac --> SCORE: 1 
+OCCURRENCE: aaata --> SCORE: 1 
+OCCURRENCE: aaaag --> SCORE: 1 
+
+MOTIF CONSENSUS: aaaaa
+-----------------------------------
+ST2:
+OCCURRENCE: aaaag --> SCORE: 1 
+OCCURRENCE: aaaac --> SCORE: 1 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaat --> SCORE: 1 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaac --> SCORE: 1 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaac --> SCORE: 1 
+OCCURRENCE: aaata --> SCORE: 1 
+OCCURRENCE: aaaag --> SCORE: 1 
+
+MOTIF CONSENSUS: aaaaa
+-----------------------------------
+ST1:
+OCCURRENCE: aaaca --> SCORE: 1 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aataa --> SCORE: 1 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaac --> SCORE: 1 
+OCCURRENCE: aaaca --> SCORE: 1 
+OCCURRENCE: aagca --> SCORE: 2 
+OCCURRENCE: aagac --> SCORE: 2 
+OCCURRENCE: aagcc --> SCORE: 3 
+OCCURRENCE: aagct --> SCORE: 3 
+
+MOTIF CONSENSUS: aaaaa
+-----------------------------------
+ST2:
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaac --> SCORE: 1 
+OCCURRENCE: aacaa --> SCORE: 1 
+OCCURRENCE: aaaca --> SCORE: 1 
+OCCURRENCE: aaaat --> SCORE: 1 
+OCCURRENCE: aaaat --> SCORE: 1 
+OCCURRENCE: aaaga --> SCORE: 1 
+
+MOTIF CONSENSUS: aaaaa
+-----------------------------------
+ST1:
+OCCURRENCE: aaaat --> SCORE: 1 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aagaa --> SCORE: 1 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaac --> SCORE: 1 
+OCCURRENCE: aacac --> SCORE: 2 
+
+MOTIF CONSENSUS: aaaaa
+-----------------------------------
+ST2:
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aagaa --> SCORE: 1 
+
+MOTIF CONSENSUS: aaaaa
+-----------------------------------
+ST1:
+OCCURRENCE: ctggt --> SCORE: 2 
+OCCURRENCE: ccgtg --> SCORE: 1 
+OCCURRENCE: ctagg --> SCORE: 2 
+OCCURRENCE: cagtg --> SCORE: 1 
+OCCURRENCE: ctttc --> SCORE: 2 
+OCCURRENCE: ccgta --> SCORE: 2 
+OCCURRENCE: cagcg --> SCORE: 2 
+OCCURRENCE: ctgag --> SCORE: 1 
+OCCURRENCE: ctgac --> SCORE: 2 
+OCCURRENCE: ccgcc --> SCORE: 3 
+
+MOTIF CONSENSUS: ctgtg
+-----------------------------------
+ST1:
+OCCURRENCE: aaaat --> SCORE: 0 
+OCCURRENCE: aaaat --> SCORE: 0 
+OCCURRENCE: aaaat --> SCORE: 0 
+OCCURRENCE: aaact --> SCORE: 1 
+OCCURRENCE: aaaac --> SCORE: 1 
+OCCURRENCE: aaaag --> SCORE: 1 
+OCCURRENCE: aaaaa --> SCORE: 1 
+OCCURRENCE: aaaag --> SCORE: 1 
+OCCURRENCE: aaagc --> SCORE: 2 
+OCCURRENCE: aaagc --> SCORE: 2 
+
+MOTIF CONSENSUS: aaaat
+-----------------------------------
+ST2:
+OCCURRENCE: aaaat --> SCORE: 0 
+OCCURRENCE: aaaat --> SCORE: 0 
+OCCURRENCE: aaaat --> SCORE: 0 
+OCCURRENCE: aaaac --> SCORE: 1 
+OCCURRENCE: aaact --> SCORE: 1 
+OCCURRENCE: aaact --> SCORE: 1 
+OCCURRENCE: aaaag --> SCORE: 1 
+OCCURRENCE: ataat --> SCORE: 1 
+OCCURRENCE: aaaag --> SCORE: 1 
+OCCURRENCE:  --> SCORE: 5 
+
+MOTIF CONSENSUS: aaaat
+-----------------------------------
+ST1:
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aacaa --> SCORE: 1 
+OCCURRENCE: aagaa --> SCORE: 1 
+OCCURRENCE: aataa --> SCORE: 1 
+OCCURRENCE: acaaa --> SCORE: 1 
+OCCURRENCE: acgaa --> SCORE: 2 
+OCCURRENCE: acgaa --> SCORE: 2 
+OCCURRENCE: acaag --> SCORE: 2 
+
+MOTIF CONSENSUS: aaaaa
+-----------------------------------
+ST2:
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaat --> SCORE: 1 
+OCCURRENCE: aataa --> SCORE: 1 
+OCCURRENCE: aaaag --> SCORE: 1 
+OCCURRENCE: agaaa --> SCORE: 1 
+OCCURRENCE: aacaa --> SCORE: 1 
+OCCURRENCE:  --> SCORE: 5 
+
+MOTIF CONSENSUS: aaaaa
+-----------------------------------
+ST1:
+OCCURRENCE: gcagt --> SCORE: 2 
+OCCURRENCE: accgt --> SCORE: 2 
+OCCURRENCE: ataat --> SCORE: 1 
+OCCURRENCE: acaag --> SCORE: 1 
+OCCURRENCE: acaat --> SCORE: 0 
+OCCURRENCE: acagt --> SCORE: 1 
+OCCURRENCE: aaaat --> SCORE: 1 
+OCCURRENCE: aaaat --> SCORE: 1 
+OCCURRENCE: tcagt --> SCORE: 2 
+OCCURRENCE: actgt --> SCORE: 2 
+
+MOTIF CONSENSUS: acaat
+-----------------------------------
+ST2:
+OCCURRENCE: acaaa --> SCORE: 1 
+OCCURRENCE: ataat --> SCORE: 1 
+OCCURRENCE: acaag --> SCORE: 1 
+OCCURRENCE: acaat --> SCORE: 0 
+OCCURRENCE: acaaa --> SCORE: 1 
+OCCURRENCE: aaaat --> SCORE: 1 
+OCCURRENCE: aaaat --> SCORE: 1 
+OCCURRENCE: ccaat --> SCORE: 1 
+OCCURRENCE:  --> SCORE: 5 
+OCCURRENCE:  --> SCORE: 5 
+
+MOTIF CONSENSUS: acaat
+-----------------------------------
+ST1:
+OCCURRENCE: agtaa --> SCORE: 1 
+OCCURRENCE: aatat --> SCORE: 1 
+OCCURRENCE: aacaa --> SCORE: 1 
+OCCURRENCE: attaa --> SCORE: 1 
+OCCURRENCE: aataa --> SCORE: 0 
+OCCURRENCE: aagaa --> SCORE: 1 
+OCCURRENCE: aatat --> SCORE: 1 
+OCCURRENCE: aagaa --> SCORE: 1 
+OCCURRENCE: aataa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 1 
+
+MOTIF CONSENSUS: aataa
+-----------------------------------
+ST2:
+OCCURRENCE: agtaa --> SCORE: 1 
+OCCURRENCE: aatat --> SCORE: 1 
+OCCURRENCE: aacaa --> SCORE: 1 
+OCCURRENCE: attaa --> SCORE: 1 
+OCCURRENCE: aataa --> SCORE: 0 
+OCCURRENCE: aagaa --> SCORE: 1 
+OCCURRENCE: aatat --> SCORE: 1 
+OCCURRENCE: aagaa --> SCORE: 1 
+OCCURRENCE: aataa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 1 
+
+MOTIF CONSENSUS: aataa
+-----------------------------------
+ST1:
+OCCURRENCE: aaaat --> SCORE: 1 
+OCCURRENCE: aaaat --> SCORE: 1 
+OCCURRENCE: aaaga --> SCORE: 1 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaag --> SCORE: 1 
+OCCURRENCE: aaaag --> SCORE: 1 
+OCCURRENCE: aaaac --> SCORE: 1 
+OCCURRENCE: aaatc --> SCORE: 2 
+OCCURRENCE: agaag --> SCORE: 2 
+
+MOTIF CONSENSUS: aaaaa
+-----------------------------------
+ST2:
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aagaa --> SCORE: 1 
+OCCURRENCE: aagaa --> SCORE: 1 
+OCCURRENCE: aaaat --> SCORE: 1 
+OCCURRENCE: agaaa --> SCORE: 1 
+OCCURRENCE:  --> SCORE: 5 
+
+MOTIF CONSENSUS: aaaaa
+-----------------------------------
+ST1:
+OCCURRENCE: aaaac --> SCORE: 1 
+OCCURRENCE: aaaac --> SCORE: 1 
+OCCURRENCE: aaaag --> SCORE: 0 
+OCCURRENCE: aaaag --> SCORE: 0 
+OCCURRENCE: aaaat --> SCORE: 1 
+OCCURRENCE: aaaag --> SCORE: 0 
+OCCURRENCE: aaaag --> SCORE: 0 
+OCCURRENCE: aaaat --> SCORE: 1 
+OCCURRENCE: aaaac --> SCORE: 1 
+OCCURRENCE: aaaat --> SCORE: 1 
+
+MOTIF CONSENSUS: aaaag
+-----------------------------------
+ST2:
+OCCURRENCE: aaaac --> SCORE: 1 
+OCCURRENCE: aaaac --> SCORE: 1 
+OCCURRENCE: aaaag --> SCORE: 0 
+OCCURRENCE: aaaag --> SCORE: 0 
+OCCURRENCE: aaaat --> SCORE: 1 
+OCCURRENCE: aaaag --> SCORE: 0 
+OCCURRENCE: aaaag --> SCORE: 0 
+OCCURRENCE: aaaat --> SCORE: 1 
+OCCURRENCE: aaaac --> SCORE: 1 
+OCCURRENCE: aaaat --> SCORE: 1 
+
+MOTIF CONSENSUS: aaaag
+-----------------------------------
+ST1:
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaag --> SCORE: 1 
+OCCURRENCE: aaaac --> SCORE: 1 
+OCCURRENCE: aacaa --> SCORE: 1 
+OCCURRENCE: aacaa --> SCORE: 1 
+OCCURRENCE: ataaa --> SCORE: 1 
+
+MOTIF CONSENSUS: aaaaa
+-----------------------------------
+ST2:
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaaa --> SCORE: 0 
+OCCURRENCE: aaaag --> SCORE: 1 
+OCCURRENCE: aaaac --> SCORE: 1 
+OCCURRENCE: aacaa --> SCORE: 1 
+OCCURRENCE: aacaa --> SCORE: 1 
+OCCURRENCE: ataaa --> SCORE: 1 
+
+MOTIF CONSENSUS: aaaaa
+-----------------------------------
+ST1:
+OCCURRENCE: actgt --> SCORE: 1 
+OCCURRENCE: atagc --> SCORE: 2 
+OCCURRENCE: attga --> SCORE: 1 
+OCCURRENCE: aatgg --> SCORE: 2 
+OCCURRENCE: attgt --> SCORE: 0 
+OCCURRENCE: atagg --> SCORE: 2 
+OCCURRENCE: aaaga --> SCORE: 3 
+OCCURRENCE: acagg --> SCORE: 3 
+OCCURRENCE: tctgc --> SCORE: 3 
+OCCURRENCE: tacgt --> SCORE: 3 
+
+MOTIF CONSENSUS: attgt
+-----------------------------------
+ST2:
+OCCURRENCE: actgt --> SCORE: 1 
+OCCURRENCE: atagc --> SCORE: 2 
+OCCURRENCE: attga --> SCORE: 1 
+OCCURRENCE: aatgg --> SCORE: 2 
+OCCURRENCE: attgt --> SCORE: 0 
+OCCURRENCE: atagg --> SCORE: 2 
+OCCURRENCE: aaaga --> SCORE: 3 
+OCCURRENCE: acagg --> SCORE: 3 
+OCCURRENCE: tctgc --> SCORE: 3 
+OCCURRENCE: tacgt --> SCORE: 3 
+
+MOTIF CONSENSUS: attgt

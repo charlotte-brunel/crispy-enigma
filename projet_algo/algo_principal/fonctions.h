@@ -14,107 +14,93 @@
 /*************************************************************************************************************
  * * *                                         STRUCTURES                                                * * *
  *************************************************************************************************************/
-  typedef struct TEnsemble_Sequences TEnsemble_Sequences;
-  struct TEnsemble_Sequences
+  typedef struct TEnsemble_Sequences
   {
-   int numero_sequence;
-   char nom_seq[120];
-   char sequence[TAILLE_MAX_SEQ];
-   struct TEnsemble_Sequences* suiv_seq;
-  };
+    int numero_sequence;
+    char nom_seq[120];
+    char sequence[TAILLE_MAX_SEQ];
+    struct TEnsemble_Sequences* suiv_seq;
+  } TEnsemble_Sequences;
   typedef TEnsemble_Sequences* TPtr_ensemble_sequences;
 
-  typedef struct TInfo_ensemble_sequences TInfo_ensemble_sequences;
-  struct TInfo_ensemble_sequences
+  typedef struct TInfo_ensemble_sequences
   {
     double nb_sequences;
     TPtr_ensemble_sequences tete_ensemble_seq; //tete pointant sur la liste chainée de sequences
-  };
+  } TInfo_ensemble_sequences;
   typedef TInfo_ensemble_sequences* TPtr_info_ensemble_sequences;
 
 /*******************************
  * STRUCTURE DICTIONNAIRE KMER *
  *******************************/
   //1er element: liste chainee des kmers
-  typedef struct TCellkmer TCellkmer;
-  struct TCellkmer{
+  typedef struct TCellkmer
+  {
     struct TCellkmer* suiv_kmer; //Pointeur sur le kmer suivant
     struct TCellSequence* tete_sequence; //Pointer qui pointe sur une liste chain�e de s�quence o� le kmer est retrouv�
     int nb_sequence; // nombre de séquence dans lesquelles le kmer est présent
     char kmer[]; //"TCC" par exemple
-  };
+  } TCellkmer;
   typedef TCellkmer* TPtr_Cellkmer; //Pointeur sur Tcellkmer
 
   //deuxieme element du dictionnaire kmer: liste chainee de sequence possedant le kmer:
-  typedef struct TCellSequence TCellSequence;
-  struct TCellSequence{
+  typedef struct TCellSequence
+  {
     int sequence; //sequence 1 --> 1; sequence 2 --> 2
     struct TCellSequence* suiv_sequence; // Pointeur qui pointe l'element suivant de la liste chainee de sequence
     struct TCellPos* tete_pos; // Pointeur qui pointe sur le premier element de la structure position qui repertorie toutes les positions o� le kmer a �t� trouv� dans une s�quence
-  };
+  } TCellSequence;
   typedef TCellSequence* TPtr_CellSequence; // Pointeur sur TCellSequence
 
   // troisieme element du dictionnaire de kmer: liste chainee de position ou le kmer a ete trouve dans une sequence.
-  typedef struct TCellPos TCellPos;
-  struct TCellPos{
+  typedef struct TCellPos
+  {
     int position; // position du kmer dans la s�quence
     struct TCellPos* suiv_pos; //pointe sur la position suivante
-  };
+  } TCellPos;
   typedef TCellPos* TPtr_CellPos;
 
 /******************************
  * STRUCTURE KMER SELECTIONNE *
  ******************************/
   //1er element: liste chainee des kmers
-  typedef struct TCellkmer_selectionne TCellkmer_selectionne;
-  struct TCellkmer_selectionne{
+  typedef struct TCellkmer_selectionne
+  {
     struct TCellkmer_selectionne* suiv_kmer_selectionne;
     struct TCell_Motif_PSSM* tete_motif_PSSM;
     int nb_sequence;
     char kmer[];
-  };
+  } TCellkmer_selectionne;
   typedef TCellkmer_selectionne* TPtr_Cellkmer_selectionne;
 
   //2eme element: liste chainee de motif pour lequels on va calculer la PSSM:
-  typedef struct TCell_Motif_PSSM TCell_Motif_PSSM;
-  struct TCell_Motif_PSSM{
-    struct TCell_Motif_PSSM* suiv_motif;
+  typedef struct TCell_Motif_PSSM
+  {
     char motif[];
-  };
+    struct TCell_Motif_PSSM* suiv_motif;
+  } TCell_Motif_PSSM;
   typedef TCell_Motif_PSSM* TPtr_Cell_Motif_PSSM;
-
-/****************************
- * LISTE CHAINEE DES MOTIFS *
- ****************************/
-  typedef struct liste_chaine_motif liste_chaine_motif; //chaque motif sera stock� dans cette liste pour effectuer le calcul de la PSSM
-  struct liste_chaine_motif{
-    char motif_substitue[6];
-    struct liste_chaine_motif *next_motif; //pointeur sur le prochain num�ro de s�quence (ex: '>Seq2:')
-  };
-  typedef liste_chaine_motif* ptr_liste_motif;
 
 /****************************************************
  * STRUCTURE CHAINEE DE MOTS POUR AMELIORER LA PSSM *
  ****************************************************/
-  typedef struct TMot_Ameliorer_PSSM TMot_Ameliorer_PSSM;
-  struct TMot_Ameliorer_PSSM
+  typedef struct TMot_Ameliorer_PSSM
   {
+    char mot[]; //Mot de longueur motif
     double score_mot; //score du mot
     struct TMot_Ameliorer_PSSM * next_mot; //pointeur sur mot suivant
-    char mot[]; //Mot de longueur motif
-  };
+  } TMot_Ameliorer_PSSM;
   typedef TMot_Ameliorer_PSSM* TPtr_Mot_Ameliorer_PSSM;
 
 /************************************************
  * STRUCTURE CHAINEE ST1/ST2 CONTENANT LES MOTS *
  ************************************************/
-  typedef struct st st;
-  struct st
+  typedef struct st
   {
-   int distance_hamming; //distance de hamming entre le mot et Ct
-   struct st * next_mot; //pointeur sur mot suivant
-   char mot[]; //Mot qui ont une distance de hamming supérieur à 2
-  };
+    char mot[]; //Mot qui ont une distance de hamming supérieur à 2
+    int distance_hamming; //distance de hamming entre le mot et Ct
+    struct st * next_mot; //pointeur sur mot suivant
+  } st;
   typedef st* Ptr_st;
 
 /*************************************************************************************************************
