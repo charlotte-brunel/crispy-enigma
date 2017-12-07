@@ -1,0 +1,40 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/charlotte/Git/crispy-enigma/projet_algo/jojohDoom/fonctions_j.c
+stdio.h
+-
+stdlib.h
+-
+time.h
+-
+string.h
+-
+math.h
+-
+stdbool.h
+-
+fonctions_j.h
+/home/charlotte/Git/crispy-enigma/projet_algo/jojohDoom/fonctions_j.h
+
+/home/charlotte/Git/crispy-enigma/projet_algo/jojohDoom/fonctions_j.h
+stdio.h
+-
+
+/home/charlotte/Git/crispy-enigma/projet_algo/jojohDoom/main_j.c
+stdio.h
+-
+stdlib.h
+-
+time.h
+-
+string.h
+-
+fonctions_j.h
+/home/charlotte/Git/crispy-enigma/projet_algo/jojohDoom/fonctions_j.h
+
