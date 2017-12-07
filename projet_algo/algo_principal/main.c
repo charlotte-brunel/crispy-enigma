@@ -137,7 +137,7 @@ int main(int argc, char *argv[])
     //
 		// kmer_present_dans_chaque_sequence(tete_info_dict_seq->nb_sequences, &tete_liste_kmer2, &tete_liste_sequence2, &tete_liste_pos2, &tete_liste_pour_recup_motif, &tete_liste_kmer_selectionne, &tete_liste_motif_PSSM);
     //
-		// affichage_dictionnaire_kmer(tete_CellKmer);
+		affichage_dictionnaire_kmer(tete_info_dict_kmer);
     //
 		// affichage_motif_selectionne(&tete_liste_kmer_selectionne2, &tete_liste_motif_PSSM2);
 
@@ -275,6 +275,6 @@ int main(int argc, char *argv[])
 	// 		tete_liste_kmer4 = tete_liste_kmer4->suiv_kmer;
 	// 	}
 	// }
-	liberation_dictionnaire_sequence(&tete_info_dict_seq, &tete_dictionnaire_sequences);
+	// liberation_dictionnaire_sequence(&tete_info_dict_seq, &tete_dictionnaire_sequences);
 	return(0);
 }
