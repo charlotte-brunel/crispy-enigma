@@ -108,15 +108,18 @@
  * * *                                           FONCTIONS                                               * * *
  *************************************************************************************************************/
   void importer_parametres(int* taille_motif, int* d, int* nb_fenetres, int* nb_masques);
-  void importer_sequences_fasta(TPtr_info_dictionnaire_sequences* ptr_info, TPtr_dictionnaire_sequences* ptr_ensemble );
-  void afficher_sequences(TPtr_info_dictionnaire_sequences* ptr_info, TPtr_dictionnaire_sequences* ptr_ensemble );
+  void importer_sequences_fasta(TPtr_info_dictionnaire_sequences* adr_tete_info_dict_seq, TPtr_dictionnaire_sequences* adr_tete_dict_seq);
+  void afficher_sequences(TPtr_info_dictionnaire_sequences* adr_tete_info_dict_seq, TPtr_dictionnaire_sequences* adr_tete_dict_seq);
+  void liberation_dictionnaire_sequence( TPtr_info_dictionnaire_sequences* adr_tete_info_dict_seq, TPtr_dictionnaire_sequences* adr_tete_dict_seq);
+
+
+
 
   int random_number(int max_number, int zero_excluded);
   void generation_masque(void* adr_masque);
 
   void parcours_masque( void* adr_masque, TPtr_dictionnaire_sequences* ptr_ensemble, TPtr_Cellkmer* adr_tete_liste_kmer, TPtr_CellSequence* adr_tete_liste_sequence, TPtr_CellPos* adr_tete_liste_pos);
-
-  // void generation_kmer(int position_kmer, char* k_mer, TPtr_Cellkmer* adr_liste_kmer, TPtr_CellSequence* adr_liste_sequence, TPtr_dictionnaire_sequences* ptr_ensemble, TPtr_CellPos* adr_liste_pos);
+  void generation_kmer(int position_kmer, char* k_mer, TPtr_Cellkmer* adr_liste_kmer, TPtr_CellSequence* adr_liste_sequence, TPtr_dictionnaire_sequences* ptr_ensemble, TPtr_CellPos* adr_liste_pos);
 
   //
   // void recuperer_motif_kmer(TPtr_Cellkmer* adr_parcours_kmer, TPtr_Cellkmer_selectionne *adr_tete_kmer_selectionne, TPtr_Cell_Motif_PSSM* adr_tete_motif_PSSM, TPtr_CellSequence* adr_cell_sequence, TPtr_CellPos* adr_cell_pos, TPtr_dictionnaire_sequences* ptr_ensemble, int nb_sequence_kmer);
@@ -125,9 +128,11 @@
   // void affichage_dictionnaire_kmer(TPtr_Cellkmer* adr_tete_kmer, TPtr_CellSequence* adr_tete_sequence, TPtr_CellPos* adr_tete_pos);
   // void affichage_motif_selectionne(TPtr_Cellkmer_selectionne* adr_tete_kmer_selectionne, TPtr_Cell_Motif_PSSM* adr_tete_motif);
   //
+  void creation_PSSM(double*** adr_matrice_PSSM);
   // void calcul_PSSM(TPtr_Cellkmer_selectionne *adr_cell_kmer_selectionne, TPtr_Cell_Motif_PSSM *adr_cell_motif_PSSM, double*** adr_matrice_PSSM, int taille_motif);
   // void calcul_nouvelle_PSSM(TPtr_Cell_Motif_PSSM *adr_cell_mot_selected, double*** adr_matrice_PSSM, double nb_sequence, char (*adr_Ct)[6], int taille_motif);
-  // void afficher_PSSM( double*** adr_matrice_PSSM, int taille_motif);
+  void afficher_PSSM( double** adr_matrice_PSSM);
+  void liberation_PSSM(double*** adr_matrice_PSSM);
   //
   // void calcul_score(TPtr_Mot_Ameliorer_PSSM* adr_mot, double*** adr_matrice_PSSM, int n_sequence, TPtr_dictionnaire_sequences* ptr_ensemble, int taille_motif);
   // double dist_PSSM(double*** adr_matrice_PSSM, double*** adr_matrice_PSSM_nouv, double* distance_PSSM, int taille_motif);

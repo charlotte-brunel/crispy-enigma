@@ -52,6 +52,7 @@ void importer_sequences_fasta( TPtr_info_dictionnaire_sequences* adr_tete_info_d
 		c = fgetc (ptr_fichier_fasta); //lecture du fichier caractère par caractère
 		if (c == '>') cptr++;  //incrémentation pour chaque nom de séquences
 	} while (c != EOF); // l'action est répétée jusqu'à ce que la fin du fichier soit atteinte
+	fclose(ptr_fichier_fasta);
 
 	ptr_fichier_fasta = fopen(nom_fichier_fasta, "r");
 	do
@@ -80,16 +81,17 @@ void importer_sequences_fasta( TPtr_info_dictionnaire_sequences* adr_tete_info_d
   fclose(ptr_fichier_fasta);
 }
 //------------------------------------------------------------------------------------------------------------
-void afficher_sequences(TPtr_info_dictionnaire_sequences* ptr_info, TPtr_dictionnaire_sequences* ptr_ensemble )
+void afficher_sequences(TPtr_info_dictionnaire_sequences* adr_tete_info_dict_seq, TPtr_dictionnaire_sequences* adr_tete_dict_seq )
 {
 	FILE* ptr_fichier;
-  TPtr_dictionnaire_sequences p = *ptr_ensemble;
+	TPtr_dictionnaire_sequences p = *adr_tete_dict_seq;
+	TPtr_info_dictionnaire_sequences ptr_info = *adr_tete_info_dict_seq;
 	int cptr = 0;
 	printf("fonction afficher_sequences\n");
-	printf("%d \n", (*ptr_info)->nb_sequences);
+	printf("%d \n", ptr_info->nb_sequences);
 
 	ptr_fichier = fopen ( "verif_dico_fasta.txt" ,"w");
-	while ( cptr < ((*ptr_info)->nb_sequences))
+	while ( cptr < (ptr_info->nb_sequences))
 	{
 		fprintf(ptr_fichier, "%d\n", p->numero_sequence);
 		fputs( p->nom_seq, ptr_fichier);
@@ -101,6 +103,70 @@ void afficher_sequences(TPtr_info_dictionnaire_sequences* ptr_info, TPtr_diction
 		p = p->suiv_seq;
 		cptr ++;
 	}
+	fclose(ptr_fichier);
+}
+//------------------------------------------------------------------------------------------------------------
+void liberation_dictionnaire_sequence( TPtr_info_dictionnaire_sequences* adr_tete_info_dict_seq, TPtr_dictionnaire_sequences* adr_tete_dict_seq )
+{
+	TPtr_info_dictionnaire_sequences p_info = *adr_tete_info_dict_seq;
+	TPtr_dictionnaire_sequences p_seq = *adr_tete_dict_seq;
+	TPtr_dictionnaire_sequences p_prec_seq = NULL;
+
+	while ( p_seq->suiv_seq != NULL)
+	{
+		p_prec_seq = p_seq;
+		p_seq = p_seq->suiv_seq;
+		free (p_prec_seq);
+	}
+	free(p_info);
+}
+//------------------------------------------------------------------------------------------------------------
+void creation_PSSM(double*** adr_matrice_PSSM)
+{
+	int i, j;
+  *adr_matrice_PSSM = malloc(4* sizeof(double*));
+
+  for (i=0; i<4; i++) //initialisation de la matrice à 0:
+  {
+		(*adr_matrice_PSSM)[i] = malloc(taille_motif * sizeof(double)); //On alloue des tableaux de 'taille2' variables.
+    for(j=0; j < taille_motif; j++)
+    {
+      (*adr_matrice_PSSM)[i][j] = 0;
+    }
+		printf("\n" );
+  }
+}
+//------------------------------------------------------------------------------------------------------------
+void afficher_PSSM( double** matrice_PSSM)
+{
+  FILE* ptr_fichier_PSSM;
+  int i, j;
+  ptr_fichier_PSSM = fopen("PSSM_Motif_Trouve.txt", "w");
+
+  fprintf(ptr_fichier_PSSM, "\n\nPSSM: \n");
+	for (i=0;  i<4; i++){
+		if(i == 0){ fprintf(ptr_fichier_PSSM, "A  ");}
+		if(i == 1){ fprintf(ptr_fichier_PSSM, "\nT  ");}
+		if(i == 2){ fprintf(ptr_fichier_PSSM, "\nC  ");}
+		if(i == 3){ fprintf(ptr_fichier_PSSM, "\nG  ");}
+		for(j=0; j<taille_motif; j++){
+		  fprintf(ptr_fichier_PSSM, "%.2f ", matrice_PSSM[i][j]);
+		}
+	}
+  fprintf(ptr_fichier_PSSM, "\n");
+  fclose(ptr_fichier_PSSM);
+}
+//------------------------------------------------------------------------------------------------------------
+void liberation_PSSM(double*** adr_matrice_PSSM)
+{
+	int i;
+	double** p_PSSM = *adr_matrice_PSSM;
+
+  for (i = 0; i<4; i++)
+	{
+		free(p_PSSM[i]);
+	}
+  free(p_PSSM);
 }
 //------------------------------------------------------------------------------------------------------------
 int random_number(int max_number, int zero_excluded)
@@ -131,28 +197,113 @@ void generation_masque(void* adr_masque)
     }
   }
 }
-// //------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
+void generation_kmer(int position_kmer, char* k_mer, TPtr_Cellkmer* adr_liste_kmer, TPtr_CellSequence* adr_liste_sequence, TPtr_dictionnaire_sequences* ptr_ensemble, TPtr_CellPos* adr_liste_pos)
+{
+  TPtr_Cellkmer temp_p_kmer = *adr_liste_kmer; //on créer des pointeurs temporaires pour parcourir les listes
+  TPtr_dictionnaire_sequences p_dictionnaire_sequence = *ptr_ensemble;
+
+  if (temp_p_kmer->suiv_kmer == NULL) //cas du premier element de la liste
+  {
+    TPtr_Cellkmer nouveau_kmer = (TCellkmer*)malloc(sizeof(TCellkmer));
+    strcpy(temp_p_kmer->kmer, k_mer);
+    nouveau_kmer->suiv_kmer = NULL;
+    TPtr_CellSequence nouvelle_sequence = (TCellSequence*)malloc(sizeof(TCellSequence));
+    temp_p_kmer->suiv_kmer = nouveau_kmer;
+    temp_p_kmer->tete_sequence = nouvelle_sequence;
+    nouvelle_sequence->sequence = p_dictionnaire_sequence->numero_sequence;
+    nouvelle_sequence->suiv_sequence = NULL;
+    TPtr_CellPos nouvelle_position = (TCellPos*)malloc(sizeof(TCellPos));
+    nouvelle_sequence->tete_pos = nouvelle_position;
+    nouvelle_position->position = position_kmer;
+    nouvelle_position->suiv_pos = NULL;
+    return;
+  }else{
+    while (temp_p_kmer->suiv_kmer != NULL)
+    {
+      if (strcmp(temp_p_kmer->kmer, k_mer) == 0)   //si le kmer a d�j� �t� trouv�
+      {
+        TPtr_CellSequence p_liste_sequence = temp_p_kmer->tete_sequence;
+        //premier element de la liste chainee de sequence:
+        while (p_liste_sequence->suiv_sequence != NULL)
+        {
+          if (p_dictionnaire_sequence->numero_sequence == p_liste_sequence->sequence) //Si le kmer a d�j� �t� trouv� dans cette s�quence
+          {
+            TPtr_CellPos p_liste_pos = p_liste_sequence->tete_pos;
+            while (p_liste_pos->suiv_pos != NULL){
+              p_liste_pos = p_liste_pos->suiv_pos;
+            }
+            TPtr_CellPos nouvelle_position = (TCellPos*)malloc(sizeof(TCellPos)); // On cr�� une nouvelle brique de p�sition
+            nouvelle_position->position = position_kmer;
+            nouvelle_position->suiv_pos = NULL;
+            p_liste_pos->suiv_pos = nouvelle_position;
+            return;
+          }
+          p_liste_sequence = p_liste_sequence->suiv_sequence;
+        }
+        if (p_dictionnaire_sequence->numero_sequence == p_liste_sequence->sequence)  //Si le kmer a d�j� �t� trouv� dans cette s�quence
+        {
+          TPtr_CellPos p_liste_pos = p_liste_sequence->tete_pos;
+          while (p_liste_pos->suiv_pos != NULL)
+          {
+            p_liste_pos = p_liste_pos->suiv_pos;
+          }
+          TPtr_CellPos nouvelle_position = (TCellPos*)malloc(sizeof(TCellPos)); // On cr�� une nouvelle brique de p�sition
+          nouvelle_position->position = position_kmer;
+          nouvelle_position->suiv_pos = NULL;
+          p_liste_pos->suiv_pos = nouvelle_position;
+          return;
+        }
+        TPtr_CellSequence nouvelle_sequence = (TCellSequence*)malloc(sizeof(TCellSequence));
+        nouvelle_sequence->sequence = p_dictionnaire_sequence->numero_sequence;
+        nouvelle_sequence->suiv_sequence = NULL;
+        p_liste_sequence->suiv_sequence = nouvelle_sequence;
+        TPtr_CellPos nouvelle_tete_pos = (TCellPos*)malloc(sizeof(TCellPos)); // on cr�� une nouvelle tete de liste de position
+        nouvelle_sequence->tete_pos = nouvelle_tete_pos;
+        nouvelle_tete_pos->position = position_kmer;
+        nouvelle_tete_pos->suiv_pos = NULL;
+        return;
+      }
+      temp_p_kmer = temp_p_kmer->suiv_kmer;
+    }
+   // Si ce kmer n'a pas encore �t� trouv�: ajout en fin de boucle
+    TPtr_Cellkmer nouveau_kmer = (TCellkmer*)malloc(sizeof(TCellkmer));
+    strcpy(temp_p_kmer->kmer, k_mer);
+    nouveau_kmer->suiv_kmer = NULL;
+    TPtr_CellSequence nouvelle_sequence = (TCellSequence*)malloc(sizeof(TCellSequence));
+    temp_p_kmer->suiv_kmer = nouveau_kmer;
+    temp_p_kmer->tete_sequence = nouvelle_sequence;
+    nouvelle_sequence->sequence = p_dictionnaire_sequence->numero_sequence;
+    nouvelle_sequence->suiv_sequence = NULL;
+    TPtr_CellPos nouvelle_position = (TCellPos*)malloc(sizeof(TCellPos));
+    nouvelle_sequence->tete_pos = nouvelle_position;
+    nouvelle_position->position = position_kmer;
+    nouvelle_position->suiv_pos = NULL;
+    return;
+  }
+}
+//------------------------------------------------------------------------------------------------------------
 void parcours_masque( void* adr_masque, TPtr_dictionnaire_sequences* adr_tete_dict_seq, TPtr_Cellkmer* adr_tete_liste_kmer, TPtr_CellSequence* adr_tete_liste_sequence, TPtr_CellPos* adr_tete_liste_pos)
 {
 	TPtr_dictionnaire_sequences p_dictionnaire_sequence = *adr_tete_dict_seq;
   TPtr_Cellkmer p_kmer = *adr_tete_liste_kmer;
   TPtr_CellSequence p_sequence = *adr_tete_liste_sequence;
   TPtr_CellPos p_pos = *adr_tete_liste_pos;
-	
+
   int *p_masque = adr_masque;
   int position = 0;
   int cpt_pos_masque, position_kmer;
   int pos_kmer = 0;
-  char k_mer[nb_fenetres+1]; // le k_mer mesure la taille du nombre de fen�tre ouverte dans le masque
+  char k_mer[nb_fenetres+1]; // le k_mer mesure la taille du nombre de fenêtres ouvertes dans le masque
 
   while (p_dictionnaire_sequence != NULL)
   {
-    while (position < 30)
+    while (position < 30) //inferieur à longueur de la séquence
     {
-      for(cpt_pos_masque = 0; cpt_pos_masque< taille_motif; cpt_pos_masque++)
-      { // on parcourt les nucleotides sous le masque
-        if (p_masque[cpt_pos_masque] == 1)
-        { //si la fen�tre du masque est ouverte
+      for(cpt_pos_masque = 0; cpt_pos_masque < taille_motif; cpt_pos_masque++) // on parcourt les nucléotides sous le masque
+      {
+        if (p_masque[cpt_pos_masque] == 1) //si la fenêtre du masque est ouverte
+        {
           k_mer[pos_kmer] = p_dictionnaire_sequence->sequence[position];
 
           if (pos_kmer == 0) { position_kmer = position; }
@@ -163,101 +314,14 @@ void parcours_masque( void* adr_masque, TPtr_dictionnaire_sequences* adr_tete_di
             pos_kmer = 0;
           }
         }
-        position = position+1;
+        position ++; // on incrémente dans le for car le masque avavnce sur la séquence de la longueur du motif
       }
       generation_kmer(position_kmer, k_mer, &p_kmer, &p_sequence, &p_dictionnaire_sequence, &p_pos);
     }
     position = 0;
     p_dictionnaire_sequence = p_dictionnaire_sequence->suiv_seq;
   }
-  return;
 }
-// //------------------------------------------------------------------------------------------------------------
-// void generation_kmer(int position_kmer, char* k_mer, TPtr_Cellkmer* adr_liste_kmer, TPtr_CellSequence* adr_liste_sequence, TPtr_dictionnaire_sequences* ptr_ensemble, TPtr_CellPos* adr_liste_pos)
-// {
-//   TPtr_Cellkmer temp_p_kmer = *adr_liste_kmer; //on cr�� des pointeurs temporaire pour parcourir les listes
-//   TPtr_dictionnaire_sequences p_dictionnaire_sequence = *ptr_ensemble;
-//
-//   if (temp_p_kmer->suiv_kmer == NULL) //cas du premier element de la liste
-//   {
-//     TPtr_Cellkmer nouveau_kmer = (TCellkmer*)malloc(sizeof(TCellkmer));
-//     strcpy(temp_p_kmer->kmer, k_mer);
-//     nouveau_kmer->suiv_kmer = NULL;
-//     TPtr_CellSequence nouvelle_sequence = (TCellSequence*)malloc(sizeof(TCellSequence));
-//     temp_p_kmer->suiv_kmer = nouveau_kmer;
-//     temp_p_kmer->tete_sequence = nouvelle_sequence;
-//     nouvelle_sequence->sequence = p_dictionnaire_sequence->numero_sequence;
-//     nouvelle_sequence->suiv_sequence = NULL;
-//     TPtr_CellPos nouvelle_position = (TCellPos*)malloc(sizeof(TCellPos));
-//     nouvelle_sequence->tete_pos = nouvelle_position;
-//     nouvelle_position->position = position_kmer;
-//     nouvelle_position->suiv_pos = NULL;
-//     return;
-//   }else{
-//     while (temp_p_kmer->suiv_kmer != NULL)
-//     {
-//       if (strcmp(temp_p_kmer->kmer, k_mer) == 0)   //si le kmer a d�j� �t� trouv�
-//       {
-//         TPtr_CellSequence p_liste_sequence = temp_p_kmer->tete_sequence;
-//         //premier element de la liste chainee de sequence:
-//         while (p_liste_sequence->suiv_sequence != NULL)
-//         {
-//           if (p_dictionnaire_sequence->numero_sequence == p_liste_sequence->sequence) //Si le kmer a d�j� �t� trouv� dans cette s�quence
-//           {
-//             TPtr_CellPos p_liste_pos = p_liste_sequence->tete_pos;
-//             while (p_liste_pos->suiv_pos != NULL){
-//               p_liste_pos = p_liste_pos->suiv_pos;
-//             }
-//             TPtr_CellPos nouvelle_position = (TCellPos*)malloc(sizeof(TCellPos)); // On cr�� une nouvelle brique de p�sition
-//             nouvelle_position->position = position_kmer;
-//             nouvelle_position->suiv_pos = NULL;
-//             p_liste_pos->suiv_pos = nouvelle_position;
-//             return;
-//           }
-//           p_liste_sequence = p_liste_sequence->suiv_sequence;
-//         }
-//         if (p_dictionnaire_sequence->numero_sequence == p_liste_sequence->sequence)  //Si le kmer a d�j� �t� trouv� dans cette s�quence
-//         {
-//           TPtr_CellPos p_liste_pos = p_liste_sequence->tete_pos;
-//           while (p_liste_pos->suiv_pos != NULL)
-//           {
-//             p_liste_pos = p_liste_pos->suiv_pos;
-//           }
-//           TPtr_CellPos nouvelle_position = (TCellPos*)malloc(sizeof(TCellPos)); // On cr�� une nouvelle brique de p�sition
-//           nouvelle_position->position = position_kmer;
-//           nouvelle_position->suiv_pos = NULL;
-//           p_liste_pos->suiv_pos = nouvelle_position;
-//           return;
-//         }
-//         TPtr_CellSequence nouvelle_sequence = (TCellSequence*)malloc(sizeof(TCellSequence));
-//         nouvelle_sequence->sequence = p_dictionnaire_sequence->numero_sequence;
-//         nouvelle_sequence->suiv_sequence = NULL;
-//         p_liste_sequence->suiv_sequence = nouvelle_sequence;
-//         TPtr_CellPos nouvelle_tete_pos = (TCellPos*)malloc(sizeof(TCellPos)); // on cr�� une nouvelle tete de liste de position
-//         nouvelle_sequence->tete_pos = nouvelle_tete_pos;
-//         nouvelle_tete_pos->position = position_kmer;
-//         nouvelle_tete_pos->suiv_pos = NULL;
-//         return;
-//       }
-//       temp_p_kmer = temp_p_kmer->suiv_kmer;
-//     }
-//    // Si ce kmer n'a pas encore �t� trouv�: ajout en fin de boucle
-//     TPtr_Cellkmer nouveau_kmer = (TCellkmer*)malloc(sizeof(TCellkmer));
-//     strcpy(temp_p_kmer->kmer, k_mer);
-//     nouveau_kmer->suiv_kmer = NULL;
-//     TPtr_CellSequence nouvelle_sequence = (TCellSequence*)malloc(sizeof(TCellSequence));
-//     temp_p_kmer->suiv_kmer = nouveau_kmer;
-//     temp_p_kmer->tete_sequence = nouvelle_sequence;
-//     nouvelle_sequence->sequence = p_dictionnaire_sequence->numero_sequence;
-//     nouvelle_sequence->suiv_sequence = NULL;
-//     TPtr_CellPos nouvelle_position = (TCellPos*)malloc(sizeof(TCellPos));
-//     nouvelle_sequence->tete_pos = nouvelle_position;
-//     nouvelle_position->position = position_kmer;
-//     nouvelle_position->suiv_pos = NULL;
-//     return;
-//   }
-// }
-//
 // //------------------------------------------------------------------------------------------------------------
 // //Procedure pour remplir le dictionnaire de kmer s�lectionn� pour le calcul de la PSSM:
 // void recuperer_motif_kmer(TPtr_Cellkmer* adr_parcours_kmer, TPtr_Cellkmer_selectionne *adr_tete_kmer_selectionne, TPtr_Cell_Motif_PSSM* adr_tete_motif_PSSM, TPtr_CellSequence* adr_cell_sequence, TPtr_CellPos* adr_cell_pos, TPtr_dictionnaire_sequences* ptr_ensemble, int nb_sequence_kmer)
@@ -340,7 +404,6 @@ void parcours_masque( void* adr_masque, TPtr_dictionnaire_sequences* adr_tete_di
 //   }while(p_sequence != NULL);
 //
 //   p_dictionnaire_sequence = tete_dictionnaire_sequence;
-//   return;
 // }
 // //------------------------------------------------------------------------------------------------------------
 // //Fonction pour trouver si le kmer est trouv� dans chaque sequence:
@@ -373,7 +436,6 @@ void parcours_masque( void* adr_masque, TPtr_dictionnaire_sequences* adr_tete_di
 //     nb_sequence_par_kmer = 0;
 //     p_parcours_kmer = p_parcours_kmer->suiv_kmer;
 //   }
-//   return;
 // }
 // //------------------------------------------------------------------------------------------------------------
 // void affichage_dictionnaire_kmer(TPtr_Cellkmer* adr_tete_kmer, TPtr_CellSequence* adr_tete_sequence, TPtr_CellPos* adr_tete_pos)
@@ -401,7 +463,6 @@ void parcours_masque( void* adr_masque, TPtr_dictionnaire_sequences* adr_tete_di
 //     p_kmer = p_kmer->suiv_kmer;
 //   }
 //   fclose(fichier_dictionnaire);
-//   return;
 // }
 // //------------------------------------------------------------------------------------------------------------
 // void affichage_motif_selectionne(TPtr_Cellkmer_selectionne* adr_tete_kmer_selectionne, TPtr_Cell_Motif_PSSM* adr_tete_motif)
@@ -422,7 +483,6 @@ void parcours_masque( void* adr_masque, TPtr_dictionnaire_sequences* adr_tete_di
 //     p_kmer_selectionne = p_kmer_selectionne->suiv_kmer_selectionne;
 //   }
 //   fclose(fichier_kmer_selectionne);
-//   return;
 // }
 // //------------------------------------------------------------------------------------------------------------
 // void calcul_PSSM(TPtr_Cellkmer_selectionne *adr_cell_kmer_selectionne, TPtr_Cell_Motif_PSSM *adr_cell_motif_PSSM, double*** adr_matrice_PSSM, int taille_motif)
@@ -456,7 +516,6 @@ void parcours_masque( void* adr_masque, TPtr_dictionnaire_sequences* adr_tete_di
 //     }
 //     p_motif = p_motif->suiv_motif;
 //   }while (p_motif != NULL);
-//   return;
 // }
 // //------------------------------------------------------------------------------------------------------------
 // void calcul_nouvelle_PSSM(TPtr_Cell_Motif_PSSM *adr_cell_mot_selected, double*** adr_matrice_PSSM_nouv, double nb_sequence, char (*adr_Ct)[6], int taille_motif)
@@ -529,43 +588,8 @@ void parcours_masque( void* adr_masque, TPtr_dictionnaire_sequences* adr_tete_di
 // 	*adr_Ct[taille_motif+1]='\0';
 // 	fprintf(file_nouv_PSSM, "\n\n\n");
 // 	fclose(file_nouv_PSSM);
-//   return;
 // }
-// //------------------------------------------------------------------------------------------------------------
-// void afficher_PSSM( double*** adr_matrice_PSSM, int taille_motif)
-// {
-//   FILE* ptr_fichier_PSSM;
-//   double** p_matrice_PSSM = *adr_matrice_PSSM;
-//   int a, t, c, g;
-//   ptr_fichier_PSSM = fopen("PSSM_Motif_Trouve.txt", "w"); // Dans ce fichier on va �crire la PSSM pr�visionnelle
-//
-//   //ecriture de la matrice PSSM dans le fichier d'info.
-//   fprintf(ptr_fichier_PSSM, "\n\nPSSM: \n");
-//   fprintf(ptr_fichier_PSSM, "a  ");
-//   for (a=0; a < taille_motif; a++)
-//   {
-//     fprintf(ptr_fichier_PSSM, "%.2f ", p_matrice_PSSM[0][a]);
-//   }
-//   fprintf(ptr_fichier_PSSM, "\nt  ");
-//   for (t=0; t < taille_motif; t++)
-//   {
-//     fprintf(ptr_fichier_PSSM, "%.2f ", p_matrice_PSSM[1][t]);
-//   }
-//   fprintf(ptr_fichier_PSSM, "\nc  ");
-//   for (c=0; c < taille_motif; c++)
-//   {
-//     fprintf(ptr_fichier_PSSM, "%.2f ", p_matrice_PSSM[2][c]);
-//   }
-//   fprintf(ptr_fichier_PSSM, "\ng  ");
-//   for (g=0; g < taille_motif; g++)
-//   {
-//     fprintf(ptr_fichier_PSSM, "%.2f ", p_matrice_PSSM[3][g]);
-//   }
-//   fprintf(ptr_fichier_PSSM, "\n\n\n");
-//   fclose(ptr_fichier_PSSM);
-//   return;
-// }
-// //------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 // void calcul_score(TPtr_Mot_Ameliorer_PSSM* adr_mot, double*** adr_matrice_PSSM, int n_sequence, TPtr_dictionnaire_sequences* ptr_ensemble, int taille_motif)
 // {
 // 	TPtr_dictionnaire_sequences p_dictionnaire_seq = *ptr_ensemble;
@@ -634,7 +658,6 @@ void parcours_masque( void* adr_masque, TPtr_dictionnaire_sequences* adr_tete_di
 // 	}
 // 	score = prob_mot_PSSM/prob_mot_background;
 // 	p_mot->score_mot = score;
-// 	return;
 // }
 // //------------------------------------------------------------------------------------------------------------
 // double dist_PSSM(double*** adr_matrice_PSSM, double*** adr_matrice_PSSM_nouv, double* distance_PSSM, int taille_motif)
@@ -795,7 +818,6 @@ void parcours_masque( void* adr_masque, TPtr_dictionnaire_sequences* adr_tete_di
 //     separer(v_St1_Dh, v_St1_Pos, g, d, &indice_pivot);
 //     trier(v_St1_Dh, v_St1_Pos, indice_pivot+1, d);
 //   }
-//   return;
 // }
 // //------------------------------------------------------------------------------------------------------------
 // void separer(int* v_St1_Dh, int* v_St1_Pos, int g, int d, int* adr_indice_pivot)
@@ -833,7 +855,6 @@ void parcours_masque( void* adr_masque, TPtr_dictionnaire_sequences* adr_tete_di
 //   v_St1_Dh[bas] = pivot;
 //   v_St1_Pos[bas] = pivot_pos;
 //   *adr_indice_pivot = bas;
-//   return;
 // }
 // //------------------------------------------------------------------------------------------------------------
 // void quick_sort_ST(Ptr_st* adr_st1, int* v_St1_Pos, int nb_sequences)
@@ -861,7 +882,6 @@ void parcours_masque( void* adr_masque, TPtr_dictionnaire_sequences* adr_tete_di
 //     printf("Vecteur Pos après tri: %d \n", v_St1_Pos[i]);
 //   }
 //  printf("\n");
-//   return;
 // }
 // //------------------------------------------------------------------------------------------------------------
 // void fichier_sortie_st(Ptr_st* adr_st1, int* v_St1_Pos, char (*adr_Ct)[6], int nb_sequences)
@@ -886,6 +906,5 @@ void parcours_masque( void* adr_masque, TPtr_dictionnaire_sequences* adr_tete_di
 //   {
 //     fprintf(fichier_sortie_st2, "%c", *adr_Ct[i]);
 //   }
-//   return;
 // }
 // //------------------------------------------------------------------------------------------------------------
