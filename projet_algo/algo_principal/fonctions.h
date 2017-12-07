@@ -33,6 +33,8 @@
 /*******************************
  * STRUCTURE DICTIONNAIRE KMER *
  *******************************/
+
+
   //1er element: liste chainee des kmers
   typedef struct TCellkmer
   {
@@ -46,7 +48,7 @@
   //deuxieme element du dictionnaire kmer: liste chainee de sequence possedant le kmer:
   typedef struct TCellSequence
   {
-    int sequence; //sequence 1 --> 1; sequence 2 --> 2
+    int sequence; //correspond au numéro de la séquence dans le dictionnaire de séquences
     struct TCellSequence* suiv_sequence; // Pointeur qui pointe l'element suivant de la liste chainee de sequence
     struct TCellPos* tete_pos; // Pointeur qui pointe sur le premier element de la structure position qui repertorie toutes les positions o� le kmer a �t� trouv� dans une s�quence
   } TCellSequence;
@@ -59,6 +61,13 @@
     struct TCellPos* suiv_pos; //pointe sur la position suivante
   } TCellPos;
   typedef TCellPos* TPtr_CellPos;
+
+  typedef struct TInfo_dictionnaire_kmer
+  {
+    int nb_kmer;
+    TPtr_Cellkmer tete_liste_kmer;
+  } TInfo_dictionnaire_kmer;
+  typedef TInfo_dictionnaire_kmer* TPtr_info_dictionnaire_kmer;
 
 /******************************
  * STRUCTURE KMER SELECTIONNE *
@@ -112,18 +121,18 @@
   void afficher_sequences(TPtr_info_dictionnaire_sequences* adr_tete_info_dict_seq, TPtr_dictionnaire_sequences* adr_tete_dict_seq);
   void liberation_dictionnaire_sequence( TPtr_info_dictionnaire_sequences* adr_tete_info_dict_seq, TPtr_dictionnaire_sequences* adr_tete_dict_seq);
 
-
   int random_number(int max_number, int zero_excluded);
-  void generation_masque(void* adr_masque);
 
-  void parcours_masque( void* adr_masque, TPtr_dictionnaire_sequences* adr_tete_dict_seq, TPtr_Cellkmer* adr_tete_CellKmer, TPtr_CellSequence* adr_tete_CellSequenceK, TPtr_CellPos* adr_tete_CellPosK);
-  void generation_kmer(int position_kmer, char* k_mer, TPtr_Cellkmer* adr_liste_kmer, TPtr_CellSequence* adr_liste_sequence, TPtr_dictionnaire_sequences* ptr_ensemble, TPtr_CellPos* adr_liste_pos);
+  int* generation_masque(int* masque);
 
-  //
+  void parcours_masque( int* masque, TPtr_dictionnaire_sequences tete_dict_seq, TPtr_info_dictionnaire_kmer tete_info_dict_kmer);
+  void generation_kmer(int position_kmer, char* k_mer, TPtr_dictionnaire_sequences tete_dict_seq, TPtr_info_dictionnaire_kmer tete_info_dict_kmer);
+  void affichage_dictionnaire_kmer(TPtr_Cellkmer tete_CellKmer);
+
   // void recuperer_motif_kmer(TPtr_Cellkmer* adr_parcours_kmer, TPtr_Cellkmer_selectionne *adr_tete_kmer_selectionne, TPtr_Cell_Motif_PSSM* adr_tete_motif_PSSM, TPtr_CellSequence* adr_cell_sequence, TPtr_CellPos* adr_cell_pos, TPtr_dictionnaire_sequences* ptr_ensemble, int nb_sequence_kmer);
   // void kmer_present_dans_chaque_sequence(int nb_sequence, TPtr_Cellkmer* adr_cell_kmer, TPtr_CellSequence *adr_cell_sequence, TPtr_CellPos *adr_cell_pos, TPtr_dictionnaire_sequences* ptr_ensemble, TPtr_Cellkmer_selectionne* adr_cell_kmer_selectionne, TPtr_Cell_Motif_PSSM* adr_cell_motif_PSSM);
   //
-  // void affichage_dictionnaire_kmer(TPtr_Cellkmer* adr_tete_kmer, TPtr_CellSequence* adr_tete_sequence, TPtr_CellPos* adr_tete_pos);
+
   // void affichage_motif_selectionne(TPtr_Cellkmer_selectionne* adr_tete_kmer_selectionne, TPtr_Cell_Motif_PSSM* adr_tete_motif);
   //
   void creation_PSSM(double*** adr_matrice_PSSM);

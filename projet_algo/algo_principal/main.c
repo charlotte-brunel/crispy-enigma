@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
 	/***********************************************
 	 *    définition des variables haaaaaaaaaa     *
 	 ***********************************************/
-		int masque[taille_motif];
+		int* masque;
 
 	/*******************************
 	 *   Dictionnaire Sequences    *
@@ -53,24 +53,24 @@ int main(int argc, char *argv[])
   // TPtr_dictionnaire_sequences tete_dictionnaire_sequences_next = NULL;
 
 	/*******************************
-	 *    Dictionnaire KMERs       *
-	 *******************************/
-	TPtr_Cellkmer tete_CellKmer = malloc(sizeof(TCellkmer));
+	*    Dictionnaire KMERs       *
+	********************************/
+	TPtr_info_dictionnaire_kmer tete_info_dict_kmer = malloc(sizeof(TInfo_dictionnaire_kmer));
+	tete_info_dict_kmer->nb_kmer = 0;
+	// TPtr_Cellkmer tete_CellKmer = malloc(sizeof(TCellkmer));
   // TPtr_Cellkmer tete_liste_kmer = tete_CellKmer;
   // TPtr_Cellkmer tete_liste_kmer2 = tete_CellKmer;
-  // TPtr_Cellkmer tete_liste_kmer3 = tete_CellKmer;
   // TPtr_Cellkmer tete_liste_kmer4 = tete_CellKmer;
-  tete_CellKmer->suiv_kmer = NULL;
-  TPtr_CellSequence tete_CellSequenceK = malloc(sizeof(TCellSequence));
+  // tete_CellKmer->suiv_kmer = NULL;
+  // TPtr_CellSequence tete_CellSequenceK = malloc(sizeof(TCellSequence));
   // TPtr_CellSequence tete_liste_sequence = tete_CellSequenceK;
   // TPtr_CellSequence tete_liste_sequence2 = tete_CellSequenceK;
   // TPtr_CellSequence tete_liste_sequence3 = tete_CellSequenceK;
-  tete_CellSequenceK->suiv_sequence = NULL;
-  TPtr_CellPos tete_CellPosK = malloc(sizeof(TCellPos));
+  // tete_CellSequenceK->suiv_sequence = NULL;
+  // TPtr_CellPos tete_CellPosK = malloc(sizeof(TCellPos));
   // TPtr_CellPos tete_liste_pos = tete_CellPosK;
   // TPtr_CellPos tete_liste_pos2 = tete_CellPosK;
-  // TPtr_CellPos tete_liste_pos3 = tete_CellPosK;
-  tete_CellPosK->suiv_pos = NULL;
+  // tete_CellPosK->suiv_pos = NULL;
 
 	/*******************************************************
 	 *    Dictionnaire KMERs suffisemment représentés      *
@@ -110,7 +110,7 @@ int main(int argc, char *argv[])
 
 	//MATRICE PSSM ET MOTIF CONSENSUS:
   double** matrice_PSSM;
-  double** matrice_PSSM_nouv;
+  // double** matrice_PSSM_nouv;
 
 	/*************************************************************************************************************
 	 * * *                                    DEBUT DE L'ALGORITHME                                          * * *
@@ -126,14 +126,18 @@ int main(int argc, char *argv[])
 
 	// for ( i = 0; i <= nb_masques; i++ )
 	// {
-		generation_masque(&masque);
+		masque = generation_masque(masque);
+		for (i=0; i< taille_motif; i++){	printf("%d", masque[i]);}
+
 		// parcours_masque( &masque, tete_info_dict_seq->nb_sequences, &tete_dictionnaire_sequences, &tete_liste_kmer, &tete_liste_sequence, &tete_liste_pos);
-		parcours_masque( &masque, &tete_dictionnaire_sequences, &tete_CellKmer, &tete_CellSequenceK, &tete_CellPosK);
+		parcours_masque( masque, tete_dictionnaire_sequences, tete_info_dict_kmer);
+    //
+		// printf("%f", tete_CellKmer->nb_sequence);
 
     //
 		// kmer_present_dans_chaque_sequence(tete_info_dict_seq->nb_sequences, &tete_liste_kmer2, &tete_liste_sequence2, &tete_liste_pos2, &tete_liste_pour_recup_motif, &tete_liste_kmer_selectionne, &tete_liste_motif_PSSM);
     //
-		// affichage_dictionnaire_kmer(&tete_liste_kmer3, &tete_liste_sequence3, &tete_liste_pos3);
+		// affichage_dictionnaire_kmer(tete_CellKmer);
     //
 		// affichage_motif_selectionne(&tete_liste_kmer_selectionne2, &tete_liste_motif_PSSM2);
 
