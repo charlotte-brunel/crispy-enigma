@@ -8,13 +8,9 @@
 #include "fonctions.h"
 //------------------------------------------------------------------------------------------------------------
 // lecture du fichier contenant les variables souhaitées, stockage de ces variables pour utilisation
-void importer_parametres(int* taille_motif, int* d, int* nb_fenetres, int* nb_masques)
+void importer_parametres(char* nom_fichier, int* taille_motif, int* d, int* nb_fenetres, int* nb_masques)
 {
 	FILE* ptr_fichier; //creation d'un pointeur sur le fichier
-  char nom_fichier[30];
-
-	printf("Quel est le nom du fichier que vous voulez utiliser pour importer les paramètres du programme ?\n");
-	scanf("%s", nom_fichier);
   ptr_fichier = fopen(nom_fichier, "r"); //ouverture du fichier
 
 	if( ptr_fichier == NULL) { free(ptr_fichier); return; }// si le fichier est vide on sort de la fonction
@@ -27,10 +23,9 @@ void importer_parametres(int* taille_motif, int* d, int* nb_fenetres, int* nb_ma
 }
 //------------------------------------------------------------------------------------------------------------
 // Récupère les séquences et les stocke dans une liste chainée
-void importer_sequences_fasta( TPtr_info_dictionnaire_sequences* adr_tete_info_dict_seq, TPtr_dictionnaire_sequences* adr_tete_dict_seq )
+void importer_sequences_fasta(char* nom_fichier_fasta, TPtr_info_dictionnaire_sequences* adr_tete_info_dict_seq, TPtr_dictionnaire_sequences* adr_tete_dict_seq )
 {
   FILE* ptr_fichier_fasta;
-  char nom_fichier_fasta[30];
   char contenu_ligne[128];
   char c; // utiliser pour lire le fichier caractère par caractère
   int cptr = 0; //compteur du nombre de seq dans le fichier
@@ -40,9 +35,6 @@ void importer_sequences_fasta( TPtr_info_dictionnaire_sequences* adr_tete_info_d
   TPtr_dictionnaire_sequences p = *adr_tete_dict_seq;
 	TPtr_info_dictionnaire_sequences ptr_info = *adr_tete_info_dict_seq;
   ptr_info->nb_sequences = 0; //initialisation du nombre de seq contenues dans le fichier à 0
-
-	printf("Quel est le nom du fichier que vous voulez utiliser pour importer les séquences ?\n");
-  scanf("%s", nom_fichier_fasta);
 
   ptr_fichier_fasta = fopen(nom_fichier_fasta, "r");
   if( ptr_fichier_fasta == NULL) { free(ptr_fichier_fasta); return; }// si le fichier est vide on sort de la fonction
@@ -87,19 +79,19 @@ void afficher_sequences(TPtr_info_dictionnaire_sequences* adr_tete_info_dict_seq
 	TPtr_dictionnaire_sequences p = *adr_tete_dict_seq;
 	TPtr_info_dictionnaire_sequences ptr_info = *adr_tete_info_dict_seq;
 	int cptr = 0;
-	printf("fonction afficher_sequences\n");
-	printf("%d \n", ptr_info->nb_sequences);
+	// printf("fonction afficher_sequences\n");
+	// printf("%d \n", ptr_info->nb_sequences);
 
 	ptr_fichier = fopen ( "verif_dico_fasta.txt" ,"w");
 	while ( cptr < (ptr_info->nb_sequences))
 	{
-		fprintf(ptr_fichier, "%d\n", p->numero_sequence);
+		// fprintf(ptr_fichier, "%d\n", p->numero_sequence);
 		fputs( p->nom_seq, ptr_fichier);
 		fputs( "\n" , ptr_fichier);
 		fputs( p->sequence, ptr_fichier);
 		fputs( "\n", ptr_fichier);
-		printf(" %s\n", p->nom_seq );
-		printf("%s\n", p->sequence);
+		// printf(" %s\n", p->nom_seq );
+		// printf("%s\n", p->sequence);
 		p = p->suiv_seq;
 		cptr ++;
 	}
@@ -143,7 +135,7 @@ void afficher_PSSM( double** matrice_PSSM)
   int i, j;
   ptr_fichier_PSSM = fopen("PSSM_Motif_Trouve.txt", "w");
 
-  fprintf(ptr_fichier_PSSM, "\n\nPSSM: \n");
+  fprintf(ptr_fichier_PSSM, "\n-----------PSSM------------- \n");
 	for (i=0;  i<4; i++){
 		if(i == 0){ fprintf(ptr_fichier_PSSM, "A  ");}
 		if(i == 1){ fprintf(ptr_fichier_PSSM, "\nT  ");}
@@ -153,7 +145,7 @@ void afficher_PSSM( double** matrice_PSSM)
 		  fprintf(ptr_fichier_PSSM, "%.2f ", matrice_PSSM[i][j]);
 		}
 	}
-  fprintf(ptr_fichier_PSSM, "\n");
+  fprintf(ptr_fichier_PSSM, "\n----------------------------\n");
   fclose(ptr_fichier_PSSM);
 }
 //------------------------------------------------------------------------------------------------------------
@@ -283,26 +275,26 @@ void generation_kmer(int position_kmer, char* k_mer, TPtr_Cellkmer* adr_liste_km
   }
 }
 //------------------------------------------------------------------------------------------------------------
-void parcours_masque( void* adr_masque, TPtr_dictionnaire_sequences* adr_tete_dict_seq, TPtr_Cellkmer* adr_tete_liste_kmer, TPtr_CellSequence* adr_tete_liste_sequence, TPtr_CellPos* adr_tete_liste_pos)
+void parcours_masque( void* adr_masque, TPtr_dictionnaire_sequences* adr_tete_dict_seq, TPtr_Cellkmer* adr_tete_CellKmer, TPtr_CellSequence* adr_tete_CellSequenceK, TPtr_CellPos* adr_tete_CellPosK)
 {
 	TPtr_dictionnaire_sequences p_dictionnaire_sequence = *adr_tete_dict_seq;
-  TPtr_Cellkmer p_kmer = *adr_tete_liste_kmer;
-  TPtr_CellSequence p_sequence = *adr_tete_liste_sequence;
-  TPtr_CellPos p_pos = *adr_tete_liste_pos;
-
+  TPtr_Cellkmer p_kmer = *adr_tete_CellKmer;
+  TPtr_CellSequence p_sequence = *adr_tete_CellSequenceK;
+  TPtr_CellPos p_pos = *adr_tete_CellPosK;
   int *p_masque = adr_masque;
+
   int position = 0;
   int cpt_pos_masque, position_kmer;
   int pos_kmer = 0;
-  char k_mer[nb_fenetres+1]; // le k_mer mesure la taille du nombre de fenêtres ouvertes dans le masque
+  char k_mer[nb_fenetres+1]; // le k_mer mesure la taille du nombre de fenêtres ouvertes dans le masque,  !!! +1 pour le caractère de fin de chaine
 
-  while (p_dictionnaire_sequence != NULL)
+  while (p_dictionnaire_sequence != NULL) //parcourt du dictionnaire de séquence
   {
     while (position < 30) //inferieur à longueur de la séquence
     {
-      for(cpt_pos_masque = 0; cpt_pos_masque < taille_motif; cpt_pos_masque++) // on parcourt les nucléotides sous le masque
+      for(i = 0; i < taille_motif; i++) // on parcourt les nucléotides sous le masque
       {
-        if (p_masque[cpt_pos_masque] == 1) //si la fenêtre du masque est ouverte
+        if (p_masque[i] == 1) //si la fenêtre du masque est ouverte
         {
           k_mer[pos_kmer] = p_dictionnaire_sequence->sequence[position];
 
