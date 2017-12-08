@@ -177,15 +177,15 @@ int* generation_masque(int* masque)
 {
   int i;
   // int p_masque = *adr_masque;
-  int nb_fenetres_ouverte;
+  int nb_fenetres_ouvertes;
 
-  while (nb_fenetres_ouverte != nb_fenetres)
+  while (nb_fenetres_ouvertes != nb_fenetres)
   {
-		nb_fenetres_ouverte=0;
+		nb_fenetres_ouvertes=0;
     for (i=0; i <= (taille_motif-1); i++)
     {
       (masque)[i] = random_number(2,0);
-      if ((masque)[i] == 1) {  nb_fenetres_ouverte ++;  }
+      if ((masque)[i] == 1) {  nb_fenetres_ouvertes ++;  }
     }
   }
 	return(masque);
@@ -193,105 +193,110 @@ int* generation_masque(int* masque)
 //------------------------------------------------------------------------------------------------------------
 void generation_dictionnaire_kmer(int position_kmer, char* k_mer, TPtr_dictionnaire_sequences tete_dict_seq, TPtr_info_dictionnaire_kmer tete_info_dict_kmer)
 {
-	int i;
+	int i = 1;
+	int j = 1;
+	int is_kmer = 0; //est ce que la brique de ce kmer existe déjà?
+	int is_seq = 0; //est ce que la brique de cette séquence existe déjà?
+
 	TPtr_dictionnaire_sequences p_dictionnaire_sequence = tete_dict_seq;
-
-  TPtr_Cellkmer p_kmer ;//on créer des pointeurs temporaires pour parcourir les listes
-	TPtr_Cellkmer p_new_kmer = NULL;
-
-	TPtr_CellSequence p_Kseq ;
-	TPtr_CellSequence p_new_Kseq = NULL;
-
-	TPtr_CellPos p_Kpos;
-	TPtr_CellPos p_new_Kpos = NULL;
+  TPtr_Cellkmer p_kmer = tete_info_dict_kmer->tete_liste_kmer; //on créer des pointeurs temporaires pour parcourir les listes
+	TPtr_Cellkmer p_new_kmer = p_kmer;
+	TPtr_CellSequence p_Kseq = p_kmer->tete_sequence;
+	TPtr_CellSequence p_new_Kseq = p_Kseq;
+	TPtr_CellPos p_Kpos = p_Kseq->tete_pos;
+	TPtr_CellPos p_new_Kpos = p_Kpos;
 
   if (tete_info_dict_kmer->nb_kmer == 0) //cas du premier element du dictionnaire de kmer
   {
 		//construction bloc Kmer
-		tete_info_dict_kmer->tete_liste_kmer = malloc(sizeof(TCellkmer));
-		p_kmer = tete_info_dict_kmer->tete_liste_kmer;
+		p_kmer = malloc(sizeof(TCellkmer));
+		tete_info_dict_kmer->tete_liste_kmer = p_kmer;
+		p_kmer->kmer = (char*) calloc(nb_fenetres+1, sizeof(char));
     strcpy(p_kmer->kmer, k_mer);
-		printf("dico:%s\n", p_kmer->kmer);
 		tete_info_dict_kmer->nb_kmer = 1;
-		// printf("%d", tete_info_dict_kmer->nb_kmer);
     p_kmer->suiv_kmer = NULL;
-
  		//construction du bloc de séquence
 		p_Kseq = malloc(sizeof(TCellSequence));
-		p_kmer->tete_sequence = p_Kseq;
-    p_Kseq->sequence = p_dictionnaire_sequence->numero_sequence;
+		p_kmer->tete_sequence = p_Kseq; //connection bloc kmer et bloc seq
+    p_Kseq->num_sequence = p_dictionnaire_sequence->numero_sequence;
     p_Kseq->suiv_sequence = NULL;
 		p_kmer->nb_sequence = 1;
- 		//constrction du bloc de position
+ 		//construction du bloc de position
 		p_Kpos = malloc(sizeof(TCellPos));
-    p_Kseq->tete_pos = p_Kpos;
+    p_Kseq->tete_pos = p_Kpos; //connection bloc seq et bloc position
     p_Kpos->position = position_kmer;
     p_Kpos->suiv_pos = NULL;
     return;
   }
+	else
+	{
+	  while( i <= tete_info_dict_kmer->nb_kmer ) //on parcourt les blocs de kmer
+	  {
+	    if ( strncmp(p_kmer->kmer, k_mer, nb_fenetres) == 0)   //si le kmer a déjà été trouvé ie. le bloc existe donc il existe au moins un bloc de seq et un bloc de pos
+	    { //on est positionné sur le bon bloc Kmer
+				is_kmer = 1;
 
-  for( i=1; i<= tete_info_dict_kmer->nb_kmer; i++ ) //on parcourt les blocs de kmer
-  {
-    if (strcmp(p_kmer->kmer, k_mer) == 0)   //si le kmer a déjà été trouvé ie. le bloc existe donc il existe au moins un bloc de seq et un bloc de pos
-    { //on est positionné sur le bon bloc Kmer
-			p_Kseq = p_kmer->tete_sequence;
-      while (p_Kseq->suiv_sequence != NULL) //on parcourt les blocs de séquence
-      {
-        if (p_dictionnaire_sequence->numero_sequence == p_Kseq->sequence) //Si le kmer a déjà été trouvé dans la séquence et il y a plusieur bloc de seq
-        {	//on est positionné sur le bon bloc seq
-          p_Kpos = p_Kseq->tete_pos;
-          while (p_Kpos->suiv_pos != NULL){  //on parcourt les blocs de position
-            p_Kpos = p_Kpos->suiv_pos;
-          }
-          p_new_Kpos = (TCellPos*)malloc(sizeof(TCellPos)); // On créer une nouvelle brique de position
-					p_Kpos->suiv_pos = p_new_Kpos; //chainage
-          p_new_Kpos->position = position_kmer;
-          p_new_Kpos->suiv_pos = NULL;
-          return;
-        }
-        p_Kseq = p_Kseq->suiv_sequence;
-      }
-      if (p_dictionnaire_sequence->numero_sequence == p_Kseq->sequence)  //Si le kmer a déjà été touvé dans cette séquence et il y a un seul bloc de seq
-			{	//on est positionné sur le bon bloc seq
-				p_Kpos = p_Kseq->tete_pos;
-				while (p_Kpos->suiv_pos != NULL){  //on parcourt les blocs de position
-					p_Kpos = p_Kpos->suiv_pos;
+				p_Kseq = p_kmer->tete_sequence;
+	      while ( j <= p_kmer->nb_sequence ) //on parcourt les blocs de séquence
+	      {
+	        if (p_dictionnaire_sequence->numero_sequence == p_Kseq->num_sequence) //Si le kmer a déjà été trouvé dans la séquence et il y a plusieur bloc de seq
+	        {	//on est positionné sur le bon bloc seq
+						is_seq = 1;
+
+	          p_Kpos = p_Kseq->tete_pos;
+	          while (p_Kpos != NULL)
+						{  //on parcourt les blocs de position jusqu'aiu bout de la liste chainée
+	            p_Kpos = p_Kpos->suiv_pos;
+	          }
+
+	          p_new_Kpos = (TCellPos*)malloc(sizeof(TCellPos)); // On créer une nouvelle brique de position
+						p_new_Kpos->position = position_kmer;
+						p_new_Kpos->suiv_pos = NULL;
+						p_Kpos = p_new_Kpos; //chainage
+						// return;
+	        }
+					if ( p_Kseq->suiv_sequence == NULL){ break; } else { p_Kseq = p_Kseq->suiv_sequence;  j++;}
+	      }
+
+				if (is_seq == 0) // pas d'occurrence de ce kmer dans la séquence
+				{
+					p_new_Kseq = (TCellSequence*)malloc(sizeof(TCellSequence)); // On créer une nouvelle brique de séquence
+					p_Kseq->suiv_sequence = p_new_Kseq; //chainage
+					p_new_Kseq->num_sequence = p_dictionnaire_sequence->numero_sequence;
+					p_new_Kseq->suiv_sequence = NULL;
+					p_kmer->nb_sequence = p_kmer->nb_sequence + 1;
+
+					p_new_Kpos = (TCellPos*)malloc(sizeof(TCellPos)); // On créer une nouvelle brique de position
+					p_new_Kseq->tete_pos = p_new_Kpos; //chainage
+					p_new_Kpos->position = position_kmer;
+					p_new_Kpos->suiv_pos = NULL;
 				}
-				p_new_Kpos = (TCellPos*)malloc(sizeof(TCellPos)); // On créer une nouvelle brique de position
-				p_Kpos->suiv_pos = p_new_Kpos; //chainage
-				p_new_Kpos->position = position_kmer;
-				p_new_Kpos->suiv_pos = NULL;
-				return;
-      }
-			return;
-    }
-		if (p_kmer->suiv_kmer != NULL)
+	    }
+			if (p_kmer->suiv_kmer == NULL){ break; } else { p_kmer = p_kmer->suiv_kmer;  i++;}
+	  }
+
+		if (is_kmer == 0)
 		{
-			p_kmer = p_kmer->suiv_kmer;
+			// Si ce kmer n'a pas encore été trouvé ie.creation du bloc
+			p_new_kmer = (TCellkmer*)malloc(sizeof(TCellkmer)); // On créer une nouvelle brique de kmer
+			p_kmer->suiv_kmer = p_new_kmer; //chainage
+			tete_info_dict_kmer->nb_kmer = tete_info_dict_kmer->nb_kmer + 1;
+			p_new_kmer->kmer = (char*) calloc(nb_fenetres+1, sizeof(char));
+			strcpy(p_new_kmer->kmer, k_mer);
+			p_new_kmer->suiv_kmer = NULL;
+
+			p_new_Kseq = (TCellSequence*)malloc(sizeof(TCellSequence)); // On créer une nouvelle brique de séquence
+			p_new_kmer->tete_sequence = p_new_Kseq; //chainage
+			p_new_Kseq->num_sequence = p_dictionnaire_sequence->numero_sequence;
+			p_new_Kseq->suiv_sequence = NULL;
+			p_new_kmer->nb_sequence = p_new_kmer->nb_sequence + 1;
+
+			p_new_Kpos = (TCellPos*)malloc(sizeof(TCellPos)); // On créer une nouvelle brique de position
+			p_new_Kseq->tete_pos = p_new_Kpos; //chainage
+			p_new_Kpos->position = position_kmer;
+			p_new_Kpos->suiv_pos = NULL;
 		}
-  }
-
-	// Si ce kmer n'a pas encore été trouvé ie.creation du bloc
-	 p_new_kmer = (TCellkmer*)malloc(sizeof(TCellkmer)); // On créer une nouvelle brique de kmer
-	 p_kmer->suiv_kmer = p_new_kmer; //chainage
-	 tete_info_dict_kmer->nb_kmer = tete_info_dict_kmer->nb_kmer + 1;
-	 // printf("%d", tete_info_dict_kmer->nb_kmer);
-	 strcpy(p_kmer->kmer, k_mer);
-	 printf("%s\n", p_kmer->kmer);
-	 p_new_kmer->suiv_kmer = NULL;
-
-	 p_new_Kseq = (TCellSequence*)malloc(sizeof(TCellSequence)); // On créer une nouvelle brique de séquence
-	 p_kmer->tete_sequence = p_new_Kseq; //chainage
-	 p_new_Kseq->sequence = p_dictionnaire_sequence->numero_sequence;
-	 p_new_Kseq->suiv_sequence = NULL;
-	 p_kmer->nb_sequence ++;
-
-	 p_new_Kpos = (TCellPos*)malloc(sizeof(TCellPos)); // On créer une nouvelle brique de position
-	 p_new_Kseq->tete_pos = p_new_Kpos; //chainage
-	 p_new_Kpos->position = position_kmer;
-	 p_new_Kpos->suiv_pos = NULL;
-	 return;
-
+	}
 }
 //------------------------------------------------------------------------------------------------------------
 void parcours_masque( int* masque, TPtr_dictionnaire_sequences tete_dict_seq, TPtr_info_dictionnaire_kmer tete_info_dict_kmer)
@@ -302,8 +307,8 @@ void parcours_masque( int* masque, TPtr_dictionnaire_sequences tete_dict_seq, TP
 
   int position = 0;
   int i, position_kmer;
-  int pos_kmer = 0;
-  char k_mer[nb_fenetres+1]; // le k_mer mesure la taille du nombre de fenêtres ouvertes dans le masque,  !!! +1 pour le caractère de fin de chaine
+  int pos_kmer = 0; // correspond au nombre de fenetre ouvertes ie. la taille du kmer
+  char* k_mer = (char*) calloc((nb_fenetres+1),sizeof(char));  // le k_mer mesure la taille du nombre de fenêtres ouvertes dans le masque,  !!! +1 pour le caractère de fin de chaine
 
   while (p_dictionnaire_sequence != NULL) //parcourt du dictionnaire de séquence
   {
@@ -333,41 +338,76 @@ void parcours_masque( int* masque, TPtr_dictionnaire_sequences tete_dict_seq, TP
     position = 0;
     p_dictionnaire_sequence = p_dictionnaire_sequence->suiv_seq;
   }
+	free(k_mer);
 }
 //------------------------------------------------------------------------------------------------------------
 void affichage_dictionnaire_kmer(TPtr_info_dictionnaire_kmer tete_info_dict_kmer)
 {
   TPtr_Cellkmer p_kmer = tete_info_dict_kmer->tete_liste_kmer;
-  TPtr_CellSequence p_sequence = NULL ;
-	TPtr_CellPos p_pos = NULL;
-	int i;
+  TPtr_CellSequence p_sequence = p_kmer->tete_sequence;
+	TPtr_CellPos p_pos = p_sequence->tete_pos;
 
   FILE* fichier_dictionnaire;
   fichier_dictionnaire = fopen("dictionnaire_kmer.txt", "w");
 
-	for( i=1; i<= tete_info_dict_kmer->nb_kmer; i++ ) //on parcourt les blocs de kmer
+	while( p_kmer != NULL ) //on parcourt les blocs de kmer
   {
-		printf("%d", i);
-    // p_sequence = p_kmer->tete_sequence;
-    // fprintf(fichier_dictionnaire, "KMER: %s \n", p_kmer->kmer);
-    // while (p_sequence != NULL) // on parcourt la liste de séquences par kmer
-    // {
-		// 	p_pos = p_sequence->tete_pos;
-    //   fprintf(fichier_dictionnaire, "Sequence: %d \n", p_sequence->sequence);
-    //   while (p_pos != NULL) //on parcout la liste de positions par séquence
-    //   {
-    //     fprintf(fichier_dictionnaire, "Position: %d \n ", p_pos->position);
-    //     p_pos = p_pos->suiv_pos;
-    //   }
-    //   p_sequence = p_sequence->suiv_sequence;
-    // }
-		// p_kmer = p_kmer->suiv_kmer;
-    // fprintf(fichier_dictionnaire, "Nb de séquence dans lesquelles le kmer est présent: %2.f \n", p_kmer->nb_sequence);
-    // fprintf(fichier_dictionnaire, "\n\n\n");
+    fprintf(fichier_dictionnaire, "KMER: %s \n", p_kmer->kmer);
+		fprintf(fichier_dictionnaire, "Nb de séquences: %2.f \n", p_kmer->nb_sequence);
+
+		p_sequence = p_kmer->tete_sequence;
+    while (p_sequence != NULL) // on parcourt la liste de séquences par kmer
+    {
+      fprintf(fichier_dictionnaire, "Sequence: %d \n", p_sequence->num_sequence);
+
+			p_pos = p_sequence->tete_pos;
+      while (p_pos != NULL) //on parcout la liste de positions par séquence
+      {
+        fprintf(fichier_dictionnaire, "Position: %d \n ", p_pos->position);
+        p_pos = p_pos->suiv_pos;
+      }
+      p_sequence = p_sequence->suiv_sequence;
+    }
+
+    fprintf(fichier_dictionnaire, "-------------------------------------------------------------------------------\n");
+		p_kmer = p_kmer->suiv_kmer;
   }
   fclose(fichier_dictionnaire);
 }
-// //------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
+void liberation_dictionnaire_kmer(TPtr_info_dictionnaire_kmer tete_info_dict_kmer)
+{
+	TPtr_Cellkmer p_kmer = tete_info_dict_kmer->tete_liste_kmer;
+	TPtr_Cellkmer p_prec_kmer = NULL;
+	TPtr_CellSequence p_seq = p_kmer->tete_sequence;
+	TPtr_CellSequence p_prec_seq = NULL;
+	TPtr_CellPos p_pos = p_seq->tete_pos;
+	TPtr_CellPos p_prec_pos = NULL;
+
+	while( p_kmer != NULL ) //on parcourt les blocs de kmer
+  {
+		p_seq = p_kmer->tete_sequence;
+    while (p_seq != NULL) // on parcourt la liste de séquences par kmer
+    {
+			p_pos = p_seq->tete_pos;
+      while (p_pos != NULL) //on parcout la liste de positions par séquence
+      {
+				p_prec_pos = p_pos;
+        p_pos = p_pos->suiv_pos;
+				free(p_prec_pos);
+      }
+			p_prec_seq = p_seq;
+      p_seq = p_seq->suiv_sequence;
+			free(p_prec_seq);
+    }
+		p_prec_kmer = p_kmer;
+		p_kmer = p_kmer->suiv_kmer;
+		free(p_prec_kmer->kmer);
+		free(p_prec_kmer);
+  }
+	free(tete_info_dict_kmer);
+}
+//------------------------------------------------------------------------------------------------------------
 // //Procedure pour remplir le dictionnaire de kmer s�lectionn� pour le calcul de la PSSM:
 // void recuperer_motif_kmer(TPtr_Cellkmer* adr_parcours_kmer, TPtr_Cellkmer_selectionne *adr_tete_kmer_selectionne, TPtr_Cell_Motif_PSSM* adr_tete_motif_PSSM, TPtr_CellSequence* adr_cell_sequence, TPtr_CellPos* adr_cell_pos, TPtr_dictionnaire_sequences* ptr_ensemble, int nb_sequence_kmer)
 // {

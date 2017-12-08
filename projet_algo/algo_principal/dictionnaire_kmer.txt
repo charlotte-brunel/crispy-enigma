@@ -1,0 +1,124 @@
+KMER: cg 
+Nb de séquences:  2 
+Sequence: 1 
+Position: 0 
+ Sequence: 6 
+Position: 5 
+ -------------------------------------------------------------------------------
+KMER: ag 
+Nb de séquences:  3 
+Sequence: 1 
+Position: 5 
+ Sequence: 3 
+Position: 10 
+ Sequence: 9 
+Position: 15 
+ -------------------------------------------------------------------------------
+KMER: at 
+Nb de séquences:  3 
+Sequence: 1 
+Position: 20 
+ Sequence: 2 
+Position: 10 
+ Sequence: 4 
+Position: 0 
+ -------------------------------------------------------------------------------
+KMER: ca 
+Nb de séquences:  4 
+Sequence: 2 
+Position: 0 
+ Sequence: 7 
+Position: 10 
+ Sequence: 8 
+Position: 0 
+ Sequence: 10 
+Position: 5 
+ -------------------------------------------------------------------------------
+KMER: gg 
+Nb de séquences:  3 
+Sequence: 2 
+Position: 15 
+ Sequence: 3 
+Position: 15 
+ Sequence: 6 
+Position: 20 
+ -------------------------------------------------------------------------------
+KMER: tg 
+Nb de séquences:  2 
+Sequence: 2 
+Position: 20 
+ Sequence: 10 
+Position: 0 
+ -------------------------------------------------------------------------------
+KMER: ct 
+Nb de séquences:  2 
+Sequence: 3 
+Position: 0 
+ Sequence: 5 
+Position: 5 
+ -------------------------------------------------------------------------------
+KMER: tc 
+Nb de séquences:  3 
+Sequence: 3 
+Position: 5 
+ Sequence: 8 
+Position: 15 
+ Sequence: 9 
+Position: 10 
+ -------------------------------------------------------------------------------
+KMER: ac 
+Nb de séquences:  3 
+Sequence: 3 
+Position: 20 
+ Sequence: 7 
+Position: 0 
+ Sequence: 9 
+Position: 5 
+ -------------------------------------------------------------------------------
+KMER: ga 
+Nb de séquences:  1 
+Sequence: 4 
+Position: 5 
+ -------------------------------------------------------------------------------
+KMER: ta 
+Nb de séquences:  4 
+Sequence: 4 
+Position: 10 
+ Sequence: 6 
+Position: 15 
+ Sequence: 8 
+Position: 20 
+ Sequence: 9 
+Position: 0 
+ -------------------------------------------------------------------------------
+KMER: tt 
+Nb de séquences:  5 
+Sequence: 4 
+Position: 15 
+ Sequence: 5 
+Position: 20 
+ Sequence: 6 
+Position: 0 
+ Sequence: 7 
+Position: 15 
+ Sequence: 8 
+Position: 10 
+ -------------------------------------------------------------------------------
+KMER: gc 
+Nb de séquences:  1 
+Sequence: 4 
+Position: 20 
+ -------------------------------------------------------------------------------
+KMER: aa 
+Nb de séquences:  5 
+Sequence: 5 
+Position: 0 
+ Sequence: 7 
+Position: 5 
+ Sequence: 8 
+Position: 5 
+ Sequence: 9 
+Position: 20 
+ Sequence: 10 
+Position: 10 
+ -------------------------------------------------------------------------------

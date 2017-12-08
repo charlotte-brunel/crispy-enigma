@@ -41,14 +41,14 @@
     struct TCellkmer* suiv_kmer; //Pointeur sur le kmer suivant
     struct TCellSequence* tete_sequence; //Pointer qui pointe sur une liste chain�e de s�quence o� le kmer est retrouv�
     double nb_sequence; // nombre de séquence dans lesquelles le kmer est présent
-    char kmer[]; //"TCC" par exemple
+    char* kmer; //"TCC" par exemple
   } TCellkmer;
   typedef TCellkmer* TPtr_Cellkmer; //Pointeur sur Tcellkmer
 
   //deuxieme element du dictionnaire kmer: liste chainee de sequence possedant le kmer:
   typedef struct TCellSequence
   {
-    int sequence; //correspond au numéro de la séquence dans le dictionnaire de séquences
+    int num_sequence; //correspond au numéro de la séquence dans le dictionnaire de séquences
     struct TCellSequence* suiv_sequence; // Pointeur qui pointe l'element suivant de la liste chainee de sequence
     struct TCellPos* tete_pos; // Pointeur qui pointe sur le premier element de la structure position qui repertorie toutes les positions o� le kmer a �t� trouv� dans une s�quence
   } TCellSequence;
@@ -78,7 +78,7 @@
     struct TCellkmer_selectionne* suiv_kmer_selectionne;
     struct TCell_Motif_PSSM* tete_motif_PSSM;
     double nb_sequence;
-    char kmer[];
+    char* kmer;
   } TCellkmer_selectionne;
   typedef TCellkmer_selectionne* TPtr_Cellkmer_selectionne;
 
@@ -128,6 +128,7 @@
   void parcours_masque( int* masque, TPtr_dictionnaire_sequences tete_dict_seq, TPtr_info_dictionnaire_kmer tete_info_dict_kmer);
   void generation_dictionnaire_kmer(int position_kmer, char* k_mer, TPtr_dictionnaire_sequences tete_dict_seq, TPtr_info_dictionnaire_kmer tete_info_dict_kmer);
   void affichage_dictionnaire_kmer(TPtr_info_dictionnaire_kmer tete_info_dict_kmer);
+  void liberation_dictionnaire_kmer(TPtr_info_dictionnaire_kmer tete_info_dict_kmer);
 
   // void recuperer_motif_kmer(TPtr_Cellkmer* adr_parcours_kmer, TPtr_Cellkmer_selectionne *adr_tete_kmer_selectionne, TPtr_Cell_Motif_PSSM* adr_tete_motif_PSSM, TPtr_CellSequence* adr_cell_sequence, TPtr_CellPos* adr_cell_pos, TPtr_dictionnaire_sequences* ptr_ensemble, int nb_sequence_kmer);
   // void kmer_present_dans_chaque_sequence(int nb_sequence, TPtr_Cellkmer* adr_cell_kmer, TPtr_CellSequence *adr_cell_sequence, TPtr_CellPos *adr_cell_pos, TPtr_dictionnaire_sequences* ptr_ensemble, TPtr_Cellkmer_selectionne* adr_cell_kmer_selectionne, TPtr_Cell_Motif_PSSM* adr_cell_motif_PSSM);

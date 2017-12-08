@@ -119,7 +119,6 @@ int main(int argc, char *argv[])
 
 	importer_sequences_fasta( argv[2], &tete_info_dict_seq, &tete_dictionnaire_sequences );
   // afficher_sequences(&tete_info_dict_seq, &tete_dictionnaire_sequences );
-
 	creation_PSSM(&matrice_PSSM);
 	afficher_PSSM(matrice_PSSM);
 	liberation_PSSM(&matrice_PSSM);
@@ -127,18 +126,12 @@ int main(int argc, char *argv[])
 	// for ( i = 0; i <= nb_masques; i++ )
 	// {
 		masque = generation_masque(masque);
-		for (i=0; i< taille_motif; i++){	printf("%d", masque[i]);}
-
-		// parcours_masque( &masque, tete_info_dict_seq->nb_sequences, &tete_dictionnaire_sequences, &tete_liste_kmer, &tete_liste_sequence, &tete_liste_pos);
 		parcours_masque( masque, tete_dictionnaire_sequences, tete_info_dict_kmer);
-    //
-		// printf("%f", tete_CellKmer->nb_sequence);
 
-    //
-		// kmer_present_dans_chaque_sequence(tete_info_dict_seq->nb_sequences, &tete_liste_kmer2, &tete_liste_sequence2, &tete_liste_pos2, &tete_liste_pour_recup_motif, &tete_liste_kmer_selectionne, &tete_liste_motif_PSSM);
+		kmer_present_dans_chaque_sequence(tete_info_dict_seq->nb_sequences, &tete_liste_kmer2, &tete_liste_sequence2, &tete_liste_pos2, &tete_liste_pour_recup_motif, &tete_liste_kmer_selectionne, &tete_liste_motif_PSSM);
     //
 		affichage_dictionnaire_kmer(tete_info_dict_kmer);
-    //
+    liberation_dictionnaire_kmer(tete_info_dict_kmer);
 		// affichage_motif_selectionne(&tete_liste_kmer_selectionne2, &tete_liste_motif_PSSM2);
 
 	// // On calculera la PSSM seulement pour les kmers qui sont présent dans plus de 7 sequences:
@@ -275,6 +268,9 @@ int main(int argc, char *argv[])
 	// 		tete_liste_kmer4 = tete_liste_kmer4->suiv_kmer;
 	// 	}
 	// }
-	// liberation_dictionnaire_sequence(&tete_info_dict_seq, &tete_dictionnaire_sequences);
+	liberation_dictionnaire_sequence(&tete_info_dict_seq, &tete_dictionnaire_sequences);
+	free(tete_info_dict_kmer);
+	free(tete_dictionnaire_sequences);
+	free(tete_info_dict_seq);
 	return(0);
 }
