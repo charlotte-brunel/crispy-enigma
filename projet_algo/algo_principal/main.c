@@ -126,12 +126,12 @@ int main(int argc, char *argv[])
 	// for ( i = 0; i <= nb_masques; i++ )
 	// {
 		masque = generation_masque(masque);
-		parcours_masque( masque, tete_dictionnaire_sequences, tete_info_dict_kmer);
+		parcours_masque_sur_seq( masque, tete_dictionnaire_sequences, tete_info_dict_kmer);
 		affichage_dictionnaire_kmer(tete_info_dict_kmer);
-
-		// kmer_present_dans_chaque_sequence(tete_info_dict_seq->nb_sequences, &tete_liste_kmer2,, &tete_liste_pour_recup_motif, &tete_liste_kmer_selectionne, &tete_liste_motif_PSSM);
     //
-
+		// // kmer_present_dans_chaque_sequence(tete_info_dict_seq->nb_sequences, &tete_liste_kmer2,, &tete_liste_pour_recup_motif, &tete_liste_kmer_selectionne, &tete_liste_motif_PSSM);
+    // //
+    //
     liberation_dictionnaire_kmer(tete_info_dict_kmer);
 		// affichage_motif_selectionne(&tete_liste_kmer_selectionne2, &tete_liste_motif_PSSM2);
 
@@ -271,7 +271,7 @@ int main(int argc, char *argv[])
 	// }
 	liberation_dictionnaire_sequence(&tete_info_dict_seq, &tete_dictionnaire_sequences);
 	free(tete_info_dict_kmer);
-	free(tete_dictionnaire_sequences);
-	free(tete_info_dict_seq);
+
+
 	return(0);
 }

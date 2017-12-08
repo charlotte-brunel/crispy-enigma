@@ -59,6 +59,7 @@
   {
     int position; // position du kmer dans la s�quence
     struct TCellPos* suiv_pos; //pointe sur la position suivante
+    char* motif; //on stocke le motif équivalent au kmer
   } TCellPos;
   typedef TCellPos* TPtr_CellPos;
 
@@ -125,12 +126,12 @@
   int random_number(int max_number, int zero_excluded);
 
   int* generation_masque(int* masque);
-  void parcours_masque( int* masque, TPtr_dictionnaire_sequences tete_dict_seq, TPtr_info_dictionnaire_kmer tete_info_dict_kmer);
-  void generation_dictionnaire_kmer(int position_kmer, char* k_mer, TPtr_dictionnaire_sequences tete_dict_seq, TPtr_info_dictionnaire_kmer tete_info_dict_kmer);
+  void parcours_masque_sur_seq( int* masque, TPtr_dictionnaire_sequences tete_dict_seq, TPtr_info_dictionnaire_kmer tete_info_dict_kmer);
+  void generation_dictionnaire_kmer(int position_kmer, char* k_mer, char* motif, TPtr_dictionnaire_sequences tete_dict_seq, TPtr_info_dictionnaire_kmer tete_info_dict_kmer);
   void affichage_dictionnaire_kmer(TPtr_info_dictionnaire_kmer tete_info_dict_kmer);
   void liberation_dictionnaire_kmer(TPtr_info_dictionnaire_kmer tete_info_dict_kmer);
 
-  // void recuperer_motif_kmer(TPtr_Cellkmer* adr_parcours_kmer, TPtr_Cellkmer_selectionne *adr_tete_kmer_selectionne, TPtr_Cell_Motif_PSSM* adr_tete_motif_PSSM, TPtr_CellSequence* adr_cell_sequence, TPtr_CellPos* adr_cell_pos, TPtr_dictionnaire_sequences* ptr_ensemble, int nb_sequence_kmer);
+
   // void kmer_present_dans_chaque_sequence(int nb_sequences, TPtr_info_dictionnaire_kmer tete_info_dict_kmer);
 
   // void affichage_motif_selectionne(TPtr_Cellkmer_selectionne* adr_tete_kmer_selectionne, TPtr_Cell_Motif_PSSM* adr_tete_motif);
