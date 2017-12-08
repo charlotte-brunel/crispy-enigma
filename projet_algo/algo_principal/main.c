@@ -57,6 +57,9 @@ int main(int argc, char *argv[])
 	********************************/
 	TPtr_info_dictionnaire_kmer tete_info_dict_kmer = malloc(sizeof(TInfo_dictionnaire_kmer));
 	tete_info_dict_kmer->nb_kmer = 0;
+	tete_info_dict_kmer->tete_liste_kmer = NULL;
+	tete_info_dict_kmer->tete_liste_kmer_selectionne = NULL;
+	tete_info_dict_kmer->tete_liste_motif = NULL;
 	// TPtr_Cellkmer tete_CellKmer = malloc(sizeof(TCellkmer));
   // TPtr_Cellkmer tete_liste_kmer = tete_CellKmer;
   // TPtr_Cellkmer tete_liste_kmer2 = tete_CellKmer;

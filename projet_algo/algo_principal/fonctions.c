@@ -341,6 +341,7 @@ void parcours_masque_sur_seq( int* masque, TPtr_dictionnaire_sequences tete_dict
       }
 			motif[taille_motif] = '\0'; // caractère de fin de chaîne
       generation_dictionnaire_kmer(position_kmer, k_mer, motif, p_dictionnaire_sequence , tete_info_dict_kmer);
+			creation_liste_motifs(motif, tete_info_dict_kmer);
 			position = position - taille_motif +1;
     }
     position = 0;
@@ -419,7 +420,60 @@ void liberation_dictionnaire_kmer(TPtr_info_dictionnaire_kmer tete_info_dict_kme
 		free(p_prec_kmer);
   }
 }
-// //------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
+void creation_liste_motifs(char* motif ,TPtr_info_dictionnaire_kmer tete_info_dict_kmer)
+{
+	TPtr_Cell_Motif p = tete_info_dict_kmer->tete_liste_motif;
+	TPtr_Cell_Motif p_new = NULL;
+
+	if (tete_info_dict_kmer->tete_liste_motif == NULL)
+	{
+		tete_info_dict_kmer->tete_liste_motif = (TCell_Motif*)malloc(sizeof(TCell_Motif));
+		p = tete_info_dict_kmer->tete_liste_motif;
+	}
+	while ( p != NULL)
+	{
+		p_new = (TCell_Motif*)malloc(sizeof(TCell_Motif));
+		p_new->suiv_motif = NULL;
+		p_new->motif = (char*) calloc(taille_motif+1, sizeof(char));
+		stcpy(p_new->motif, motif);
+		p->suiv_motif = p_new;
+
+		p = p_new;
+	}
+}
+//------------------------------------------------------------------------------------------------------------
+void afficher_liste_motifs(TPtr_info_dictionnaire_kmer tete_info_dict_kmer)
+{
+	TPtr_Cell_Motif p = tete_info_dict_kmer->tete_liste_motif;
+	TPtr_Cell_Motif p_prec = NULL;
+
+	FILE* fichier_motifs;
+	fichier_motifs = fopen("dictionnaire_motifs.txt", "w");
+
+	fprintf(fichier_motifs, "MOTIFS POUR CALCUL DE LA PSSM\n" );
+	while( p != NULL)
+	{
+		fprintf(fichier_motifs, "%s\n", p->motif);
+		p_prec = p;
+		p = p->suiv_motifs;
+	}
+	fclose(fichier_motifs);
+}
+//------------------------------------------------------------------------------------------------------------
+void liberation_liste_motifs(TPtr_info_dictionnaire_kmer tete_info_dict_kmer)
+{
+	TPtr_Cell_Motif p = tete_info_dict_kmer->tete_liste_motif;
+	TPtr_Cell_Motif p_prec = NULL;
+
+	while( p != NULL)
+	{
+		p_prec = p;
+		p = p->suiv_motif;
+		free(p_prec);
+	}
+}
+//------------------------------------------------------------------------------------------------------------
 // void calcul_PSSM(TPtr_Cellkmer_selectionne *adr_cell_kmer_selectionne, TPtr_Cell_Motif_PSSM *adr_cell_motif_PSSM, double*** adr_matrice_PSSM)
 // {
 //   TPtr_Cellkmer_selectionne p_kmer_selectionne = *adr_cell_kmer_selectionne;

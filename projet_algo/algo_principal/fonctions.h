@@ -34,7 +34,6 @@
  * STRUCTURE DICTIONNAIRE KMER *
  *******************************/
 
-
   //1er element: liste chainee des kmers
   typedef struct TCellkmer
   {
@@ -63,32 +62,21 @@
   } TCellPos;
   typedef TCellPos* TPtr_CellPos;
 
-/******************************
- * STRUCTURE KMER SELECTIONNE *
- ******************************/
-  //1er element: liste chainee des kmers
-  typedef struct TCellkmer_selectionne
+  // quatrième élément contenant tous les motifs correspondants aux kmers trouvés
+  typedef struct TCell_Motif
   {
-    struct TCellkmer_selectionne* suiv_kmer_selectionne;
-    struct TCell_Motif_PSSM* tete_motif_PSSM;
-    double nb_sequence;
-    char* kmer;
-  } TCellkmer_selectionne;
-  typedef TCellkmer_selectionne* TPtr_Cellkmer_selectionne;
+    struct TCell_Motif* suiv_motif;
+    char* motif;
+  } TCell_Motif;
+  typedef TCell_Motif* TPtr_Cell_Motif;
 
-  //2eme element: liste chainee de motif pour lequels on va calculer la PSSM:
-  typedef struct TCell_Motif_PSSM
-  {
-    struct TCell_Motif_PSSM* suiv_motif;
-    char motif[];
-  } TCell_Motif_PSSM;
-  typedef TCell_Motif_PSSM* TPtr_Cell_Motif_PSSM;
-
+  // header contenant les tetes des elements précédents
   typedef struct TInfo_dictionnaire_kmer
   {
     int nb_kmer;
     TPtr_Cellkmer tete_liste_kmer;
     TPtr_Cellkmer_selectionne tete_liste_kmer_selectionne;
+    TPtr_Cell_Motif tete_liste_motif;
   } TInfo_dictionnaire_kmer;
   typedef TInfo_dictionnaire_kmer* TPtr_info_dictionnaire_kmer;
 
@@ -131,11 +119,9 @@
   void affichage_dictionnaire_kmer(TPtr_info_dictionnaire_kmer tete_info_dict_kmer);
   void liberation_dictionnaire_kmer(TPtr_info_dictionnaire_kmer tete_info_dict_kmer);
 
+  void creation_liste_motifs( char* motif ,TPtr_info_dictionnaire_kmer tete_info_dict_kmer);
+  void liberation_liste_motifs(TPtr_info_dictionnaire_kmer tete_info_dict_kmer);
 
-  // void kmer_present_dans_chaque_sequence(int nb_sequences, TPtr_info_dictionnaire_kmer tete_info_dict_kmer);
-
-  // void affichage_motif_selectionne(TPtr_Cellkmer_selectionne* adr_tete_kmer_selectionne, TPtr_Cell_Motif_PSSM* adr_tete_motif);
-  //
   void creation_PSSM(double*** adr_matrice_PSSM);
   // void calcul_PSSM(TPtr_Cellkmer_selectionne *adr_cell_kmer_selectionne, TPtr_Cell_Motif_PSSM *adr_cell_motif_PSSM, double*** adr_matrice_PSSM, int taille_motif);
   // void calcul_nouvelle_PSSM(TPtr_Cell_Motif_PSSM *adr_cell_mot_selected, double*** adr_matrice_PSSM, double nb_sequence, char (*adr_Ct)[6], int taille_motif);
