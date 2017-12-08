@@ -16,7 +16,8 @@
  *************************************************************************************************************/
   typedef struct TDictionnaire_Sequences
   {
-    int numero_sequence;
+    int numero_sequence;		// // kmer_present_dans_chaque_sequence(tete_info_dict_seq->nb_sequences, &tete_liste_kmer2,, &tete_liste_pour_recup_motif, &tete_liste_kmer_selectionne, &tete_liste_motif_PSSM);
+    // //
     char nom_seq[120];
     char sequence[TAILLE_MAX_SEQ];
     struct TDictionnaire_Sequences* suiv_seq;
@@ -108,29 +109,29 @@
  *************************************************************************************************************/
   void importer_parametres(char* nom_fichier, int* taille_motif, int* d, int* nb_fenetres, int* nb_masques);
   void importer_sequences_fasta(char* nom_fichier_fasta, TPtr_info_dictionnaire_sequences* adr_tete_info_dict_seq, TPtr_dictionnaire_sequences* adr_tete_dict_seq);
-  void afficher_sequences(TPtr_info_dictionnaire_sequences* adr_tete_info_dict_seq, TPtr_dictionnaire_sequences* adr_tete_dict_seq);
-  void liberation_dictionnaire_sequence( TPtr_info_dictionnaire_sequences* adr_tete_info_dict_seq, TPtr_dictionnaire_sequences* adr_tete_dict_seq);
+  void affichage_dictionnaire_sequences(TPtr_info_dictionnaire_sequences* adr_tete_info_dict_seq, TPtr_dictionnaire_sequences* adr_tete_dict_seq);
+  void liberation_dictionnaire_sequences( TPtr_info_dictionnaire_sequences* adr_tete_info_dict_seq, TPtr_dictionnaire_sequences* adr_tete_dict_seq);
 
   int random_number(int max_number, int zero_excluded);
-
   int* generation_masque(int* masque);
   void parcours_masque_sur_seq( int* masque, TPtr_dictionnaire_sequences tete_dict_seq, TPtr_info_dictionnaire_kmer tete_info_dict_kmer);
-  void generation_dictionnaire_kmer(int position_kmer, char* k_mer, char* motif, TPtr_dictionnaire_sequences tete_dict_seq, TPtr_info_dictionnaire_kmer tete_info_dict_kmer);
-  void affichage_dictionnaire_kmer(TPtr_info_dictionnaire_kmer tete_info_dict_kmer);
-  void liberation_dictionnaire_kmer(TPtr_info_dictionnaire_kmer tete_info_dict_kmer);
+
+  void generation_dictionnaire_kmers(int position_kmer, char* k_mer, char* motif, TPtr_dictionnaire_sequences tete_dict_seq, TPtr_info_dictionnaire_kmer tete_info_dict_kmer);
+  void affichage_dictionnaire_kmers(TPtr_info_dictionnaire_kmer tete_info_dict_kmer);
+  void liberation_dictionnaire_kmers(TPtr_info_dictionnaire_kmer tete_info_dict_kmer);
 
   void creation_liste_motifs( char* motif ,TPtr_info_dictionnaire_kmer tete_info_dict_kmer);
+  void afficher_liste_motifs(TPtr_info_dictionnaire_kmer tete_info_dict_kmer);
   void liberation_liste_motifs(TPtr_info_dictionnaire_kmer tete_info_dict_kmer);
 
   void creation_PSSM(double*** adr_matrice_PSSM);
-  // void calcul_PSSM(TPtr_Cellkmer_selectionne *adr_cell_kmer_selectionne, TPtr_Cell_Motif_PSSM *adr_cell_motif_PSSM, double*** adr_matrice_PSSM, int taille_motif);
-  // void calcul_nouvelle_PSSM(TPtr_Cell_Motif_PSSM *adr_cell_mot_selected, double*** adr_matrice_PSSM, double nb_sequence, char (*adr_Ct)[6], int taille_motif);
   void afficher_PSSM( double** matrice_PSSM);
   void liberation_PSSM(double*** adr_matrice_PSSM);
+  // void calcul_PSSM(TPtr_Cellkmer_selectionne *adr_cell_kmer_selectionne, TPtr_Cell_Motif_PSSM *adr_cell_motif_PSSM, double*** adr_matrice_PSSM, int taille_motif);
+  // void calcul_nouvelle_PSSM(TPtr_Cell_Motif_PSSM *adr_cell_mot_selected, double*** adr_matrice_PSSM, double nb_sequence, char (*adr_Ct)[6], int taille_motif);
+  // double calcul_distance_PSSMs(double*** adr_matrice_PSSM, double*** adr_matrice_PSSM_nouv, double* distance_PSSM, int taille_motif);
   //
   // void calcul_score(TPtr_Mot_Ameliorer_PSSM* adr_mot, double*** adr_matrice_PSSM, int n_sequence, TPtr_dictionnaire_sequences* ptr_ensemble, int taille_motif);
-  // double dist_PSSM(double*** adr_matrice_PSSM, double*** adr_matrice_PSSM_nouv, double* distance_PSSM, int taille_motif);
-  //
   // int distanceHammingSt1(char (*adr_Ct)[6], TPtr_Cell_Motif_PSSM* adr_mot_selected, Ptr_st* adr_st1, int taille_motif);
   // int distanceHammingSt2(char (*adr_Ct)[6], TPtr_Cell_Motif_PSSM* adr_mot_selected, Ptr_st* adr_st2, int taille_motif);
   // int distanceHammingSt2_prim(char (*adr_Ct)[6], TPtr_dictionnaire_sequences* ptr_ensemble, TPtr_Mot_Ameliorer_PSSM *adr_mot, Ptr_st* adr_st2_prim, int taille_motif);
@@ -139,6 +140,6 @@
   // void trier(int* v_St1_Dh, int* v_St1_Pos, int g, int d);
   // void separer(int* v_St1_Dh, int* v_St1_Pos, int g, int d, int* adr_indice_pivot);
   //
-  // void fichier_sortie_st(Ptr_st* adr_st1, int* v_St1_Pos, char (*adr_Ct)[6], int nb_sequences);
+  // void generation_fichier_résultats(Ptr_st* adr_st1, int* v_St1_Pos, char (*adr_Ct)[6], int nb_sequences);
 
 #endif
