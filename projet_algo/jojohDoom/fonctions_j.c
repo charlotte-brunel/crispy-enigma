@@ -311,36 +311,36 @@ void recuperer_motif_kmer(TPtr_Cellkmer* adr_parcours_kmer, TPtr_Cellkmer_select
 }
 //------------------------------------------------------------------------------------------------------------
 //Fonction pour trouver si le kmer est trouv� dans chaque sequence:
-void kmer_present_dans_chaque_sequence(int nb_sequence, TPtr_Cellkmer* adr_cell_kmer, TPtr_CellSequence *adr_cell_sequence, TPtr_CellPos *adr_cell_pos, ptr_struct_seq* adr_cell_generation_sequence, TPtr_Cellkmer_selectionne* adr_cell_kmer_selectionne, TPtr_Cell_Motif_PSSM* adr_cell_motif_PSSM, int taille_motif)
-{
-  TPtr_Cellkmer p_parcours_kmer= *adr_cell_kmer;
-  TPtr_Cellkmer_selectionne tete_kmer_selectionne= *adr_cell_kmer_selectionne;
-  TPtr_Cellkmer_selectionne p_kmer_selectionne= *adr_cell_kmer_selectionne;
-  p_kmer_selectionne->suiv_kmer_selectionne= NULL;
-  TPtr_Cell_Motif_PSSM p_motif_PSSM= *adr_cell_motif_PSSM;
-  TPtr_CellSequence tete_sequence= *adr_cell_sequence;
-  TPtr_CellPos tete_pos= *adr_cell_pos;
-  ptr_struct_seq tete_generation_sequence= *adr_cell_generation_sequence;
-  double nb_sequence_par_kmer=0;
-
-  while (p_parcours_kmer != NULL)
-  {
-    TPtr_CellSequence p_parcours_sequence= p_parcours_kmer->tete_sequence;
-    while (p_parcours_sequence != NULL )
-    {
-      nb_sequence_par_kmer++;
-      p_parcours_sequence=p_parcours_sequence->suiv_sequence;
-    }
-    p_parcours_kmer->nb_sequence=nb_sequence_par_kmer;
-    if (nb_sequence_par_kmer >= 7)
-    { //Pour l"instant pour pouvoir continuer
-      recuperer_motif_kmer(&p_parcours_kmer, &p_kmer_selectionne, &p_motif_PSSM, &tete_sequence, &tete_pos, &tete_generation_sequence, nb_sequence_par_kmer, taille_motif);
-      p_kmer_selectionne= tete_kmer_selectionne;
-}
-    nb_sequence_par_kmer=0;
-    p_parcours_kmer=p_parcours_kmer->suiv_kmer;
-  }
-  return;
+// void kmer_present_dans_chaque_sequence(int nb_sequence, TPtr_Cellkmer* adr_cell_kmer, TPtr_CellSequence *adr_cell_sequence, TPtr_CellPos *adr_cell_pos, ptr_struct_seq* adr_cell_generation_sequence, TPtr_Cellkmer_selectionne* adr_cell_kmer_selectionne, TPtr_Cell_Motif_PSSM* adr_cell_motif_PSSM, int taille_motif)
+// {
+//   TPtr_Cellkmer p_parcours_kmer= *adr_cell_kmer;
+//   TPtr_Cellkmer_selectionne tete_kmer_selectionne= *adr_cell_kmer_selectionne;
+//   TPtr_Cellkmer_selectionne p_kmer_selectionne= *adr_cell_kmer_selectionne;
+//   p_kmer_selectionne->suiv_kmer_selectionne= NULL;
+//   TPtr_Cell_Motif_PSSM p_motif_PSSM= *adr_cell_motif_PSSM;
+//   TPtr_CellSequence tete_sequence= *adr_cell_sequence;
+//   TPtr_CellPos tete_pos= *adr_cell_pos;
+//   ptr_struct_seq tete_generation_sequence= *adr_cell_generation_sequence;
+//   double nb_sequence_par_kmer=0;
+//
+//   while (p_parcours_kmer != NULL)
+//   {
+//     TPtr_CellSequence p_parcours_sequence= p_parcours_kmer->tete_sequence;
+//     while (p_parcours_sequence != NULL )
+//     {
+//       nb_sequence_par_kmer++;
+//       p_parcours_sequence=p_parcours_sequence->suiv_sequence;
+//     }
+//     p_parcours_kmer->nb_sequence=nb_sequence_par_kmer;
+//     if (nb_sequence_par_kmer >= 7)
+//     { //Pour l"instant pour pouvoir continuer
+//       recuperer_motif_kmer(&p_parcours_kmer, &p_kmer_selectionne, &p_motif_PSSM, &tete_sequence, &tete_pos, &tete_generation_sequence, nb_sequence_par_kmer, taille_motif);
+//       p_kmer_selectionne= tete_kmer_selectionne;
+// }
+//     nb_sequence_par_kmer=0;
+//     p_parcours_kmer=p_parcours_kmer->suiv_kmer;
+//   }
+//   return;
 }
 //------------------------------------------------------------------------------------------------------------
 void affichage_dictionnaire_kmer(TPtr_Cellkmer* adr_tete_kmer, TPtr_CellSequence* adr_tete_sequence, TPtr_CellPos* adr_tete_pos)
