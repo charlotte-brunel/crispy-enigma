@@ -7,8 +7,8 @@
 #include <math.h>
 #include <limits.h>
 #include "fonctions.h"
-//------------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------------------------------------------------------
+//==================================================================================================
+//==================================================================================================
 // lecture du fichier contenant les variables souhaitées, stockage de ces variables pour utilisation
 void importer_parametres(char* nom_fichier, int* taille_motif, int* d, int* nb_fenetres, int* nb_masques)
 {
@@ -23,7 +23,7 @@ void importer_parametres(char* nom_fichier, int* taille_motif, int* d, int* nb_f
   fscanf(ptr_fichier, "#nombre de masques à générer: %d\n", nb_masques);
   fclose(ptr_fichier); //fermeture du fichier
 }
-//------------------------------------------------------------------------------------------------------------
+//==================================================================================================
 // Récupère les séquences et les stocke dans une liste chainée
 void importer_sequences_fasta(char* nom_fichier_fasta, TPtr_info_dictionnaire_sequences* adr_tete_info_dict_seq, TPtr_dictionnaire_sequences* adr_tete_dict_seq )
 {
@@ -74,7 +74,7 @@ void importer_sequences_fasta(char* nom_fichier_fasta, TPtr_info_dictionnaire_se
 	}	while(!feof(ptr_fichier_fasta));
   fclose(ptr_fichier_fasta);
 }
-//------------------------------------------------------------------------------------------------------------
+//==================================================================================================
 void affichage_dictionnaire_sequences(TPtr_info_dictionnaire_sequences* adr_tete_info_dict_seq, TPtr_dictionnaire_sequences* adr_tete_dict_seq )
 {
 	FILE* ptr_fichier;
@@ -99,7 +99,7 @@ void affichage_dictionnaire_sequences(TPtr_info_dictionnaire_sequences* adr_tete
 	}
 	fclose(ptr_fichier);
 }
-//------------------------------------------------------------------------------------------------------------
+//==================================================================================================
 void liberation_dictionnaire_sequences( TPtr_info_dictionnaire_sequences* adr_tete_info_dict_seq, TPtr_dictionnaire_sequences* adr_tete_dict_seq )
 {
 	TPtr_info_dictionnaire_sequences p_info = *adr_tete_info_dict_seq;
@@ -114,8 +114,8 @@ void liberation_dictionnaire_sequences( TPtr_info_dictionnaire_sequences* adr_te
 	}
 	free(p_info);
 }
-//------------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------------------------------------------------------
+//==================================================================================================
+//==================================================================================================
 int random_number(int max_number, int zero_excluded)
 {
 	int randomNumber;
@@ -127,7 +127,7 @@ int random_number(int max_number, int zero_excluded)
 	}
 	return(randomNumber);
 }
-//------------------------------------------------------------------------------------------------------------
+//==================================================================================================
 int* generation_masque(int* masque)
 {
   int i;
@@ -145,7 +145,7 @@ int* generation_masque(int* masque)
   }
 	return(masque);
 }
-//------------------------------------------------------------------------------------------------------------
+//==================================================================================================
 void generation_dictionnaire_kmers(int position_kmer, char* k_mer, char* motif, TPtr_dictionnaire_sequences tete_dict_seq, TPtr_info_dictionnaire_kmer tete_info_dict_kmer)
 {void importer_parametres(char* nom_fichier, int* taille_motif, int* d, int* nb_fenetres, int* nb_masques)
 {
@@ -273,7 +273,7 @@ void generation_dictionnaire_kmers(int position_kmer, char* k_mer, char* motif, 
 		}
 	}
 }
-//------------------------------------------------------------------------------------------------------------
+//==================================================================================================
 void parcours_masque_sur_seq( int* masque, TPtr_dictionnaire_sequences tete_dict_seq, TPtr_info_dictionnaire_kmer tete_info_dict_kmer)
 {
 	TPtr_dictionnaire_sequences p_dictionnaire_sequence = tete_dict_seq;
@@ -317,7 +317,7 @@ void parcours_masque_sur_seq( int* masque, TPtr_dictionnaire_sequences tete_dict
 	free(k_mer);
 	free(motif);
 }
-//------------------------------------------------------------------------------------------------------------
+//==================================================================================================
 void affichage_dictionnaire_kmers(TPtr_info_dictionnaire_kmer tete_info_dict_kmer)
 {
   TPtr_Cellkmer p_kmer = tete_info_dict_kmer->tete_liste_kmer;
@@ -354,7 +354,7 @@ void affichage_dictionnaire_kmers(TPtr_info_dictionnaire_kmer tete_info_dict_kme
   }
   fclose(fichier_dictionnaire);
 }
-// //------------------------------------------------------------------------------------------------------------
+//==================================================================================================
 void liberation_dictionnaire_kmers(TPtr_info_dictionnaire_kmer tete_info_dict_kmer)
 {
 	TPtr_Cellkmer p_kmer = tete_info_dict_kmer->tete_liste_kmer;
@@ -383,12 +383,14 @@ void liberation_dictionnaire_kmers(TPtr_info_dictionnaire_kmer tete_info_dict_km
     }
 		p_prec_kmer = p_kmer;
 		p_kmer = p_kmer->suiv_kmer;
+		free(p_prec_kmer->motif_consensus);
 		free(p_prec_kmer->kmer);
+		liberation_PSSM(p_prec_kmer->PSSM)
 		free(p_prec_kmer);
   }
 }
-//------------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------------------------------------------------------
+//==================================================================================================
+//==================================================================================================
 void creation_PSSM(double*** adr_matrice_PSSM)
 {
 	int i, j;
@@ -403,7 +405,7 @@ void creation_PSSM(double*** adr_matrice_PSSM)
     }
   }
 }
-//------------------------------------------------------------------------------------------------------------
+//==================================================================================================
 void afficher_PSSM( double** matrice_PSSM)
 {
   FILE* ptr_fichier_PSSM;
@@ -423,7 +425,7 @@ void afficher_PSSM( double** matrice_PSSM)
   fprintf(ptr_fichier_PSSM, "\n----------------------------\n");
   fclose(ptr_fichier_PSSM);
 }
-//------------------------------------------------------------------------------------------------------------
+//==================================================================================================
 double calcul_distance_PSSMs(double*** adr_matrice_PSSM, double*** adr_matrice_PSSM_nouv)
 {
 	double** p_ancienne_matrice_PSSM = *adr_matrice_PSSM;
@@ -441,7 +443,7 @@ double calcul_distance_PSSMs(double*** adr_matrice_PSSM, double*** adr_matrice_P
 	printf("Somme Distance = %f \n", somme_distance);
 	return(distance);
 }
-//------------------------------------------------------------------------------------------------------------
+//==================================================================================================
 void copie_PSSM(double*** adr_matrice_PSSM, double*** adr_matrice_PSSM_nouv)
 {
 	double** p_matrice_PSSM = *adr_matrice_PSSM;
@@ -456,7 +458,7 @@ void copie_PSSM(double*** adr_matrice_PSSM, double*** adr_matrice_PSSM_nouv)
 		}
 	}
 }
-//------------------------------------------------------------------------------------------------------------
+//==================================================================================================
 void liberation_PSSM(double*** adr_matrice_PSSM)
 {
 	int i;
@@ -468,7 +470,7 @@ void liberation_PSSM(double*** adr_matrice_PSSM)
 	}
   free(p_PSSM);
 }
-//------------------------------------------------------------------------------------------------------------
+//==================================================================================================
 void calcul_PSSM(TPtr_Cellkmer p_kmer , double*** adr_matrice_PSSM )
 {
 	TPtr_CellSequence p_Kseq ;
@@ -504,7 +506,7 @@ void calcul_PSSM(TPtr_Cellkmer p_kmer , double*** adr_matrice_PSSM )
   p_seq = p_seq->suiv_sequence;
   }
 }
-//------------------------------------------------------------------------------------------------------------
+//==================================================================================================
 void calcul_PSSM_amelioree(TPtr_Cellkmer p_kmer , double*** adr_matrice_PSSM )
 {
 	TPtr_CellSequence p_Kseq ;
@@ -516,7 +518,7 @@ void calcul_PSSM_amelioree(TPtr_Cellkmer p_kmer , double*** adr_matrice_PSSM )
 
 	p_seq = p_kmer->tete_sequence;
 	while (p_seq != NULL) // on parcourt la liste de séquences par kmer
-	{void egalisation_T(TPtr_Cellkmer p_kmer)
+	{
 		p_pos = p_seq->tete_pos_max;
 		for (i=0; i < taille_motif; i++) //on parcourt chaque nucléotide du motif
 		{
@@ -540,7 +542,7 @@ void calcul_PSSM_amelioree(TPtr_Cellkmer p_kmer , double*** adr_matrice_PSSM )
 	p_seq = p_seq->suiv_sequence;
 	}
 }
-//------------------------------------------------------------------------------------------------------------
+//==================================================================================================
 char* identification_motif_consensus(double** matrice_PSSM)
 {
 	int i, j;
@@ -576,7 +578,7 @@ char* identification_motif_consensus(double** matrice_PSSM)
 	mot_consensus[taille_motif+1]='\0';
 	return(mot_consensus);
 }
-//------------------------------------------------------------------------------------------------------------
+//==================================================================================================
 void calculer_score(TPtr_CellPos* adr_p_pos, double** matrice_PSSM, TPtr_info_dictionnaire_sequences tete_info_dict_seq)
 {
 	TPtr_info_dictionnaire_sequences p_info_dict_seq = tete_info_dict_seq;
@@ -641,7 +643,7 @@ void calculer_score(TPtr_CellPos* adr_p_pos, double** matrice_PSSM, TPtr_info_di
 	score = Proba_motif_PSSM/Proba_motif_background;
 	p_pos->score = score;
 }
-//------------------------------------------------------------------------------------------------------------
+//==================================================================================================
 void recherche_motifs_maximisant_scores(TPtr_Cellkmer p_kmer, double** matrice_PSSM, TPtr_info_dictionnaire_sequences tete_info_dict_seq)
 {
 	double score_max;
@@ -677,7 +679,7 @@ void recherche_motifs_maximisant_scores(TPtr_Cellkmer p_kmer, double** matrice_P
   }
 	//Post condition: le mot de la sequence courante le plus proche de la PSSM est identifié !
 }
-//------------------------------------------------------------------------------------------------------------
+//==================================================================================================
 int distance_Hamming_St1(TPtr_Cellkmer p_kmer)
 {
 	TPtr_CellSequence p_seq = p_kmer->tete_sequence;
@@ -706,7 +708,7 @@ int distance_Hamming_St1(TPtr_Cellkmer p_kmer)
 	}
 	return(st1);
 }
-//------------------------------------------------------------------------------------------------------------
+//==================================================================================================
 int distance_Hamming_St2_T(TPtr_Cellkmer p_kmer)
 {
 	TPtr_CellSequence p_seq = p_kmer->tete_sequence;
@@ -735,7 +737,7 @@ int distance_Hamming_St2_T(TPtr_Cellkmer p_kmer)
 	}
 	return(st2);
 }
-//------------------------------------------------------------------------------------------------------------
+//==================================================================================================
 int distance_Hamming_St2_T_prim(TPtr_Cellkmer p_kmer)
 {
 	TPtr_CellSequence p_seq = p_kmer->tete_sequence;
@@ -764,7 +766,7 @@ int distance_Hamming_St2_T_prim(TPtr_Cellkmer p_kmer)
 	}
 	return(st2_prim);
 }
-//------------------------------------------------------------------------------------------------------------
+//==================================================================================================
 void recherche_motifs_minimisant_dHamming(TPtr_Cellkmer p_kmer)
 {
 	TPtr_CellSequence p_seq = p_kmer->tete_sequence;
@@ -805,59 +807,37 @@ void recherche_motifs_minimisant_dHamming(TPtr_Cellkmer p_kmer)
 		distance_hamming = 0;
 	}
 }
-//------------------------------------------------------------------------------------------------------------
+//==================================================================================================
 void raffiner_version1(TPtr_Cellkmer p_kmer)
 {
 	p_kmer->score_St1 = distance_Hamming_St1( p_kmer );
 }
-//------------------------------------------------------------------------------------------------------------
+//==================================================================================================
 void egalisation_T(TPtr_Cellkmer p_kmer)
 {
 	TPtr_CellSequence p_seq = p_kmer->tete_sequence;
-	TPtr_CellSequence p_prec_seq = NULL;
-	TPtr_CellPos p_pos = p_seq->tete_pos;
-	TPtr_CellPos p_prec_pos = NULL;
 
-	p_seq = p_kmer->tete_sequence;
 	while (p_seq != NULL) // on parcourt la liste de séquences par kmer
 	{
-		p_pos = p_seq->tete_pos;
-		while (p_pos != NULL) //on parcout la liste de positions par séquence
-		{
-			p_prec_pos->tete_pos_max = p_prec_pos->tete_pos_max
+		p_seq->tete_pos_max = p_seq->tete_pos_max;
 
-			p_prec_pos = p_pos;
-			p_pos = p_pos->suiv_pos;
-		}
-		p_prec_seq = p_seq;
 		p_seq = p_seq->suiv_sequence;
 	}
 }
-//------------------------------------------------------------------------------------------------------------
+//==================================================================================================
 int verification_convergence_T(TPtr_Cellkmer p_kmer)
 {
 	TPtr_CellSequence p_seq = p_kmer->tete_sequence;
-	TPtr_CellSequence p_prec_seq = NULL;
-	TPtr_CellPos p_pos = p_seq->tete_pos;
-	TPtr_CellPos p_prec_pos = NULL;
 
-	p_seq = p_kmer->tete_sequence;
 	while (p_seq != NULL) // on parcourt la liste de séquences par kmer
 	{
-		p_pos = p_seq->tete_pos;
-		while (p_pos != NULL) //on parcout la liste de positions par séquence
-		{
-			if (p_prec_pos->tete_pos_max = p_prec_pos->tete_pos_max) { cpt ++;}
+		if (p_seq->tete_pos_max = p_seq->tete_pos_max) { cpt ++;}
 
-			p_prec_pos = p_pos;
-			p_pos = p_pos->suiv_pos;
-		}
-		p_prec_seq = p_seq;
 		p_seq = p_seq->suiv_sequence;
 	}
 	if (cpt == p_kmer->nb_sequence){ return(1); }else{ return(0); }
 }
-//------------------------------------------------------------------------------------------------------------
+//==================================================================================================
 void raffiner_version2(TPtr_Cellkmer p_kmer)
 {
 	int score_St2 = 0;
@@ -868,121 +848,183 @@ void raffiner_version2(TPtr_Cellkmer p_kmer)
 
 	do {
 		score_St2 = distance_Hamming_St2( p_kmer );
-		recherche_motifs_minimisant_dHamming( p_kmer);
+		recherche_motifs_minimisant_dHamming( p_kmer); // définition de l'ensemble T'
 
 		score_St2_prim = distance_Hamming_St2_T_prim(p_kmer);
 
 		if (score_St2_prim > score_St2)
 		{
-			egalisation_T(p_kmer);
+			egalisation_T(p_kmer); // on égalise T à T'
 			creation_PSSM(&PSSM);
 			calcul_PSSM_amelioree(&PSSM);
 			motif_consensus_prim = identification_motif_consensus(&PSSM);
 			p_kmer->motif_consensus = motif_consensus_prim;
+			p_kmer->PSSM_consensus = PSSM;
 		}
-
 	} while( verification_convergence_T(p_kmer) == 0);
 
 }
-//------------------------------------------------------------------------------------------------------------
-// void trier(int* v_St1_Dh, int* v_St1_Pos, int g, int d)
-// {
-//   int indice_pivot;
-//
-//   if (g < d)
-//   {
-//     separer(v_St1_Dh, v_St1_Pos, g, d, &indice_pivot);
-//     indice_pivot --;
-//     separer(v_St1_Dh, v_St1_Pos, g, d, &indice_pivot);
-//     trier(v_St1_Dh, v_St1_Pos, indice_pivot+1, d);
-//   }
-// }
-// //------------------------------------------------------------------------------------------------------------
-// void separer(int* v_St1_Dh, int* v_St1_Pos, int g, int d, int* adr_indice_pivot)
-// {
-//   //PRECONDITIONS
-//   // g < d
-//   int bas, haut; //indices de position dans le vecteur
-//   int comp, pivot;  //comp pour comparateur, c'est variables sont des entiers car on trie un vecteur d'entiers
-//   int comp_pos, pivot_pos;
-//
-//   bas = g;
-//   haut = d;
-//   pivot = v_St1_Dh[bas];
-//   pivot_pos = v_St1_Pos[bas];
-//   comp = v_St1_Dh[haut];
-//   comp_pos = v_St1_Pos[haut];
-//
-//   while (bas < haut)
-//   {
-//     if ( comp > pivot)
-//     {
-//       v_St1_Dh[haut] = comp;
-//       v_St1_Pos[haut] = comp_pos;
-//       haut --;
-//       comp = v_St1_Dh[haut];
-//       comp_pos = v_St1_Pos[haut];
-//     }else{
-//       v_St1_Dh[bas] = comp;
-//       v_St1_Pos[bas] = comp_pos;
-//       bas ++;
-//       comp = v_St1_Dh[bas];
-//       comp_pos = v_St1_Pos[bas];
-//     }
-//   }
-//   v_St1_Dh[bas] = pivot;
-//   v_St1_Pos[bas] = pivot_pos;
-//   *adr_indice_pivot = bas;
-// }
-// //------------------------------------------------------------------------------------------------------------
-// void quick_sort_ST(Ptr_st* adr_st1, int* v_St1_Pos, int nb_sequences)
-// {
-//   Ptr_st p_st1 = *adr_st1;
-//   int i;
-//   int v_St1_Dh[9]; //Distance de Hamming de chaque occurrence
-//   int borne_gauche = 0;
-//   int borne_droite = 9;
-//   for (i=0; i<nb_sequences; i++)
-//   {
-//     v_St1_Dh[i] = p_st1->distance_hamming;
-//     v_St1_Pos[i] = i;
-//     printf("Vecteur Distance Hamming: %d \n", v_St1_Dh[i]);
-//     printf("Vecteur Pos: %d \n", v_St1_Pos[i]);
-//     p_st1 = p_st1->next_mot;
-//   }
-//   printf("\n");
-//
-//   trier(v_St1_Dh, v_St1_Pos, borne_gauche, borne_droite);
-//
-//   for(i=0; i<10; i++)
-//   {
-//     printf("Vecteur Distance Hamming après tri: %d \n", v_St1_Dh[i]);
-//     printf("Vecteur Pos après tri: %d \n", v_St1_Pos[i]);
-//   }
-//  printf("\n");
-// }
-// //------------------------------------------------------------------------------------------------------------
-// void generation_fichier_résultats(Ptr_st* adr_st1, int* v_St1_Pos, char (*adr_Ct)[6], int nb_sequences)
-// {
-//   Ptr_st p_st1 = *adr_st1;
-//   int i, position, cpt;
-//   FILE* fichier_sortie_st2;
-//   fichier_sortie_st2 = fopen("score_ST2.txt", "w");
-//
-//   for (i=0; i<nb_sequences; i++)
-//   {
-//     p_st1 = *adr_st1;
-//     position = v_St1_Pos[i];
-//     for (cpt=0; cpt < position; cpt++)
-//     {
-//       p_st1 = p_st1->next_mot;
-//     }
-//     fprintf(fichier_sortie_st2, "OCCURRENCE: %s --> SCORE: %d \n", p_st1->mot, p_st1->distance_hamming);
-//   }
-//   fprintf(fichier_sortie_st2, "\n\nMOTIF CONSENSUS: \n");
-//   for (i=0; i<taille_motif; i++)
-//   {
-//     fprintf(fichier_sortie_st2, "%c", *adr_Ct[i]);
-//   }
-// }
-// //------------------------------------------------------------------------------------------------------------
+//==================================================================================================
+void trier_ST1(TPtr_Cellkmer* adr_tableau_kmer_QS, int g, int d)
+{
+  int indice_pivot;
+
+  if (g < d)
+  {
+    separer_ST1(adr_tableau_kmer_QS, g, d, &indice_pivot);
+    trier_ST1(adr_tableau_kmer_QS, g, indice_pivot-1);
+    trier_ST1(adr_tableau_kmer_QS, indice_pivot+1, d);
+  }
+}
+//==================================================================================================
+void separer_ST1(TPtr_Cellkmer* adr_tableau_kmer_QS, int g, int d, int* adr_indice_pivot)
+{
+  //PRECONDITIONS
+  // g < d
+  int bas, haut; //indices de position dans le vecteur
+  int comp, pivot;  //comp pour comparateur, c'est variables sont des entiers car on trie un vecteur d'entiers
+  int comp_pos, pivot_pos;
+	TPtr_Cellkmer p_tableau_kmer_QS = *adr_tableau_kmer_QS
+
+  bas = g;
+  haut = d;
+  pivot = p_tableau_kmer_QS[bas]->score_St1;
+  pivot_pos = p_tableau_kmer_QS[bas]->score_St1;
+  comp = p_tableau_kmer_QS[haut]->score_St1;
+  comp_pos = p_tableau_kmer_QS[haut]->score_St1;
+
+  while (bas < haut)
+  {
+    if ( comp > pivot)
+    {
+      p_tableau_kmer_QS[haut]->score_St1 = comp;
+      p_tableau_kmer_QS[haut]->score_St1 = comp_pos;
+      haut --;
+      comp = p_tableau_kmer_QS[haut]->score_St1;
+      comp_pos = p_tableau_kmer_QS[haut]->score_St1;
+    }else{
+      p_tableau_kmer_QS[bas]->score_St1 = comp;
+      p_tableau_kmer_QS[bas]->score_St1 = comp_pos;
+      bas ++;
+      comp = p_tableau_kmer_QS[bas]->score_St1;
+      comp_pos = p_tableau_kmer_QS[bas]->score_St1;
+    }
+  }
+  p_tableau_kmer_QS[bas]->score_St1 = pivot;
+  p_tableau_kmer_QS[bas]->score_St1 = pivot_pos;
+  *adr_indice_pivot = bas;
+}
+//==================================================================================================
+void trier_ST2(TPtr_Cellkmer* adr_tableau_kmer_QS, int g, int d)
+{
+  int indice_pivot;
+
+  if (g < d)
+  {
+    separer_ST2(adr_tableau_kmer_QS, g, d, &indice_pivot);
+    trier_ST2(adr_tableau_kmer_QS, g, indice_pivot-1);
+    trier_ST2(adr_tableau_kmer_QS, indice_pivot+1, d);
+  }
+}
+//==================================================================================================
+void separer_ST2(TPtr_Cellkmer* adr_tableau_kmer_QS, int g, int d, int* adr_indice_pivot)
+{
+  //PRECONDITIONS
+  // g < d
+  int bas, haut; //indices de position dans le vecteur
+  int comp, pivot;  //comp pour comparateur, c'est variables sont des entiers car on trie un vecteur d'entiers
+  int comp_pos, pivot_pos;
+	TPtr_Cellkmer p_tableau_kmer_QS = *adr_tableau_kmer_QS
+
+  bas = g;
+  haut = d;
+  pivot = p_tableau_kmer_QS[bas]->score_St2;
+  pivot_pos = p_tableau_kmer_QS[bas]->score_St2;
+  comp = p_tableau_kmer_QS[haut]->score_St2;
+  comp_pos = p_tableau_kmer_QS[haut]->score_St2;
+
+  while (bas < haut)
+  {
+    if ( comp > pivot)
+    {
+      p_tableau_kmer_QS[haut]->score_St2 = comp;
+      p_tableau_kmer_QS[haut]->score_St2 = comp_pos;
+      haut --;
+      comp = p_tableau_kmer_QS[haut]->score_St2;
+      comp_pos = p_tableau_kmer_QS[haut]->score_St2;
+    }else{
+      p_tableau_kmer_QS[bas]->score_St2 = comp;
+      p_tableau_kmer_QS[bas]->score_St2 = comp_pos;
+      bas ++;
+      comp = p_tableau_kmer_QS[bas]->score_St2;
+      comp_pos = p_tableau_kmer_QS[bas]->score_St2;
+    }
+  }
+  p_tableau_kmer_QS[bas]->score_St2 = pivot;
+  p_tableau_kmer_QS[bas]->score_St2 = pivot_pos;
+  *adr_indice_pivot = bas;
+}
+//==================================================================================================
+void quick_sort_ST(TPtr_Cellkmer* adr_tableau_kmer_QS, TInfo_dictionnaire_kmer tete_info_dict_kmer)
+{
+	TPtr_Cellkmer p_tableau_kmer_QS = *adr_tableau_kmer_QS
+	TPtr_Cellkmer p_kmer = tete_info_dict_kmer->tete_liste_kmer;
+	TPtr_Cellkmer p_prec_kmer = NULL;
+
+	int i = 0;
+	int borne_gauche = 0;
+	int borne_droite = tete_info_dict_kmer->nb_kmer - 1;
+
+//on remplit le vecteur, chaque case contient le pointeur vers le bloc kmer correspondant
+	while ( p_kmer != NULL)
+	{
+		if (i == 0) // cas de l'enregistrement du pointeur vers le premier bloc Kmer, donc on ne doit pas avancer
+		{
+			p_tableau_kmer_QS[i] = tete_info_dict_kmer->tete_liste_kmer;
+			i++;
+		}
+		else
+		{
+			p_tableau_kmer_QS[i] = p_kmer->suiv;
+			i++;
+			p_prec_kmer = p_kmer;
+			p_kmer = p_kmer->suiv_kmer;
+		}
+	}
+
+  trier_ST1(adr_tableau_kmer_QS, borne_gauche, borne_droite);
+	trier_ST2(adr_tableau_kmer_QS, borne_gauche, borne_droite);
+}
+//==================================================================================================
+//==================================================================================================
+void generation_fichier_resultats(TPtr_Cellkmer tableau_kmer_QS, int numero_essais, TInfo_dictionnaire_kmer tete_info_dict_kmer)
+{
+  int i, j, iter_kmer;
+	char nom_fichier[50];
+	snprintf( nom_fichier, 50, "fichier_resultatse_%d.txt", numero_essais);
+
+  FILE* fichier_resultats;
+  fichier_resultats = fopen(nom_fichier, "w");
+
+	for ( iter_kmer=0; iter_kmer < tete_info_dict_kmer->nb_kmer; iter_kmer++ )
+	{
+		fprintf(fichier_resultats, "\n=============================================== \n");
+
+		fprintf(fichier_resultats, "Kmer: %s      Motif consensus: %s", tableau_kmer_QS[iter_kmer]->kmer, tableau_kmer_QS[iter_kmer]->motif_consensus );
+		fprintf(fichier_resultats, " ST1: %s                  ST2: %s", tableau_kmer_QS[iter_kmer]->score_St1, tableau_kmer_QS[iter_kmer]->score_St2);
+
+		fprintf(fichier_resultats, "\n-----------PSSM------------- \n");
+		for (i=0;  i<4; i++){
+			if(i == 0){ fprintf(fichier_resultats, "A  ");}
+			if(i == 1){ fprintf(fichier_resultats, "\nT  ");}
+			if(i == 2){ fprintf(fichier_resultats, "\nC  ");}
+			if(i == 3){ fprintf(fichier_resultats, "\nG  ");}
+			for(j=0; j<taille_motif; j++){
+				fprintf(fichier_resultats, "%.2f ", tableau_kmer_QS[iter_kmer]->PSSM[i][j]);
+			}
+		}
+		fprintf(fichier_resultats, "\n=============================================== \n");
+	}
+	fclose(fichier_resultats);
+}
+//==================================================================================================

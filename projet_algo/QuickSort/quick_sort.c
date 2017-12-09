@@ -12,7 +12,7 @@ void trier(int* v, int g, int d)
   {
     separer(v, g, d, &indice_pivot);
     indice_pivot --;
-    separer(v, g, d, &indice_pivot);
+    trier(v, g, indice_pivot-1);
     trier(v, indice_pivot+1, d);
   }
   return;

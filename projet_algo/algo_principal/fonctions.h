@@ -20,7 +20,7 @@
   *********************************/
   typedef struct TDictionnaire_Sequences
   {
-    int numero_sequence;		// // kmer_present_dans_chaque_sequence(tete_info_dict_seq->nb_sequences, &tete_liste_kmer2,, &tete_liste_pour_recup_motif, &tete_liste_kmer_selectionne, &tete_liste_motif_PSSM);
+    int numero_sequence;		// kmer_present_dans_chaque_sequence(tete_info_dict_seq->nb_sequences, &tete_liste_kmer2,, &tete_liste_pour_recup_motif, &tete_liste_kmer_selectionne, &tete_liste_motif_PSSM);
     char nom_seq[120];
     char sequence[TAILLE_MAX_SEQ];
     struct TDictionnaire_Sequences* suiv_seq;
@@ -45,6 +45,7 @@
     double nb_sequence; // nombre de séquence dans lesquelles le kmer est présent
     int score_St1;
     int score_St2;
+    double** PSSM_consensus //PSSM associée au motif consensus
     char* motif_consensus;
     char* kmer; //"TCC" par exemple
   } TCellkmer;
@@ -118,10 +119,13 @@
   void raffiner_version1(TPtr_Cellkmer p_kmer);
   void raffiner_version2(TPtr_Cellkmer p_kmer);
 
-  void quick_sort_ST(Ptr_st* adr_st1, int* v_St1_Pos, int nb_sequences);
-  void trier(int* v_St1_Dh, int* v_St1_Pos, int g, int d);
-  void separer(int* v_St1_Dh, int* v_St1_Pos, int g, int d, int* adr_indice_pivot);
+  void creation_vecteur_kmer_pour_QuickSort(TPtr_Cellkmer* adr_tableau_kmer_QS, TInfo_dictionnaire_kmer tete_info_dict_kmer);
+  void trier_ST1(TPtr_Cellkmer* adr_tableau_kmer_QS, int g, int d);
+  void separer_ST1(TPtr_Cellkmer* adr_tableau_kmer_QS, int g, int d, int* adr_indice_pivot);
+  void trier_ST2(TPtr_Cellkmer* adr_tableau_kmer_QS, int g, int d);
+  void separer_ST2(TPtr_Cellkmer* adr_tableau_kmer_QS, int g, int d, int* adr_indice_pivot);
+  void quick_sort_ST(TPtr_Cellkmer* adr_tableau_kmer_QS, TInfo_dictionnaire_kmer tete_info_dict_kmer);
 
-  // void generation_fichier_résultats(Ptr_st* adr_st1, int* v_St1_Pos, char (*adr_Ct)[6], int nb_sequences);
+  void generation_fichier_resultats(TPtr_Cellkmer tableau_kmer_QS, int numero_essais, TInfo_dictionnaire_kmer tete_info_dict_kmer);
 
 #endif
