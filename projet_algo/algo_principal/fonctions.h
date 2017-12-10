@@ -1,6 +1,12 @@
 #ifndef HEADER_FONCTIONS
 #define HEADER_FONCTIONS
+
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+#include <stdbool.h>
+#include <time.h>
 
   #define TAILLE_MAX_SEQ 800
 /*************************************************************************************************************
@@ -45,7 +51,7 @@
     double nb_sequence; // nombre de séquence dans lesquelles le kmer est présent
     int score_St1;
     int score_St2;
-    double** PSSM_consensus //PSSM associée au motif consensus
+    double** PSSM_consensus; //PSSM associée au motif consensus
     char* motif_consensus;
     char* kmer; //"TCC" par exemple
   } TCellkmer;
@@ -77,7 +83,6 @@
   {
     int nb_kmer;
     TPtr_Cellkmer tete_liste_kmer;
-    TPtr_Cell_Motif tete_liste_motif;
   } TInfo_dictionnaire_kmer;
   typedef TInfo_dictionnaire_kmer* TPtr_info_dictionnaire_kmer;
 
@@ -90,42 +95,40 @@
   void liberation_dictionnaire_sequences( TPtr_info_dictionnaire_sequences* adr_tete_info_dict_seq, TPtr_dictionnaire_sequences* adr_tete_dict_seq);
 
   int random_number(int max_number, int zero_excluded);
-  int* generation_masque(int* masque);
-  void parcours_masque_sur_seq( int* masque, TPtr_dictionnaire_sequences tete_dict_seq, TPtr_info_dictionnaire_kmer tete_info_dict_kmer);
-
+  void initialisation_masque(int** adr_masque);
+  void affichage_masque(int* masque);
+  void generation_masque(int** masque);
   void generation_dictionnaire_kmers(int position_kmer, char* k_mer, char* motif, TPtr_dictionnaire_sequences tete_dict_seq, TPtr_info_dictionnaire_kmer tete_info_dict_kmer);
+  void parcours_masque_sur_seq( int* masque, TPtr_dictionnaire_sequences tete_dict_seq, TPtr_info_dictionnaire_kmer tete_info_dict_kmer);
   void affichage_dictionnaire_kmers(TPtr_info_dictionnaire_kmer tete_info_dict_kmer);
   void liberation_dictionnaire_kmers(TPtr_info_dictionnaire_kmer tete_info_dict_kmer);
 
   void creation_PSSM(double*** adr_matrice_PSSM);
   void afficher_PSSM( double** matrice_PSSM);
+  double calcul_distance_PSSMs(double*** adr_matrice_PSSM, double*** adr_matrice_PSSM_nouv );
+  void copie_PSSM(double*** adr_matrice_PSSM, double*** adr_matrice_PSSM_nouv);
   void liberation_PSSM(double*** adr_matrice_PSSM);
   void calcul_PSSM(TPtr_Cellkmer p_kmer , double*** adr_matrice_PSSM );
   void calcul_PSSM_amelioree(TPtr_Cellkmer p_kmer , double*** adr_matrice_PSSM );
-  void copie_PSSM(double*** adr_matrice_PSSM, double*** adr_matrice_PSSM_nouv);
-  double calcul_distance_PSSMs(double*** adr_matrice_PSSM, double*** adr_matrice_PSSM_nouv );
 
-  double calculer_score(TPtr_CellPos* adr_p_pos, double** matrice_PSSM, TPtr_info_dictionnaire_sequences tete_info_dict_seq);
   char* identification_motif_consensus(double** matrice_PSSM);
-
+  void calculer_score(TPtr_CellPos* adr_p_pos, double** matrice_PSSM, TPtr_info_dictionnaire_sequences tete_info_dict_seq);
   void recherche_motifs_maximisant_scores(TPtr_Cellkmer p_kmer, double** matrice_PSSM, TPtr_info_dictionnaire_sequences tete_info_dict_seq);
-  void recherche_motifs_minimisant_dHamming(TPtr_Cellkmer p_kmer);
-
   int distance_Hamming_St1(TPtr_Cellkmer p_kmer);
   int distance_Hamming_St2(TPtr_Cellkmer p_kmer);
+  int distance_Hamming_St2_T_prim(TPtr_Cellkmer p_kmer);
+  void recherche_motifs_minimisant_dHamming(TPtr_Cellkmer p_kmer);
+  void raffiner_version1(TPtr_Cellkmer p_kmer);
   void egalisation_T(TPtr_Cellkmer p_kmer);
   int verification_convergence_T(TPtr_Cellkmer p_kmer);
-
-  void raffiner_version1(TPtr_Cellkmer p_kmer);
   void raffiner_version2(TPtr_Cellkmer p_kmer);
 
-  void creation_vecteur_kmer_pour_QuickSort(TPtr_Cellkmer* adr_tableau_kmer_QS, TInfo_dictionnaire_kmer tete_info_dict_kmer);
-  void trier_ST1(TPtr_Cellkmer* adr_tableau_kmer_QS, int g, int d);
-  void separer_ST1(TPtr_Cellkmer* adr_tableau_kmer_QS, int g, int d, int* adr_indice_pivot);
-  void trier_ST2(TPtr_Cellkmer* adr_tableau_kmer_QS, int g, int d);
-  void separer_ST2(TPtr_Cellkmer* adr_tableau_kmer_QS, int g, int d, int* adr_indice_pivot);
-  void quick_sort_ST(TPtr_Cellkmer* adr_tableau_kmer_QS, TInfo_dictionnaire_kmer tete_info_dict_kmer);
+  void trier_ST1(TPtr_Cellkmer* (*adr_tableau_kmer_QS), int g, int d);
+  void separer_ST1(TPtr_Cellkmer* (*adr_tableau_kmer_QS), int g, int d, int* adr_indice_pivot);
+  void trier_ST2(TPtr_Cellkmer* (*adr_tableau_kmer_QS), int g, int d);
+  void separer_ST2(TPtr_Cellkmer* (*adr_tableau_kmer_QS), int g, int d, int* adr_indice_pivot);
+  void quick_sort_ST(TPtr_Cellkmer* (*adr_tableau_kmer_QS), TPtr_info_dictionnaire_kmer tete_info_dict_kmer);
 
-  void generation_fichier_resultats(TPtr_Cellkmer tableau_kmer_QS, int numero_essais, TInfo_dictionnaire_kmer tete_info_dict_kmer);
+  void generation_fichier_resultats(TPtr_Cellkmer *tableau_kmer_QS, int numero_essais, TPtr_info_dictionnaire_kmer tete_info_dict_kmer, TPtr_info_dictionnaire_sequences tete_info_dict_seq);
 
 #endif
