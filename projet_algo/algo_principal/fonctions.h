@@ -1,6 +1,12 @@
 #ifndef HEADER_FONCTIONS
 #define HEADER_FONCTIONS
+
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+#include <stdbool.h>
+#include <time.h>
 
   #define TAILLE_MAX_SEQ 800
 /*************************************************************************************************************
@@ -14,9 +20,13 @@
 /*************************************************************************************************************
  * * *                                         STRUCTURES                                                * * *
  *************************************************************************************************************/
+
+ /*********************************
+  *   DICTIONNAIRE DE SEQUENCES   *
+  *********************************/
   typedef struct TDictionnaire_Sequences
   {
-    int numero_sequence;
+    int numero_sequence;		// kmer_present_dans_chaque_sequence(tete_info_dict_seq->nb_sequences, &tete_liste_kmer2,, &tete_liste_pour_recup_motif, &tete_liste_kmer_selectionne, &tete_liste_motif_PSSM);
     char nom_seq[120];
     char sequence[TAILLE_MAX_SEQ];
     struct TDictionnaire_Sequences* suiv_seq;
@@ -30,17 +40,19 @@
   } TInfo_dictionnaire_sequences;
   typedef TInfo_dictionnaire_sequences* TPtr_info_dictionnaire_sequences;
 
-/*******************************
- * STRUCTURE DICTIONNAIRE KMER *
- *******************************/
-
-
-  //1er element: liste chainee des kmers
+/*********************************
+ *     DICTIONNAIRE DE KMERs     *
+ *********************************/
+  //premier element du dictionnaire de kmer:: liste chainee des kmers
   typedef struct TCellkmer
   {
     struct TCellkmer* suiv_kmer; //Pointeur sur le kmer suivant
     struct TCellSequence* tete_sequence; //Pointer qui pointe sur une liste chain�e de s�quence o� le kmer est retrouv�
     double nb_sequence; // nombre de séquence dans lesquelles le kmer est présent
+    int score_St1;
+    int score_St2;
+    double** PSSM_consensus; //PSSM associée au motif consensus
+    char* motif_consensus;
     char* kmer; //"TCC" par exemple
   } TCellkmer;
   typedef TCellkmer* TPtr_Cellkmer; //Pointeur sur Tcellkmer
@@ -51,6 +63,8 @@
     int num_sequence; //correspond au numéro de la séquence dans le dictionnaire de séquences
     struct TCellSequence* suiv_sequence; // Pointeur qui pointe l'element suivant de la liste chainee de sequence
     struct TCellPos* tete_pos; // Pointeur qui pointe sur le premier element de la structure position qui repertorie toutes les positions o� le kmer a �t� trouv� dans une s�quence
+    struct TCellPos* tete_pos_max;
+    struct TCellPos* tete_pos_dH_min;
   } TCellSequence;
   typedef TCellSequence* TPtr_CellSequence; // Pointeur sur TCellSequence
 
@@ -58,10 +72,13 @@
   typedef struct TCellPos
   {
     int position; // position du kmer dans la s�quence
+    double score;
     struct TCellPos* suiv_pos; //pointe sur la position suivante
+    char* motif; //on stocke le motif équivalent au kmer
   } TCellPos;
   typedef TCellPos* TPtr_CellPos;
 
+  // header contenant les tetes des elements précédents
   typedef struct TInfo_dictionnaire_kmer
   {
     int nb_kmer;
@@ -69,90 +86,49 @@
   } TInfo_dictionnaire_kmer;
   typedef TInfo_dictionnaire_kmer* TPtr_info_dictionnaire_kmer;
 
-/******************************
- * STRUCTURE KMER SELECTIONNE *
- ******************************/
-  //1er element: liste chainee des kmers
-  typedef struct TCellkmer_selectionne
-  {
-    struct TCellkmer_selectionne* suiv_kmer_selectionne;
-    struct TCell_Motif_PSSM* tete_motif_PSSM;
-    double nb_sequence;
-    char* kmer;
-  } TCellkmer_selectionne;
-  typedef TCellkmer_selectionne* TPtr_Cellkmer_selectionne;
-
-  //2eme element: liste chainee de motif pour lequels on va calculer la PSSM:
-  typedef struct TCell_Motif_PSSM
-  {
-    struct TCell_Motif_PSSM* suiv_motif;
-    char motif[];
-  } TCell_Motif_PSSM;
-  typedef TCell_Motif_PSSM* TPtr_Cell_Motif_PSSM;
-
-/****************************************************
- * STRUCTURE CHAINEE DE MOTS POUR AMELIORER LA PSSM *
- ****************************************************/
-  typedef struct TMot_Ameliorer_PSSM
-  {
-    double score_mot; //score du mot
-    struct TMot_Ameliorer_PSSM * next_mot; //pointeur sur mot suivant
-    char mot[]; //Mot de longueur motif
-  } TMot_Ameliorer_PSSM;
-  typedef TMot_Ameliorer_PSSM* TPtr_Mot_Ameliorer_PSSM;
-
-/************************************************
- * STRUCTURE CHAINEE ST1/ST2 CONTENANT LES MOTS *
- ************************************************/
-  typedef struct st
-  {
-    // position /s si meme motif pour plusieurs séquences
-    int distance_hamming; //distance de hamming entre le mot et Ct
-    struct st * next_mot; //pointeur sur mot suivant
-    char mot[]; //Mot qui ont une distance de hamming supérieur à 2
-  } st;
-  typedef st* Ptr_st;
-
 /*************************************************************************************************************
  * * *                                           FONCTIONS                                               * * *
  *************************************************************************************************************/
   void importer_parametres(char* nom_fichier, int* taille_motif, int* d, int* nb_fenetres, int* nb_masques);
   void importer_sequences_fasta(char* nom_fichier_fasta, TPtr_info_dictionnaire_sequences* adr_tete_info_dict_seq, TPtr_dictionnaire_sequences* adr_tete_dict_seq);
-  void afficher_sequences(TPtr_info_dictionnaire_sequences* adr_tete_info_dict_seq, TPtr_dictionnaire_sequences* adr_tete_dict_seq);
-  void liberation_dictionnaire_sequence( TPtr_info_dictionnaire_sequences* adr_tete_info_dict_seq, TPtr_dictionnaire_sequences* adr_tete_dict_seq);
+  void affichage_dictionnaire_sequences(TPtr_info_dictionnaire_sequences* adr_tete_info_dict_seq, TPtr_dictionnaire_sequences* adr_tete_dict_seq);
+  void liberation_dictionnaire_sequences( TPtr_info_dictionnaire_sequences* adr_tete_info_dict_seq, TPtr_dictionnaire_sequences* adr_tete_dict_seq);
 
   int random_number(int max_number, int zero_excluded);
+  void initialisation_masque(int** adr_masque);
+  void affichage_masque(int* masque);
+  void generation_masque(int** masque);
+  void generation_dictionnaire_kmers(int position_kmer, char* k_mer, char* motif, TPtr_dictionnaire_sequences tete_dict_seq, TPtr_info_dictionnaire_kmer tete_info_dict_kmer);
+  void parcours_masque_sur_seq( int* masque, TPtr_dictionnaire_sequences tete_dict_seq, TPtr_info_dictionnaire_kmer tete_info_dict_kmer);
+  void affichage_dictionnaire_kmers(TPtr_info_dictionnaire_kmer tete_info_dict_kmer);
+  void liberation_dictionnaire_kmers(TPtr_info_dictionnaire_kmer tete_info_dict_kmer);
 
-  int* generation_masque(int* masque);
-
-  void parcours_masque( int* masque, TPtr_dictionnaire_sequences tete_dict_seq, TPtr_info_dictionnaire_kmer tete_info_dict_kmer);
-  void generation_dictionnaire_kmer(int position_kmer, char* k_mer, TPtr_dictionnaire_sequences tete_dict_seq, TPtr_info_dictionnaire_kmer tete_info_dict_kmer);
-  void affichage_dictionnaire_kmer(TPtr_info_dictionnaire_kmer tete_info_dict_kmer);
-  void liberation_dictionnaire_kmer(TPtr_info_dictionnaire_kmer tete_info_dict_kmer);
-
-  // void recuperer_motif_kmer(TPtr_Cellkmer* adr_parcours_kmer, TPtr_Cellkmer_selectionne *adr_tete_kmer_selectionne, TPtr_Cell_Motif_PSSM* adr_tete_motif_PSSM, TPtr_CellSequence* adr_cell_sequence, TPtr_CellPos* adr_cell_pos, TPtr_dictionnaire_sequences* ptr_ensemble, int nb_sequence_kmer);
-  // void kmer_present_dans_chaque_sequence(int nb_sequence, TPtr_Cellkmer* adr_cell_kmer, TPtr_CellSequence *adr_cell_sequence, TPtr_CellPos *adr_cell_pos, TPtr_dictionnaire_sequences* ptr_ensemble, TPtr_Cellkmer_selectionne* adr_cell_kmer_selectionne, TPtr_Cell_Motif_PSSM* adr_cell_motif_PSSM);
-  //
-
-  // void affichage_motif_selectionne(TPtr_Cellkmer_selectionne* adr_tete_kmer_selectionne, TPtr_Cell_Motif_PSSM* adr_tete_motif);
-  //
   void creation_PSSM(double*** adr_matrice_PSSM);
-  // void calcul_PSSM(TPtr_Cellkmer_selectionne *adr_cell_kmer_selectionne, TPtr_Cell_Motif_PSSM *adr_cell_motif_PSSM, double*** adr_matrice_PSSM, int taille_motif);
-  // void calcul_nouvelle_PSSM(TPtr_Cell_Motif_PSSM *adr_cell_mot_selected, double*** adr_matrice_PSSM, double nb_sequence, char (*adr_Ct)[6], int taille_motif);
   void afficher_PSSM( double** matrice_PSSM);
+  double calcul_distance_PSSMs(double*** adr_matrice_PSSM, double*** adr_matrice_PSSM_nouv );
+  void copie_PSSM(double*** adr_matrice_PSSM, double*** adr_matrice_PSSM_nouv);
   void liberation_PSSM(double*** adr_matrice_PSSM);
-  //
-  // void calcul_score(TPtr_Mot_Ameliorer_PSSM* adr_mot, double*** adr_matrice_PSSM, int n_sequence, TPtr_dictionnaire_sequences* ptr_ensemble, int taille_motif);
-  // double dist_PSSM(double*** adr_matrice_PSSM, double*** adr_matrice_PSSM_nouv, double* distance_PSSM, int taille_motif);
-  //
-  // int distanceHammingSt1(char (*adr_Ct)[6], TPtr_Cell_Motif_PSSM* adr_mot_selected, Ptr_st* adr_st1, int taille_motif);
-  // int distanceHammingSt2(char (*adr_Ct)[6], TPtr_Cell_Motif_PSSM* adr_mot_selected, Ptr_st* adr_st2, int taille_motif);
-  // int distanceHammingSt2_prim(char (*adr_Ct)[6], TPtr_dictionnaire_sequences* ptr_ensemble, TPtr_Mot_Ameliorer_PSSM *adr_mot, Ptr_st* adr_st2_prim, int taille_motif);
-  //
-  // void quick_sort_ST(Ptr_st* adr_st1, int* v_St1_Pos, int nb_sequences);
-  // void trier(int* v_St1_Dh, int* v_St1_Pos, int g, int d);
-  // void separer(int* v_St1_Dh, int* v_St1_Pos, int g, int d, int* adr_indice_pivot);
-  //
-  // void fichier_sortie_st(Ptr_st* adr_st1, int* v_St1_Pos, char (*adr_Ct)[6], int nb_sequences);
+  void calcul_PSSM(TPtr_Cellkmer p_kmer , double*** adr_matrice_PSSM );
+  void calcul_PSSM_amelioree(TPtr_Cellkmer p_kmer , double*** adr_matrice_PSSM );
+
+  char* identification_motif_consensus(double** matrice_PSSM);
+  void calculer_score(TPtr_CellPos* adr_p_pos, double** matrice_PSSM, TPtr_info_dictionnaire_sequences tete_info_dict_seq);
+  void recherche_motifs_maximisant_scores(TPtr_Cellkmer p_kmer, double** matrice_PSSM, TPtr_info_dictionnaire_sequences tete_info_dict_seq);
+  int distance_Hamming_St1(TPtr_Cellkmer p_kmer);
+  int distance_Hamming_St2(TPtr_Cellkmer p_kmer);
+  int distance_Hamming_St2_T_prim(TPtr_Cellkmer p_kmer);
+  void recherche_motifs_minimisant_dHamming(TPtr_Cellkmer p_kmer);
+  void raffiner_version1(TPtr_Cellkmer p_kmer);
+  void egalisation_T(TPtr_Cellkmer p_kmer);
+  int verification_convergence_T(TPtr_Cellkmer p_kmer);
+  void raffiner_version2(TPtr_Cellkmer p_kmer);
+
+  void trier_ST1(TPtr_Cellkmer* (*adr_tableau_kmer_QS), int g, int d);
+  void separer_ST1(TPtr_Cellkmer* (*adr_tableau_kmer_QS), int g, int d, int* adr_indice_pivot);
+  void trier_ST2(TPtr_Cellkmer* (*adr_tableau_kmer_QS), int g, int d);
+  void separer_ST2(TPtr_Cellkmer* (*adr_tableau_kmer_QS), int g, int d, int* adr_indice_pivot);
+  void quick_sort_ST(TPtr_Cellkmer* (*adr_tableau_kmer_QS), TPtr_info_dictionnaire_kmer tete_info_dict_kmer);
+
+  void generation_fichier_resultats(TPtr_Cellkmer *tableau_kmer_QS, int numero_essais, TPtr_info_dictionnaire_kmer tete_info_dict_kmer, TPtr_info_dictionnaire_sequences tete_info_dict_seq);
 
 #endif

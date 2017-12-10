@@ -141,7 +141,6 @@ int main()
 //------------------------------------------------------------------------------------------------------------
   for (essais=0; essais < nb_essais; essais++)
   {
-    printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
     generation_masque(longueur_masque, &masque, nb_fenetre);
     parcours_masque(longueur_masque, &masque, nb_fenetre, nb_sequence_dico, &tete_liste_pour_parcours_masque, &tete_liste_kmer, &tete_liste_sequence, &tete_liste_pos);
     kmer_present_dans_chaque_sequence(nb_sequence_dico, &tete_liste_kmer2, &tete_liste_sequence2, &tete_liste_pos2, &tete_liste_pour_recup_motif, &tete_liste_kmer_selectionne, &tete_liste_motif_PSSM, longueur_masque);
