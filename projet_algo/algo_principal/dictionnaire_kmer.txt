@@ -43,7 +43,7 @@ Positions:  -> 9
 -------------------------------------------
 
 ---KMER--- ag 
-Nb de séquences: 10 
+Nb de séquences:  8 
 -----------
 Sequence_num:-> 1 
 Positions:  -> 1 
@@ -76,14 +76,6 @@ Positions:  -> 4
 Sequence_num:-> 9 
 Positions:  -> 9 
             -> tgact 
------------
-Sequence_num:-> 4 
-Positions:  -> 8 
-            -> agtaa 
------------
-Sequence_num:-> 10 
-Positions:  -> 6 
-            -> agaca 
 -------------------------------------------
 
 ---KMER--- ac 
@@ -131,7 +123,7 @@ Positions:  -> 14
 -------------------------------------------
 
 ---KMER--- ga 
-Nb de séquences: 10 
+Nb de séquences:  8 
 -----------
 Sequence_num:-> 1 
 Positions:  -> 3 
@@ -164,14 +156,6 @@ Positions:  -> 1
 Sequence_num:-> 9 
 Positions:  -> 4 
             -> aaaca 
------------
-Sequence_num:-> 5 
-Positions:  -> 17 
-            -> gactt 
------------
-Sequence_num:-> 10 
-Positions:  -> 3 
-            -> gacag 
 -------------------------------------------
 
 ---KMER--- aa 
@@ -219,7 +203,7 @@ Positions:  -> 4
 -------------------------------------------
 
 ---KMER--- at 
-Nb de séquences:  9 
+Nb de séquences:  8 
 -----------
 Sequence_num:-> 1 
 Positions:  -> 9 
@@ -252,14 +236,10 @@ Positions:  -> 7
 Sequence_num:-> 9 
 Positions:  -> 12 
             -> ctatt 
------------
-Sequence_num:-> 3 
-Positions:  -> 25 
-            -> aactt 
 -------------------------------------------
 
 ---KMER--- tg 
-Nb de séquences:  8 
+Nb de séquences:  6 
 -----------
 Sequence_num:-> 1 
 Positions:  -> 11 
@@ -284,18 +264,10 @@ Positions:  -> 9
 Sequence_num:-> 9 
 Positions:  -> 16 
             -> tgaaa 
------------
-Sequence_num:-> 6 
-Positions:  -> 3 
-            -> tgcgt 
------------
-Sequence_num:-> 10 
-Positions:  -> 2 
-            -> tgaca 
 -------------------------------------------
 
 ---KMER--- cc 
-Nb de séquences: 10 
+Nb de séquences:  8 
 -----------
 Sequence_num:-> 1 
 Positions:  -> 14 
@@ -328,18 +300,10 @@ Positions:  -> 17
 Sequence_num:-> 10 
 Positions:  -> 17 
             -> acaac 
------------
-Sequence_num:-> 9 
-Positions:  -> 1 
-            -> ccaga 
------------
-Sequence_num:-> 6 
-Positions:  -> 2 
-            -> ctgcg 
 -------------------------------------------
 
 ---KMER--- cg 
-Nb de séquences:  8 
+Nb de séquences:  7 
 -----------
 Sequence_num:-> 1 
 Positions:  -> 16 
@@ -368,14 +332,10 @@ Positions:  -> 2
 Sequence_num:-> 10 
 Positions:  -> 5 
             -> agaca 
------------
-Sequence_num:-> 5 
-Positions:  -> 16 
-            -> cgact 
 -------------------------------------------
 
 ---KMER--- tc 
-Nb de séquences:  9 
+Nb de séquences:  7 
 -----------
 Sequence_num:-> 1 
 Positions:  -> 23 
@@ -404,18 +364,10 @@ Positions:  -> 10
 Sequence_num:-> 9 
 Positions:  -> 0 
             -> ccaga 
------------
-Sequence_num:-> 5 
-Positions:  -> 25 
-            -> ttacg 
------------
-Sequence_num:-> 10 
-Positions:  -> 2 
-            -> tgaca 
 -------------------------------------------
 
 ---KMER--- ta 
-Nb de séquences:  9 
+Nb de séquences:  8 
 -----------
 Sequence_num:-> 2 
 Positions:  -> 12 
@@ -448,14 +400,10 @@ Positions:  -> 10
 Sequence_num:-> 10 
 Positions:  -> 2 
             -> gacag 
------------
-Sequence_num:-> 1 
-Positions:  -> 11 
-            -> tagca 
 -------------------------------------------
 
 ---KMER--- gg 
-Nb de séquences:  6 
+Nb de séquences:  4 
 -----------
 Sequence_num:-> 2 
 Positions:  -> 15 
@@ -472,18 +420,10 @@ Positions:  -> 4
 Sequence_num:-> 10 
 Positions:  -> 1 
             -> tgaca 
------------
-Sequence_num:-> 8 
-Positions:  -> 1 
-            -> ggaaa 
------------
-Sequence_num:-> 4 
-Positions:  -> 27 
-            -> gaggt 
 -------------------------------------------
 
 ---KMER--- gt 
-Nb de séquences:  9 
+Nb de séquences:  4 
 -----------
 Sequence_num:-> 2 
 Positions:  -> 17 
@@ -500,30 +440,10 @@ Positions:  -> 19
 Sequence_num:-> 8 
 Positions:  -> 11 
             -> ctgtt 
------------
-Sequence_num:-> 4 
-Positions:  -> 9 
-            -> gtaaa 
------------
-Sequence_num:-> 10 
-Positions:  -> 1 
-            -> gtgac 
------------
-Sequence_num:-> 1 
-Positions:  -> 8 
-            -> gaata 
------------
-Sequence_num:-> 5 
-Positions:  -> 17 
-            -> gactt 
------------
-Sequence_num:-> 9 
-Positions:  -> 11 
-            -> gacta 
 -------------------------------------------
 
 ---KMER--- ct 
-Nb de séquences:  8 
+Nb de séquences:  6 
 -----------
 Sequence_num:-> 3 
 Positions:  -> 0 
@@ -548,18 +468,10 @@ Positions:  -> 18
 Sequence_num:-> 9 
 Positions:  -> 8 
             -> atgac 
------------
-Sequence_num:-> 7 
-Positions:  -> 20 
-            -> ctcag 
------------
-Sequence_num:-> 2 
-Positions:  -> 27 
-            -> agctg 
 -------------------------------------------
 
 ---KMER--- tt 
-Nb de séquences:  9 
+Nb de séquences:  8 
 -----------
 Sequence_num:-> 3 
 Positions:  -> 1 
@@ -592,14 +504,10 @@ Positions:  -> 14
 Sequence_num:-> 10 
 Positions:  -> 0 
             -> gtgac 
------------
-Sequence_num:-> 2 
-Positions:  -> 12 
-            -> ttaga 
 -------------------------------------------
 
 ---KMER--- gc 
-Nb de séquences: 10 
+Nb de séquences:  6 
 -----------
 Sequence_num:-> 3 
 Positions:  -> 17 
@@ -624,21 +532,5 @@ Positions:  -> 11
 Sequence_num:-> 10 
 Positions:  -> 3 
             -> acaga 
------------
-Sequence_num:-> 1 
-Positions:  -> 3 
-            -> gcaaa 
------------
-Sequence_num:-> 2 
-Positions:  -> 1 
-            -> gcacc 
------------
-Sequence_num:-> 6 
-Positions:  -> 1 
-            -> gctgc 
------------
-Sequence_num:-> 8 
-Positions:  -> 11 
-            -> gctgt 
 -------------------------------------------
 

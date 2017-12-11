@@ -154,46 +154,7 @@ int main()
         calcul_PSSM(&tete_liste_kmer_selectionne_pour_calcul, &tete_liste_motif_PSSM_pour_calcul, &matrice_PSSM, longueur_masque);
       	do //repeter l'amélioration de la PSSM jusqu'à convergence
       	{
-      		while (p_generation_seq != NULL) //pour chaque sequence
-      		{
-      			pos_max= -1;
-      			score_max= -100;
 
-      			while (position<=25)  //pour chaque mot:
-      			{
-      				n_sequence= p_generation_seq->numero_sequence;
-      				for (cpt_mot=0; cpt_mot<=longueur_masque; cpt_mot++)
-      				{
-      					p_mot->mot[cpt_mot]= p_generation_seq-> sequence[position];
-      					if (cpt_mot==longueur_masque)
-      					{
-      						p_mot->mot[longueur_masque]= '\0';
-
-      						calcul_score(&p_mot, &matrice_PSSM, n_sequence, &p_generation_seq, longueur_masque);
-      					}
-      					position++;
-      				}
-      				position= position -5;
-
-      				if (p_mot->score_mot> score_max)  //si le score de ce mot est supérieur au score max
-      				{
-      					score_max= p_mot-> score_mot;
-      					pos_max= position;
-      					strcpy(p_mot_selected->motif, p_mot->mot);
-      				}
-      				TPtr_Mot_Ameliorer_PSSM p_nouv_mot=malloc(sizeof(TMot_Ameliorer_PSSM));
-      				p_mot->next_mot= p_nouv_mot;
-      				p_mot=p_nouv_mot;
-      			}
-      			//Post condition: le mot de la sequence courante le plus proche de la PSSM est identifié !
-      			position=0;
-      			TPtr_Cell_Motif_PSSM p_mot_selected_suiv= malloc(sizeof(TCell_Motif_PSSM));
-      			p_mot_selected-> suiv_motif= p_mot_selected_suiv;
-      			p_mot_selected=p_mot_selected_suiv;
-      			score_max=-100;
-      			pos_max=0;
-      			p_generation_seq= p_generation_seq-> next_sequence;
-      		}
       		calcul_nouvelle_PSSM(&tete_mot_selected_calcul_PSSM, &matrice_PSSM_nouv, nb_sequence_dico, &Ct, longueur_masque);
       		printf("Ct: %s \n", Ct);
       		distance_PSSM=dist_PSSM(&matrice_PSSM, &matrice_PSSM_nouv, &distance_PSSM, longueur_masque);

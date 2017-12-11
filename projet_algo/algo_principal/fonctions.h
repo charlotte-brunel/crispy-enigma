@@ -35,7 +35,7 @@
 
   typedef struct TInfo_dictionnaire_sequences
   {
-    int nb_sequences;
+    double nb_sequences;
     TPtr_dictionnaire_sequences tete_dictionnaire_seq; //tete pointant sur la liste chainée de sequences
   } TInfo_dictionnaire_sequences;
   typedef TInfo_dictionnaire_sequences* TPtr_info_dictionnaire_sequences;
@@ -51,7 +51,7 @@
     double nb_sequence; // nombre de séquence dans lesquelles le kmer est présent
     int score_St1;
     int score_St2;
-    double** PSSM_consensus; //PSSM associée au motif consensus
+    double*** PSSM_consensus; //PSSM associée au motif consensus
     char* motif_consensus;
     char* kmer; //"TCC" par exemple
   } TCellkmer;
@@ -112,16 +112,16 @@
   void calcul_PSSM_amelioree(TPtr_Cellkmer p_kmer , double*** adr_matrice_PSSM );
 
   char* identification_motif_consensus(double** matrice_PSSM);
-  void calculer_score(TPtr_CellPos* adr_p_pos, double** matrice_PSSM, TPtr_info_dictionnaire_sequences tete_info_dict_seq);
-  void recherche_motifs_maximisant_scores(TPtr_Cellkmer p_kmer, double** matrice_PSSM, TPtr_info_dictionnaire_sequences tete_info_dict_seq);
+  double calculer_score(char* motif_tmp, double** matrice_PSSM,  TPtr_dictionnaire_sequences tete_dict_seq,  TPtr_info_dictionnaire_sequences tete_info_dict_seq);
+  void recherche_motifs_maximisant_scores(TPtr_Cellkmer p_kmer, double** matrice_PSSM,  TPtr_dictionnaire_sequences tete_dict_seq, TPtr_info_dictionnaire_sequences tete_info_dict_seq);
   int distance_Hamming_St1(TPtr_Cellkmer p_kmer);
   int distance_Hamming_St2(TPtr_Cellkmer p_kmer);
   int distance_Hamming_St2_T_prim(TPtr_Cellkmer p_kmer);
-  void recherche_motifs_minimisant_dHamming(TPtr_Cellkmer p_kmer);
+  void recherche_motifs_minimisant_dHamming(TPtr_Cellkmer p_kmer,TPtr_info_dictionnaire_sequences tete_info_dict_seq);
   void raffiner_version1(TPtr_Cellkmer p_kmer);
   void egalisation_T(TPtr_Cellkmer p_kmer);
   int verification_convergence_T(TPtr_Cellkmer p_kmer);
-  void raffiner_version2(TPtr_Cellkmer p_kmer);
+  void raffiner_version2(TPtr_Cellkmer p_kmer, TPtr_info_dictionnaire_sequences tete_info_dict_seq);
 
   void trier_ST1(TPtr_Cellkmer* (*adr_tableau_kmer_QS), int g, int d);
   void separer_ST1(TPtr_Cellkmer* (*adr_tableau_kmer_QS), int g, int d, int* adr_indice_pivot);

@@ -82,7 +82,7 @@ typedef structure_sequence* ptr_struct_seq; // on cr�� le type ptr_struct_se
   {
     double score_mot; //score du mot
     struct TMot_Ameliorer_PSSM * next_mot; //pointeur sur mot suivant
-    char mot[]; //Mot de longueur motif
+    char* mot; //Mot de longueur motif
   };
   typedef TMot_Ameliorer_PSSM* TPtr_Mot_Ameliorer_PSSM;
 
@@ -93,8 +93,8 @@ typedef structure_sequence* ptr_struct_seq; // on cr�� le type ptr_struct_se
   struct st
   {
    int distance_hamming; //distance de hamming entre le mot et Ct
-   struct st * next_mot; //pointeur sur mot suivant
-   char mot[]; //Mot qui ont une distance de hamming supérieur à 2
+   struct st* next_mot; //pointeur sur mot suivant
+   char* mot; //Mot qui ont une distance de hamming supérieur à 2
   };
   typedef st* Ptr_st;
 
